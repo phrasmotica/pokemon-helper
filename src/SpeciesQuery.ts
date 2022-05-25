@@ -4,13 +4,13 @@ interface Name {
     name: string
 }
 
-interface Type {
+interface Move {
     name: string
 }
 
-interface PokemonType {
+interface PokemonMove {
     id: number
-    type: Type
+    move: Move
 }
 
 interface Stat {
@@ -23,7 +23,17 @@ interface PokemonStat {
     baseValue: number
 }
 
+interface Type {
+    name: string
+}
+
+interface PokemonType {
+    id: number
+    type: Type
+}
+
 interface Variety {
+    moves: PokemonMove[]
     types: PokemonType[]
     stats: PokemonStat[]
 }
@@ -53,6 +63,12 @@ const getSpeciesQuery = gql`
                 name
             }
             varieties: pokemon_v2_pokemons(order_by: {order: asc}) {
+                moves: pokemon_v2_pokemonmoves(order_by: {order: asc}) {
+                    id: move_id
+                    move: pokemon_v2_move {
+                        name
+                    }
+                }
                 stats: pokemon_v2_pokemonstats(order_by: {stat_id: asc}) {
                     id: stat_id
                     stat: pokemon_v2_stat {

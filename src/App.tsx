@@ -2,21 +2,26 @@ import { useState } from "react"
 
 import { useSpeciesQuery } from "./SpeciesQuery"
 
-function App() {
+import "./App.css"
+
+const App = () => {
     const [species, setSpecies] = useState("")
 
     const { loadingSpecies, error, speciesData, refetchSpecies } =
-        useSpeciesQuery("floatzel")
+        useSpeciesQuery("piplup")
 
     let speciesInfo = loadingSpecies ? undefined : speciesData!.speciesInfo[0]!
     let variety = loadingSpecies ? undefined : speciesInfo!.varieties[0]!
+
+    let moves = loadingSpecies ? [] : variety!.moves
+    let uniqueMoveNames = [...new Set(moves.map(m => m.move.name))]
 
     let types = loadingSpecies ? [] : variety!.types
     let stats = loadingSpecies ? [] : variety!.stats
 
     return (
         <div className="App">
-            <header className="App-header">
+            <div className="App-header">
                 <div>
                     <input onChange={(e) => setSpecies(e.target.value)}></input>
                     <button onClick={() => refetchSpecies(species)}>
@@ -24,16 +29,18 @@ function App() {
                     </button>
                 </div>
 
-                <div>
-                    <p>{!loadingSpecies && speciesInfo!.names[0]!.name}</p>
+                <div className="details-container">
+                    <div>
+                        <p>{!loadingSpecies && speciesInfo!.names[0]!.name}</p>
 
-                    {!loadingSpecies && (
-                        <p>
-                            <span>
-                                {types.map((t) => t.type.name).join("-")}
-                            </span>
-                        </p>
-                    )}
+                        {!loadingSpecies && (
+                            <p>
+                                <span>
+                                    {types.map((t) => t.type.name).join("-")}
+                                </span>
+                            </p>
+                        )}
+                    </div>
 
                     <div>
                         {!loadingSpecies &&
@@ -44,8 +51,17 @@ function App() {
                                 </div>
                             ))}
                     </div>
+
+                    <div>
+                        {!loadingSpecies &&
+                            uniqueMoveNames.map(n => (
+                                <div>
+                                    <span>{n}</span>
+                                </div>
+                            ))}
+                    </div>
                 </div>
-            </header>
+            </div>
         </div>
     )
 }
