@@ -25,9 +25,11 @@ const App = () => {
     let variety = loadingSpecies ? undefined : speciesInfo!.varieties[0]!
 
     let moves = loadingSpecies ? [] : variety!.moves
-    let uniqueMoveNames = [...new Set(moves.map(m => m.move.name))]
+    let uniqueMoveNames = [...new Set(moves.map(m => m.move.names[0]!.name))]
 
     let types = loadingSpecies ? [] : variety!.types
+    let typeStr = types.map(t => t.type.names[0]!.name).join("-")
+
     let stats = loadingSpecies ? [] : variety!.stats
 
     return (
@@ -66,7 +68,7 @@ const App = () => {
                         {!loadingSpecies && (
                             <p>
                                 <span>
-                                    {types.map((t) => t.type.name).join("-")}
+                                    {typeStr}
                                 </span>
                             </p>
                         )}
@@ -76,7 +78,7 @@ const App = () => {
                         {!loadingSpecies &&
                             stats.map((s) => (
                                 <div key={s.id}>
-                                    <span>{s.stat.name}</span>:&nbsp;
+                                    <span>{s.stat.names[0]!.name}</span>:&nbsp;
                                     <span>{s.baseValue}</span>
                                 </div>
                             ))}

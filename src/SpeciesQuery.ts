@@ -8,6 +8,7 @@ interface Name {
 interface Move {
     id: number
     name: string
+    names: Name[]
 }
 
 interface PokemonMove {
@@ -18,6 +19,7 @@ interface PokemonMove {
 interface Stat {
     id: number
     name: string
+    names: Name[]
 }
 
 interface PokemonStat {
@@ -29,6 +31,7 @@ interface PokemonStat {
 interface Type {
     id: number
     name: string
+    names: Name[]
 }
 
 interface PokemonType {
@@ -77,6 +80,10 @@ const getSpeciesQuery = gql`
                     move: pokemon_v2_move {
                         id
                         name
+                        names: pokemon_v2_movenames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                            id
+                            name
+                        }
                     }
                 }
                 stats: pokemon_v2_pokemonstats(order_by: {stat_id: asc}) {
@@ -84,6 +91,10 @@ const getSpeciesQuery = gql`
                     stat: pokemon_v2_stat {
                         id
                         name
+                        names: pokemon_v2_statnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                            id
+                            name
+                        }
                     }
                     baseValue: base_stat
                 }
@@ -92,6 +103,10 @@ const getSpeciesQuery = gql`
                     type: pokemon_v2_type {
                         id
                         name
+                        names: pokemon_v2_typenames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                            id
+                            name
+                        }
                     }
                 }
             }
