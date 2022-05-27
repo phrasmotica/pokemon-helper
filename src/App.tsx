@@ -45,7 +45,7 @@ const App = () => {
                     <div>
                         {!loadingSpecies &&
                             stats.map((s) => (
-                                <div>
+                                <div key={s.id}>
                                     <span>{s.stat.name}</span>:&nbsp;
                                     <span>{s.baseValue}</span>
                                 </div>
@@ -55,7 +55,7 @@ const App = () => {
                     <div>
                         {!loadingSpecies &&
                             uniqueMoveNames.map(n => (
-                                <div>
+                                <div key={n}>
                                     <span>{n}</span>
                                 </div>
                             ))}
