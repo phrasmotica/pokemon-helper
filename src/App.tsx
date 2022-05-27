@@ -4,11 +4,18 @@ import { useSpeciesQuery } from "./SpeciesQuery"
 
 import "./App.css"
 
+const history = ["piplup"]
+
 const App = () => {
     const [species, setSpecies] = useState("")
 
     const { loadingSpecies, error, speciesData, refetchSpecies } =
         useSpeciesQuery("piplup")
+
+    const findSpecies = () => {
+        history.push(species)
+        refetchSpecies(species)
+    }
 
     let speciesInfo = loadingSpecies ? undefined : speciesData!.speciesInfo[0]!
     let variety = loadingSpecies ? undefined : speciesInfo!.varieties[0]!
@@ -24,12 +31,16 @@ const App = () => {
             <div className="App-header">
                 <div>
                     <input onChange={(e) => setSpecies(e.target.value)}></input>
-                    <button onClick={() => refetchSpecies(species)}>
+                    <button onClick={findSpecies}>
                         Find
                     </button>
                 </div>
 
                 <div className="details-container">
+                    <div>
+                        {history.map(s => <p key={s}><span><a onClick={() => setSpecies(s)}>{s}</a></span></p>)}
+                    </div>
+
                     <div>
                         <p>{!loadingSpecies && speciesInfo!.names[0]!.name}</p>
 
