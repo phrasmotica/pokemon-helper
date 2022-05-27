@@ -6,6 +6,7 @@ import { useSpeciesQuery } from "./SpeciesQuery"
 import { StatsTable } from "./StatsTable"
 
 import "./App.css"
+import { MovesTable } from "./MovesTable"
 
 const history = ["piplup"]
 
@@ -61,20 +62,11 @@ const App = () => {
                     </div>
                 </div>
 
-                <div className="details-container">
-                    {!loadingSpecies && <BasicInfo speciesInfo={speciesInfo!} />}
-
-                    {!loadingSpecies && <StatsTable stats={stats} />}
-
-                    <div>
-                        {!loadingSpecies &&
-                            uniqueMoveNames.map(n => (
-                                <div key={n}>
-                                    <span>{n}</span>
-                                </div>
-                            ))}
-                    </div>
-                </div>
+                {!loadingSpecies && <div className="details-container">
+                    <BasicInfo speciesInfo={speciesInfo!} />
+                    <StatsTable stats={stats} />
+                    <MovesTable moves={moves} />
+                </div>}
             </div>
         </div>
     )

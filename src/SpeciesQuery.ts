@@ -19,7 +19,7 @@ interface Move {
     names: Name[]
 }
 
-interface PokemonMove {
+export interface PokemonMove {
     id: number
     move: Move
 }
