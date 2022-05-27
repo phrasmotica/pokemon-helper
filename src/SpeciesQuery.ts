@@ -5,6 +5,14 @@ interface Name {
     name: string
 }
 
+interface PokemonForm {
+    id: number
+    name: string
+    formName: string
+    isDefault: boolean
+    names: Name[]
+}
+
 interface Move {
     id: number
     name: string
@@ -43,6 +51,7 @@ interface Variety {
     id: number
     name: string
     isDefault: boolean
+    forms: PokemonForm[]
     moves: PokemonMove[]
     types: PokemonType[]
     stats: PokemonStat[]
@@ -77,6 +86,16 @@ const getSpeciesQuery = gql`
                 id
                 name
                 isDefault: is_default
+                forms: pokemon_v2_pokemonforms(order_by: {form_order: asc}) {
+                    id
+                    name
+                    formName: form_name
+                    isDefault: is_default
+                    names: pokemon_v2_pokemonformnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                        id
+                        name
+                    }
+                }
                 moves: pokemon_v2_pokemonmoves(order_by: {order: asc}) {
                     id
                     move: pokemon_v2_move {

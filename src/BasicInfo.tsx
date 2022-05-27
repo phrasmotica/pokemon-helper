@@ -17,6 +17,15 @@ export const BasicInfo = (props: BasicInfoProps) => {
     const [sprite, setSprite] = useState("")
 
     let variety = props.speciesInfo.varieties.find(v => v.isDefault)!
+
+    let name = props.speciesInfo.names[0]!.name
+    let formName = ""
+
+    let form = variety.forms[0]!
+    if (form.formName.length > 0) {
+        formName = form.names[0]!.name
+    }
+
     let typeStr = variety.types.map(t => t.type.names[0]!.name).join("-")
 
     useEffect(() => {
@@ -33,7 +42,8 @@ export const BasicInfo = (props: BasicInfoProps) => {
     return (
         <Segment className="basic-info">
             <div>
-                <h2>{props.speciesInfo.names[0]!.name}</h2>
+                <h2>{name}</h2>
+                {formName.length > 0 && <p>{formName}</p>}
 
                 <h4>{typeStr}</h4>
             </div>
