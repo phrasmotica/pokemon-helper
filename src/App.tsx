@@ -12,9 +12,12 @@ const App = () => {
     const { loadingSpecies, error, speciesData, refetchSpecies } =
         useSpeciesQuery("piplup")
 
-    const findSpecies = () => {
-        history.push(species)
-        refetchSpecies(species)
+    const findSpecies = (speciesName: string) => {
+        if (!history.includes(speciesName)) {
+            history.push(speciesName)
+        }
+
+        refetchSpecies(speciesName)
     }
 
     let speciesInfo = loadingSpecies ? undefined : speciesData!.speciesInfo[0]!
@@ -29,18 +32,29 @@ const App = () => {
     return (
         <div className="App">
             <div className="App-header">
-                <div>
-                    <input onChange={(e) => setSpecies(e.target.value)}></input>
-                    <button onClick={findSpecies}>
-                        Find
-                    </button>
+                <div className="control-container">
+                    <div className="input-container">
+                        <input
+                            value={species}
+                            onChange={(e) => setSpecies(e.target.value)} />
+
+                        <button onClick={() => findSpecies(species)}>
+                            Find
+                        </button>
+                    </div>
+
+                    <div className="history-container">
+                        {history.map(s => (
+                            <div key={s}>
+                                <button onClick={() => findSpecies(s)}>
+                                    {s}
+                                </button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <div className="details-container">
-                    <div>
-                        {history.map(s => <p key={s}><span><a onClick={() => setSpecies(s)}>{s}</a></span></p>)}
-                    </div>
-
                     <div>
                         <p>{!loadingSpecies && speciesInfo!.names[0]!.name}</p>
 
