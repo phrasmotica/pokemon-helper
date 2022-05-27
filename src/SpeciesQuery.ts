@@ -1,10 +1,12 @@
 import { gql, useQuery } from "@apollo/client"
 
 interface Name {
+    id: number
     name: string
 }
 
 interface Move {
+    id: number
     name: string
 }
 
@@ -14,6 +16,7 @@ interface PokemonMove {
 }
 
 interface Stat {
+    id: number
     name: string
 }
 
@@ -24,6 +27,7 @@ interface PokemonStat {
 }
 
 interface Type {
+    id: number
     name: string
 }
 
@@ -33,6 +37,8 @@ interface PokemonType {
 }
 
 interface Variety {
+    id: number
+    name: string
     moves: PokemonMove[]
     types: PokemonType[]
     stats: PokemonStat[]
@@ -60,25 +66,31 @@ const getSpeciesQuery = gql`
             id
             name
             names: pokemon_v2_pokemonspeciesnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                id
                 name
             }
             varieties: pokemon_v2_pokemons(order_by: {order: asc}) {
+                id
+                name
                 moves: pokemon_v2_pokemonmoves(order_by: {order: asc}) {
-                    id: move_id
+                    id
                     move: pokemon_v2_move {
+                        id
                         name
                     }
                 }
                 stats: pokemon_v2_pokemonstats(order_by: {stat_id: asc}) {
-                    id: stat_id
+                    id
                     stat: pokemon_v2_stat {
+                        id
                         name
                     }
                     baseValue: base_stat
                 }
                 types: pokemon_v2_pokemontypes(order_by: {slot: asc}) {
-                    id: type_id
+                    id
                     type: pokemon_v2_type {
+                        id
                         name
                     }
                 }
