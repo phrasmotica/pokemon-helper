@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Button, Input, Menu } from "semantic-ui-react"
 
 import { useSpeciesQuery } from "./SpeciesQuery"
 
@@ -34,23 +35,27 @@ const App = () => {
             <div className="App-header">
                 <div className="control-container">
                     <div className="input-container">
-                        <input
-                            value={species}
-                            onChange={(e) => setSpecies(e.target.value)} />
+                        <h2>Species search</h2>
 
-                        <button onClick={() => findSpecies(species)}>
-                            Find
-                        </button>
+                        <Input
+                            action={<Button onClick={() => findSpecies(species)}>
+                                Find
+                            </Button>}
+                            placeholder="Search..."
+                            value={species}
+                            onChange={(e, data) => setSpecies(data.value)} />
                     </div>
 
                     <div className="history-container">
-                        {history.map(s => (
-                            <div key={s}>
-                                <button onClick={() => findSpecies(s)}>
+                        <h4>History</h4>
+
+                        <Menu vertical>
+                            {history.map(s => (
+                                <Menu.Item key={s} onClick={() => findSpecies(s)}>
                                     {s}
-                                </button>
-                            </div>
-                        ))}
+                                </Menu.Item>
+                            ))}
+                        </Menu>
                     </div>
                 </div>
 
