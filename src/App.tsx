@@ -4,6 +4,7 @@ import { Button, Input, Menu } from "semantic-ui-react"
 import { useSpeciesQuery } from "./SpeciesQuery"
 
 import "./App.css"
+import { StatsTable } from "./StatsTable"
 
 const history = ["piplup"]
 
@@ -44,6 +45,7 @@ const App = () => {
                                 Find
                             </Button>}
                             placeholder="Search..."
+                            loading={loadingSpecies}
                             value={species}
                             onChange={(e, data) => setSpecies(data.value)} />
                     </div>
@@ -63,26 +65,12 @@ const App = () => {
 
                 <div className="details-container">
                     <div>
-                        <p>{!loadingSpecies && speciesInfo!.names[0]!.name}</p>
+                        {!loadingSpecies && <h2>{speciesInfo!.names[0]!.name}</h2>}
 
-                        {!loadingSpecies && (
-                            <p>
-                                <span>
-                                    {typeStr}
-                                </span>
-                            </p>
-                        )}
+                        {!loadingSpecies && <h4>{typeStr}</h4>}
                     </div>
 
-                    <div>
-                        {!loadingSpecies &&
-                            stats.map((s) => (
-                                <div key={s.id}>
-                                    <span>{s.stat.names[0]!.name}</span>:&nbsp;
-                                    <span>{s.baseValue}</span>
-                                </div>
-                            ))}
-                    </div>
+                    {!loadingSpecies && <StatsTable stats={stats} />}
 
                     <div>
                         {!loadingSpecies &&

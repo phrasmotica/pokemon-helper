@@ -22,7 +22,7 @@ interface Stat {
     names: Name[]
 }
 
-interface PokemonStat {
+export interface PokemonStat {
     id: number
     stat: Stat
     baseValue: number
