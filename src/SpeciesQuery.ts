@@ -47,7 +47,7 @@ interface Variety {
     stats: PokemonStat[]
 }
 
-interface Species {
+export interface Species {
     id: number
     name: string
     names: Name[]

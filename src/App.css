@@ -3,7 +3,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: lightcoral;
   min-height: 100vh;
   display: flex;
   align-items: flex-start;
@@ -22,4 +22,12 @@
 
 .details-container {
   margin-left: 1em;
+}
+
+.basic-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: start;
+  color: black;
 }

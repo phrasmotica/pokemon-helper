@@ -1,10 +1,11 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button, Input, Menu } from "semantic-ui-react"
 
 import { useSpeciesQuery } from "./SpeciesQuery"
 
 import "./App.css"
 import { StatsTable } from "./StatsTable"
+import { BasicInfo } from "./BasicInfo"
 
 const history = ["piplup"]
 
@@ -64,11 +65,7 @@ const App = () => {
                 </div>
 
                 <div className="details-container">
-                    <div>
-                        {!loadingSpecies && <h2>{speciesInfo!.names[0]!.name}</h2>}
-
-                        {!loadingSpecies && <h4>{typeStr}</h4>}
-                    </div>
+                    {!loadingSpecies && <BasicInfo speciesInfo={speciesInfo!} />}
 
                     {!loadingSpecies && <StatsTable stats={stats} />}
 
