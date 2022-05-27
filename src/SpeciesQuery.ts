@@ -42,6 +42,7 @@ interface PokemonType {
 interface Variety {
     id: number
     name: string
+    isDefault: boolean
     moves: PokemonMove[]
     types: PokemonType[]
     stats: PokemonStat[]
@@ -75,6 +76,7 @@ const getSpeciesQuery = gql`
             varieties: pokemon_v2_pokemons(order_by: {order: asc}) {
                 id
                 name
+                isDefault: is_default
                 moves: pokemon_v2_pokemonmoves(order_by: {order: asc}) {
                     id
                     move: pokemon_v2_move {

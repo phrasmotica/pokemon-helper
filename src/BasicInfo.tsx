@@ -16,11 +16,12 @@ interface HasSprite {
 export const BasicInfo = (props: BasicInfoProps) => {
     const [sprite, setSprite] = useState("")
 
-    let variety = props.speciesInfo.varieties[0]!
+    let variety = props.speciesInfo.varieties.find(v => v.isDefault)!
     let typeStr = variety.types.map(t => t.type.names[0]!.name).join("-")
 
     useEffect(() => {
-        fetchSprite(props.speciesInfo.varieties[0]!.name)
+        let variety = props.speciesInfo.varieties.find(v => v.isDefault)!
+        fetchSprite(variety.name)
     }, [props.speciesInfo])
 
     const fetchSprite = (pokemonName: string) => {
