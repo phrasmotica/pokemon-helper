@@ -2,11 +2,11 @@ import { useState } from "react"
 import { Button, Input, Menu } from "semantic-ui-react"
 
 import { BasicInfo } from "./BasicInfo"
+import { MovesTable } from "./MovesTable"
 import { useSpeciesQuery } from "./SpeciesQuery"
 import { StatsTable } from "./StatsTable"
 
 import "./App.css"
-import { MovesTable } from "./MovesTable"
 
 const history = ["piplup"]
 
@@ -28,8 +28,6 @@ const App = () => {
     let variety = loadingSpecies ? undefined : speciesInfo!.varieties.find(v => v.isDefault)!
 
     let moves = loadingSpecies ? [] : variety!.moves
-    let uniqueMoveNames = [...new Set(moves.map(m => m.move.names[0]!.name))]
-
     let stats = loadingSpecies ? [] : variety!.stats
 
     return (
@@ -52,7 +50,7 @@ const App = () => {
                     <div className="history-container">
                         <h4>History</h4>
 
-                        <Menu vertical>
+                        <Menu vertical fluid>
                             {history.map(s => (
                                 <Menu.Item key={s} onClick={() => findSpecies(s)}>
                                     {s}
