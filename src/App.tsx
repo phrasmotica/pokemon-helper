@@ -49,15 +49,20 @@ const App = () => {
                     <div className="input-container">
                         <h2>Species search</h2>
 
-                        <Input
-                            className="species-input"
-                            action={<Button onClick={() => findSpecies(species)}>
-                                Find
-                            </Button>}
-                            placeholder="Species..."
-                            loading={loadingSpecies}
-                            value={species}
-                            onChange={(e, data) => setSpecies(data.value)} />
+                        <div className="species-input-container">
+                            <Input
+                                className="species-input"
+                                placeholder="Species..."
+                                loading={loadingSpecies}
+                                value={species}
+                                onChange={(e, data) => setSpecies(data.value)} />
+
+                            <div className="find-button-container">
+                                <Button onClick={() => findSpecies(species)}>
+                                    Find
+                                </Button>
+                            </div>
+                        </div>
 
                         <Dropdown
                             fluid

@@ -16,8 +16,15 @@
   margin-bottom: 1em;
 }
 
-.species-input {
+.species-input-container {
+  display: flex;
+  align-items: stretch;
   margin-bottom: 1em;
+}
+
+.find-button-container > .ui.button {
+  margin: 0em 0em 0em 0.5em;
+  height: 100%;
 }
 
 .history-container {
