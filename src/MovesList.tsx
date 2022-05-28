@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { Accordion, Table } from "semantic-ui-react"
+import { Accordion } from "semantic-ui-react"
 
-import { groupBy } from "./Helpers"
-import { PokemonMove, Version, VersionGroup } from "./SpeciesQuery"
+import { getVersionGroupName, groupBy } from "./Helpers"
+import { PokemonMove } from "./SpeciesQuery"
 
 interface MovesTableProps {
     moves: PokemonMove[]
@@ -12,9 +12,6 @@ export const MovesTable = (props: MovesTableProps) => {
     const [openMoves, setOpenMoves] = useState<number[]>([])
 
     const getName = (move: PokemonMove) => move.move.names[0]!.name
-
-    const getVersionName = (version: Version) => version.names[0]!.name
-    const getVersionGroupName = (versionGroup: VersionGroup) => versionGroup.versions.map(getVersionName).join("/")
 
     let allMoves = props.moves
 

@@ -1,9 +1,7 @@
 import { gql, useQuery } from "@apollo/client"
 
-interface Name {
-    id: number
-    name: string
-}
+import { Name } from "./models/Name"
+import { VersionGroup } from "./models/VersionGroup"
 
 interface PokemonForm {
     id: number
@@ -17,18 +15,6 @@ interface Move {
     id: number
     name: string
     names: Name[]
-}
-
-export interface Version {
-    id: number
-    name: string
-    names: Name[]
-}
-
-export interface VersionGroup {
-    id: number
-    name: string
-    versions: Version[]
 }
 
 export interface PokemonMove {
