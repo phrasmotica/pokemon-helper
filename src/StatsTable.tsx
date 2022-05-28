@@ -24,7 +24,7 @@ export const StatsTable = (props: StatsTableProps) => {
                 <Table.Body>
                     <Table.Row>
                         {props.stats.map(s => <Table.Cell key={s.id}>{s.baseValue}</Table.Cell>)}
-                        <Table.Cell>{props.stats.map(s => s.baseValue).reduce((a, b) => a + b)}</Table.Cell>
+                        <Table.Cell>{props.stats.map(s => s.baseValue).reduce((a, b) => a + b, 0)}</Table.Cell>
                     </Table.Row>
                 </Table.Body>
             </Table>
