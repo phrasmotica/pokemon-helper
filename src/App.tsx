@@ -10,11 +10,11 @@ import { useVersionGroupsQuery } from "./VersionGroupQuery"
 
 import "./App.css"
 
-const history = ["piplup"]
-
 const App = () => {
     const [species, setSpecies] = useState("")
     const [versionGroup, setVersionGroup] = useState<number>()
+
+    const [history, setHistory] = useState(["piplup"])
 
     const { loadingSpecies, error, speciesData, refetchSpecies } =
         useSpeciesQuery("piplup")
@@ -24,9 +24,9 @@ const App = () => {
 
     const findSpecies = (speciesName: string) => {
         refetchSpecies(speciesName)
-            .then(() => {
-                if (speciesData?.speciesInfo[0] && !history.includes(speciesName)) {
-                    history.push(speciesName)
+            .then(result => {
+                if (result.data?.speciesInfo[0] && !history.includes(speciesName)) {
+                    setHistory([...history, speciesName])
                 }
             })
     }
