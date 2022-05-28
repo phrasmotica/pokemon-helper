@@ -62,8 +62,22 @@ export const BasicInfo = (props: BasicInfoProps) => {
         )
     }
 
+    let form = props.form
+    if (!form) {
+        return (
+            <Segment className="basic-info">
+                <h2>Select a form!</h2>
+            </Segment>
+        )
+    }
+
     let name = getName(species)
     let formName = getVarietyName(variety)
+
+    let effectiveTypes = variety.types
+    if (form.types.length > 0) {
+        effectiveTypes = form.types
+    }
 
     return (
         <Segment className="basic-info">
@@ -71,7 +85,7 @@ export const BasicInfo = (props: BasicInfoProps) => {
                 <h2>{name}</h2>
                 {formName.length > 0 && <p>{formName}</p>}
 
-                {variety.types.map(t => <TypeLabel type={t.type} size="big" />)}
+                {effectiveTypes.map(t => <TypeLabel type={t.type} size="big" />)}
             </div>
 
             <div>

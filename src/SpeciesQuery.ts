@@ -3,12 +3,18 @@ import { gql, useQuery } from "@apollo/client"
 import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
 
+interface PokemonFormType {
+    id: number
+    type: Type
+}
+
 export interface PokemonForm {
     id: number
     name: string
     formName: string
     isDefault: boolean
     names: Name[]
+    types: PokemonFormType[]
 }
 
 interface LearnMethod {
@@ -102,6 +108,17 @@ const getSpeciesQuery = gql`
                     names: pokemon_v2_pokemonformnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
                         id
                         name
+                    }
+                    types: pokemon_v2_pokemonformtypes(order_by: {slot: asc}) {
+                        id
+                        type: pokemon_v2_type {
+                            id
+                            name
+                            names: pokemon_v2_typenames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                                id
+                                name
+                            }
+                        }
                     }
                 }
                 moves: pokemon_v2_pokemonmoves(order_by: {order: asc}) {
