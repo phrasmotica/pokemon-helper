@@ -4,7 +4,7 @@ import { Image, Segment } from "semantic-ui-react"
 import { Species } from "./SpeciesQuery"
 
 interface BasicInfoProps {
-    speciesInfo: Species
+    speciesInfo: Species | undefined
 }
 
 interface HasSprite {
@@ -16,9 +16,31 @@ interface HasSprite {
 export const BasicInfo = (props: BasicInfoProps) => {
     const [sprite, setSprite] = useState("")
 
-    let variety = props.speciesInfo.varieties.find(v => v.isDefault)!
+    useEffect(() => {
+        if (props.speciesInfo) {
+            let variety = props.speciesInfo.varieties.find(v => v.isDefault)!
+            fetchSprite(variety.name)
+        }
+    }, [props.speciesInfo])
 
-    let name = props.speciesInfo.names[0]!.name
+    const fetchSprite = (pokemonName: string) => {
+        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+            .then(res => res.json())
+            .then((p: HasSprite) => setSprite(p.sprites.front_default))
+    }
+
+    let species = props.speciesInfo
+    if (!species) {
+        return (
+            <Segment className="basic-info">
+                <h2>Search for a species!</h2>
+            </Segment>
+        )
+    }
+
+    let variety = species.varieties.find(v => v.isDefault)!
+
+    let name = species.names[0]!.name
     let formName = ""
 
     let form = variety.forms[0]!
@@ -27,17 +49,6 @@ export const BasicInfo = (props: BasicInfoProps) => {
     }
 
     let typeStr = variety.types.map(t => t.type.names[0]!.name).join("-")
-
-    useEffect(() => {
-        let variety = props.speciesInfo.varieties.find(v => v.isDefault)!
-        fetchSprite(variety.name)
-    }, [props.speciesInfo])
-
-    const fetchSprite = (pokemonName: string) => {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
-            .then(res => res.json())
-            .then((p: HasSprite) => setSprite(p.sprites.front_default))
-    }
 
     return (
         <Segment className="basic-info">

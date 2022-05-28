@@ -4,7 +4,7 @@ import { Button, Dropdown, Input, Menu } from "semantic-ui-react"
 import { BasicInfo } from "./BasicInfo"
 import { getVersionGroupName } from "./Helpers"
 import { MovesTable } from "./MovesList"
-import { useSpeciesQuery } from "./SpeciesQuery"
+import { PokemonMove, PokemonStat, useSpeciesQuery } from "./SpeciesQuery"
 import { StatsTable } from "./StatsTable"
 import { useVersionGroupsQuery } from "./VersionGroupQuery"
 
@@ -23,11 +23,12 @@ const App = () => {
         useVersionGroupsQuery()
 
     const findSpecies = (speciesName: string) => {
-        if (!history.includes(speciesName)) {
-            history.push(speciesName)
-        }
-
         refetchSpecies(speciesName)
+            .then(() => {
+                if (speciesData?.speciesInfo[0] && !history.includes(speciesName)) {
+                    history.push(speciesName)
+                }
+            })
     }
 
     let versionGroupOptions = loadingVersionGroups ? [] : versionGroupsData!.versionGroupInfo.map(vg => ({
@@ -36,11 +37,17 @@ const App = () => {
         value: vg.id,
     }))
 
-    let speciesInfo = loadingSpecies ? undefined : speciesData!.speciesInfo[0]!
-    let variety = loadingSpecies ? undefined : speciesInfo!.varieties.find(v => v.isDefault)!
+    let speciesInfo = loadingSpecies ? undefined : speciesData!.speciesInfo[0]
 
-    let moves = loadingSpecies ? [] : variety!.moves
-    let stats = loadingSpecies ? [] : variety!.stats
+    let moves: PokemonMove[] = []
+    let stats: PokemonStat[] = []
+
+    if (speciesInfo) {
+        let variety = loadingSpecies ? undefined : speciesInfo!.varieties.find(v => v.isDefault)!
+
+        moves = loadingSpecies ? [] : variety!.moves
+        stats = loadingSpecies ? [] : variety!.stats
+    }
 
     return (
         <div className="App">
@@ -87,8 +94,8 @@ const App = () => {
                     </div>
                 </div>
 
-                {!loadingSpecies && <div className="details-container">
-                    <BasicInfo speciesInfo={speciesInfo!} />
+                {<div className="details-container">
+                    <BasicInfo speciesInfo={speciesInfo} />
                     <StatsTable stats={stats} />
                     <MovesTable moves={moves} versionGroup={versionGroup} />
                 </div>}
