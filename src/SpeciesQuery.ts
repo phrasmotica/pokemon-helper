@@ -19,9 +19,22 @@ interface Move {
     names: Name[]
 }
 
+export interface Version {
+    id: number
+    name: string
+    names: Name[]
+}
+
+export interface VersionGroup {
+    id: number
+    name: string
+    versions: Version[]
+}
+
 export interface PokemonMove {
     id: number
     move: Move
+    versionGroup: VersionGroup
 }
 
 interface Stat {
@@ -104,6 +117,18 @@ const getSpeciesQuery = gql`
                         names: pokemon_v2_movenames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
                             id
                             name
+                        }
+                    }
+                    versionGroup: pokemon_v2_versiongroup {
+                        id
+                        name
+                        versions: pokemon_v2_versions {
+                            id
+                            name
+                            names: pokemon_v2_versionnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                                id
+                                name
+                            }
                         }
                     }
                 }
