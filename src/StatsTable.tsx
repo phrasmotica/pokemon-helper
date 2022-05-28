@@ -17,12 +17,14 @@ export const StatsTable = (props: StatsTableProps) => {
                 <Table.Header>
                     <Table.Row>
                         {props.stats.map(s => <Table.HeaderCell key={s.id}>{getName(s)}</Table.HeaderCell>)}
+                        <Table.HeaderCell>Total</Table.HeaderCell>
                     </Table.Row>
                 </Table.Header>
 
                 <Table.Body>
                     <Table.Row>
                         {props.stats.map(s => <Table.Cell key={s.id}>{s.baseValue}</Table.Cell>)}
+                        <Table.Cell>{props.stats.map(s => s.baseValue).reduce((a, b) => a + b)}</Table.Cell>
                     </Table.Row>
                 </Table.Body>
             </Table>
