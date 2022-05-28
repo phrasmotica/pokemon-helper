@@ -32,8 +32,16 @@
   color: black;
 }
 
+.moves-list {
+  text-align: start;
+}
+
 .move-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.move-content {
+  color: black;
 }

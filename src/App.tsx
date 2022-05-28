@@ -2,7 +2,7 @@ import { useState } from "react"
 import { Button, Input, Menu } from "semantic-ui-react"
 
 import { BasicInfo } from "./BasicInfo"
-import { MovesTable } from "./MovesTable"
+import { MovesTable } from "./MovesList"
 import { useSpeciesQuery } from "./SpeciesQuery"
 import { StatsTable } from "./StatsTable"
 
