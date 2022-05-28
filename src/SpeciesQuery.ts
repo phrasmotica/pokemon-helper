@@ -44,7 +44,7 @@ export interface PokemonStat {
     baseValue: number
 }
 
-interface Type {
+export interface Type {
     id: number
     name: string
     names: Name[]

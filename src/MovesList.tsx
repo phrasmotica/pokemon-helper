@@ -5,6 +5,7 @@ import { getVersionGroupName, groupBy } from "./Helpers"
 import { PokemonMove } from "./SpeciesQuery"
 
 import "./MovesList.css"
+import { TypeLabel } from "./TypeLabel"
 
 interface MovesTableProps {
     moves: PokemonMove[]
@@ -59,9 +60,7 @@ export const MovesTable = (props: MovesTableProps) => {
                         <span>{getName(exampleMoveDetail)}</span>
 
                         <div className="move-type">
-                            <Label className={"move-type-label " + move.type.name}>
-                                {move.type.names[0]!.name}
-                            </Label>
+                            <TypeLabel type={move.type} />
                         </div>
                     </div>
 

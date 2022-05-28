@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { Image, Segment } from "semantic-ui-react"
 
 import { Species } from "./SpeciesQuery"
+import { TypeLabel } from "./TypeLabel"
 
 interface BasicInfoProps {
     speciesInfo: Species | undefined
@@ -48,15 +49,13 @@ export const BasicInfo = (props: BasicInfoProps) => {
         formName = form.names[0]!.name
     }
 
-    let typeStr = variety.types.map(t => t.type.names[0]!.name).join("-")
-
     return (
         <Segment className="basic-info">
             <div>
                 <h2>{name}</h2>
                 {formName.length > 0 && <p>{formName}</p>}
 
-                <h4>{typeStr}</h4>
+                {variety.types.map(t => <TypeLabel type={t.type} size="big" />)}
             </div>
 
             <div>

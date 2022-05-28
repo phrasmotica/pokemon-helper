@@ -1,113 +1,28 @@
 .moves-list-container {
-  margin-top: 1em;
-  text-align: start;
+    margin-top: 1em;
+    text-align: start;
 }
 
 .moves-list {
-  height: 50vh;
-  overflow-y: scroll;
+    height: 50vh;
+    overflow-y: scroll;
 }
 
 .move-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .move-name-container {
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .move-type {
-  margin-left: 0.5em;
-}
-
-.ui.label.move-type-label {
-  padding: 0.3em;
-  color: white;
-}
-
-.ui.label.move-type-label.unknown {
-  background-color: #68a090;
-}
-
-.ui.label.move-type-label.normal {
-  background-color: #a8a878;
-}
-
-.ui.label.move-type-label.fighting {
-  background-color: #c03028;
-}
-
-.ui.label.move-type-label.flying {
-  background-color: #a890f0;
-}
-
-.ui.label.move-type-label.poison {
-  background-color: #a040a0;
-}
-
-.ui.label.move-type-label.ground {
-  background-color: #e0c068;
-}
-
-.ui.label.move-type-label.rock {
-  background-color: #b8a038;
-}
-
-.ui.label.move-type-label.bug {
-  background-color: #a8b820;
-}
-
-.ui.label.move-type-label.ghost {
-  background-color: #705898;
-}
-
-.ui.label.move-type-label.steel {
-  background-color: #b8b8d0;
-}
-
-.ui.label.move-type-label.fire {
-  background-color: #f08030;
-}
-
-.ui.label.move-type-label.water {
-  background-color: #6890f0;
-}
-
-.ui.label.move-type-label.grass {
-  background-color: #78c850;
-}
-
-.ui.label.move-type-label.electric {
-  background-color: #f8d030;
-}
-
-.ui.label.move-type-label.psychic {
-  background-color: #f85888;
-}
-
-.ui.label.move-type-label.ice {
-  background-color: #98d8d8;
-}
-
-.ui.label.move-type-label.dragon {
-  background-color: #7038f8;
-}
-
-.ui.label.move-type-label.dark {
-  background-color: #705848;
-}
-
-.ui.label.move-type-label.fairy {
-  background-color: #ee99ac;
-}
-
-.ui.label.move-type-label.shadow {
-  background-color: #978cae;
+    margin-left: 0.5em;
 }
 
 .move-content {
-  color: black;
+    color: black;
 }
