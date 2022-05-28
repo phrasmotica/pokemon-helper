@@ -19,12 +19,16 @@
 .species-input-container {
   display: flex;
   align-items: stretch;
-  margin-bottom: 1em;
+  margin-bottom: 0.5em;
 }
 
 .find-button-container > .ui.button {
   margin: 0em 0em 0em 0.5em;
   height: 100%;
+}
+
+.variety-input-container {
+  margin-bottom: 0.5em;
 }
 
 .history-container {

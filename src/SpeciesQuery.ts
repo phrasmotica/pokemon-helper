@@ -55,7 +55,7 @@ interface PokemonType {
     type: Type
 }
 
-interface Variety {
+export interface Variety {
     id: number
     name: string
     isDefault: boolean
@@ -90,7 +90,7 @@ const getSpeciesQuery = gql`
                 id
                 name
             }
-            varieties: pokemon_v2_pokemons(order_by: {order: asc}) {
+            varieties: pokemon_v2_pokemons(order_by: {id: asc}) {
                 id
                 name
                 isDefault: is_default

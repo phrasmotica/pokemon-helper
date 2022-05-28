@@ -1,5 +1,7 @@
+import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
 import { Version } from "./models/Version"
+import { Variety } from "./SpeciesQuery"
 
 /**
  * Groups elements of the given array by the given key function, and returns the
@@ -10,6 +12,23 @@ export const groupBy = <T>(arr: T[], func: (x: T) => string) => arr.reduce(
     (entryMap, e) => entryMap.set(func(e), [...entryMap.get(func(e)) || [], e]),
     new Map<string, T[]>()
 )
+
+export const getName = (x: { names: Name[] }) => x.names[0]!.name
+
+export const getVarietyName = (v: Variety) => {
+    if (v.isDefault) {
+        return ""
+    }
+
+    let formName = ""
+
+    let form = v.forms[0]!
+    if (form.formName.length > 0) {
+        formName = form.names[0]!.name || form.name
+    }
+
+    return formName
+}
 
 const getVersionName = (version: Version) => version.names[0]!.name
 

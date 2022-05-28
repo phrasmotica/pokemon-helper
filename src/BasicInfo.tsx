@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react"
 import { Image, Segment } from "semantic-ui-react"
 
-import { Species } from "./SpeciesQuery"
+import { getVarietyName } from "./Helpers"
+import { Species, Variety } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
 interface BasicInfoProps {
     speciesInfo: Species | undefined
+    variety: Variety | undefined
 }
 
 interface HasSprite {
@@ -18,11 +20,13 @@ export const BasicInfo = (props: BasicInfoProps) => {
     const [sprite, setSprite] = useState("")
 
     useEffect(() => {
-        if (props.speciesInfo) {
-            let variety = props.speciesInfo.varieties.find(v => v.isDefault)!
-            fetchSprite(variety.name)
+        if (props.variety) {
+            fetchSprite(props.variety.name)
         }
-    }, [props.speciesInfo])
+        else {
+            setSprite("")
+        }
+    }, [props.variety])
 
     const fetchSprite = (pokemonName: string) => {
         fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
@@ -39,15 +43,17 @@ export const BasicInfo = (props: BasicInfoProps) => {
         )
     }
 
-    let variety = species.varieties.find(v => v.isDefault)!
+    let variety = props.variety
+    if (!variety) {
+        return (
+            <Segment className="basic-info">
+                <h2>Select a variety!</h2>
+            </Segment>
+        )
+    }
 
     let name = species.names[0]!.name
-    let formName = ""
-
-    let form = variety.forms[0]!
-    if (form.formName.length > 0) {
-        formName = form.names[0]!.name
-    }
+    let formName = getVarietyName(variety)
 
     return (
         <Segment className="basic-info">
