@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 
 import { BasicInfo } from "./BasicInfo"
+import { FormSelector } from "./FormSelector"
 import { HistoryMenu } from "./HistoryMenu"
 import { MovesList } from "./MovesList"
 import { useSpeciesQuery } from "./SpeciesQuery"
@@ -14,6 +15,7 @@ import "./App.css"
 
 const App = () => {
     const [varietyId, setVarietyId] = useState<number>()
+    const [formId, setFormId] = useState<number>()
 
     const [versionGroup, setVersionGroup] = useState<number>()
     const [history, setHistory] = useState(["piplup"])
@@ -25,6 +27,11 @@ const App = () => {
         let firstVariety = speciesData?.speciesInfo[0].varieties[0]
         if (firstVariety) {
             setVarietyId(firstVariety.id)
+
+            let firstForm = firstVariety.forms[0]
+            if (firstForm) {
+                setFormId(firstForm.id)
+            }
         }
     }, [speciesData])
 
@@ -40,10 +47,13 @@ const App = () => {
             })
     }
 
-    let speciesInfo = speciesData?.speciesInfo[0]
-    let varieties = speciesInfo?.varieties ?? []
+    let speciesInfo = loadingSpecies ? undefined : speciesData?.speciesInfo[0]
 
-    let variety = loadingSpecies ? undefined : varieties.find(v => v.id === varietyId)!
+    let varieties = speciesInfo?.varieties ?? []
+    let variety = varieties.find(v => v.id === varietyId)
+
+    let forms = variety?.forms ?? []
+    let form = forms.find(f => f.id === formId)
 
     let moves = variety?.moves ?? []
     let stats = variety?.stats ?? []
@@ -66,6 +76,13 @@ const App = () => {
                             variety={varietyId}
                             setVariety={setVarietyId} />
 
+                        <FormSelector
+                            species={speciesInfo}
+                            loadingForms={loadingSpecies}
+                            forms={forms}
+                            form={formId}
+                            setForm={setFormId} />
+
                         <VersionGroupSelector
                             loadingVersionGroups={loadingVersionGroups}
                             versionGroups={versionGroupsData?.versionGroupInfo ?? []}
@@ -77,8 +94,13 @@ const App = () => {
                 </div>
 
                 <div className="details-container">
-                    <BasicInfo speciesInfo={speciesInfo} variety={variety} />
+                    <BasicInfo
+                        speciesInfo={speciesInfo}
+                        variety={variety}
+                        form={form} />
+
                     <StatsTable stats={stats} />
+
                     <MovesList moves={moves} versionGroup={versionGroup} />
                 </div>
             </div>

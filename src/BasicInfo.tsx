@@ -2,12 +2,13 @@ import { useEffect, useState } from "react"
 import { Image, Segment } from "semantic-ui-react"
 
 import { getName, getVarietyName } from "./Helpers"
-import { Species, Variety } from "./SpeciesQuery"
+import { PokemonForm, Species, Variety } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
 interface BasicInfoProps {
     speciesInfo: Species | undefined
     variety: Variety | undefined
+    form: PokemonForm | undefined
 }
 
 interface HasSprite {
@@ -20,13 +21,22 @@ export const BasicInfo = (props: BasicInfoProps) => {
     const [sprite, setSprite] = useState("")
 
     useEffect(() => {
-        if (props.variety) {
+        if (props.form && !props.form.isDefault) {
+            fetchFormSprite(props.form.name)
+        }
+        else if (props.variety) {
             fetchSprite(props.variety.name)
         }
         else {
             setSprite("")
         }
-    }, [props.variety])
+    }, [props.variety, props.form])
+
+    const fetchFormSprite = (formName: string) => {
+        fetch(`https://pokeapi.co/api/v2/pokemon-form/${formName}`)
+            .then(res => res.json())
+            .then((p: HasSprite) => setSprite(p.sprites.front_default))
+    }
 
     const fetchSprite = (pokemonName: string) => {
         fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)

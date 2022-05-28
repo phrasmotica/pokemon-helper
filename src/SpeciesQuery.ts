@@ -3,7 +3,7 @@ import { gql, useQuery } from "@apollo/client"
 import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
 
-interface PokemonForm {
+export interface PokemonForm {
     id: number
     name: string
     formName: string
