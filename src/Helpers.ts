@@ -1,6 +1,5 @@
 import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
-import { Version } from "./models/Version"
 import { Variety } from "./SpeciesQuery"
 
 /**
@@ -24,12 +23,10 @@ export const getVarietyName = (v: Variety) => {
 
     let form = v.forms[0]!
     if (form.formName.length > 0) {
-        formName = form.names[0]!.name || form.name
+        formName = getName(form) || form.name
     }
 
     return formName
 }
 
-const getVersionName = (version: Version) => version.names[0]!.name
-
-export const getVersionGroupName = (versionGroup: VersionGroup) => versionGroup.versions.map(getVersionName).join("/")
+export const getVersionGroupName = (versionGroup: VersionGroup) => versionGroup.versions.map(getName).join("/")

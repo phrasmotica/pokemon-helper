@@ -1,5 +1,6 @@
 import { Label, SemanticSIZES } from "semantic-ui-react"
 
+import { getName } from "./Helpers"
 import { Type } from "./SpeciesQuery"
 
 import "./TypeLabel.css"
@@ -13,6 +14,6 @@ export const TypeLabel = (props: TypeLabelProps) => (
     <Label
         className={"type-label " + props.type.name}
         size={props.size}>
-        {props.type.names[0]!.name}
+        {getName(props.type)}
     </Label>
 )

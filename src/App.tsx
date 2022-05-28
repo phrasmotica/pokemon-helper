@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 
 import { BasicInfo } from "./BasicInfo"
 import { HistoryMenu } from "./HistoryMenu"
-import { MovesTable } from "./MovesList"
+import { MovesList } from "./MovesList"
 import { useSpeciesQuery } from "./SpeciesQuery"
 import { SpeciesSelector } from "./SpeciesSelector"
 import { StatsTable } from "./StatsTable"
@@ -79,7 +79,7 @@ const App = () => {
                 <div className="details-container">
                     <BasicInfo speciesInfo={speciesInfo} variety={variety} />
                     <StatsTable stats={stats} />
-                    <MovesTable moves={moves} versionGroup={versionGroup} />
+                    <MovesList moves={moves} versionGroup={versionGroup} />
                 </div>
             </div>
         </div>

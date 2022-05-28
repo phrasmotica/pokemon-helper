@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import { Image, Segment } from "semantic-ui-react"
 
-import { getVarietyName } from "./Helpers"
+import { getName, getVarietyName } from "./Helpers"
 import { Species, Variety } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
@@ -52,7 +52,7 @@ export const BasicInfo = (props: BasicInfoProps) => {
         )
     }
 
-    let name = species.names[0]!.name
+    let name = getName(species)
     let formName = getVarietyName(variety)
 
     return (

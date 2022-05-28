@@ -1,21 +1,19 @@
 import { useState } from "react"
-import { Accordion, Label } from "semantic-ui-react"
+import { Accordion } from "semantic-ui-react"
 
-import { getVersionGroupName, groupBy } from "./Helpers"
+import { getName, getVersionGroupName, groupBy } from "./Helpers"
 import { PokemonMove } from "./SpeciesQuery"
+import { TypeLabel } from "./TypeLabel"
 
 import "./MovesList.css"
-import { TypeLabel } from "./TypeLabel"
 
 interface MovesTableProps {
     moves: PokemonMove[]
     versionGroup: number | undefined
 }
 
-export const MovesTable = (props: MovesTableProps) => {
+export const MovesList = (props: MovesTableProps) => {
     const [openMoves, setOpenMoves] = useState<number[]>([])
-
-    const getName = (move: PokemonMove) => move.move.names[0]!.name
 
     let allMoves = props.moves
 
@@ -57,7 +55,7 @@ export const MovesTable = (props: MovesTableProps) => {
                     active={openMoves.includes(moveId)}
                     onClick={() => toggleMoveOpen(moveId)}>
                     <div className="move-name-container">
-                        <span>{getName(exampleMoveDetail)}</span>
+                        <span>{getName(exampleMoveDetail.move)}</span>
 
                         <div className="move-type">
                             <TypeLabel type={move.type} />
@@ -74,7 +72,7 @@ export const MovesTable = (props: MovesTableProps) => {
                     className="move-content"
                     active={openMoves.includes(moveId)}>
                     {filteredMoveDetails.map(md => {
-                        let learnMethodText = md.learnMethod.names[0]!.name
+                        let learnMethodText = getName(md.learnMethod)
                         if (md.learnMethod.id === 1) {
                             learnMethodText = `level ${md.level}`
                         }
