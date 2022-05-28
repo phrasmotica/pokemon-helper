@@ -21,6 +21,7 @@ interface Move {
     id: number
     name: string
     names: Name[]
+    type: Type
 }
 
 export interface PokemonMove {
@@ -120,6 +121,14 @@ const getSpeciesQuery = gql`
                         names: pokemon_v2_movenames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
                             id
                             name
+                        }
+                        type: pokemon_v2_type {
+                            id
+                            name
+                            names: pokemon_v2_typenames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                                id
+                                name
+                            }
                         }
                     }
                     versionGroup: pokemon_v2_versiongroup {

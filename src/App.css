@@ -43,23 +43,3 @@
 .stats-table > .ui.table {
   text-align: center;
 }
-
-.moves-list-container {
-  margin-top: 1em;
-  text-align: start;
-}
-
-.moves-list {
-  height: 50vh;
-  overflow-y: scroll;
-}
-
-.move-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.move-content {
-  color: black;
-}

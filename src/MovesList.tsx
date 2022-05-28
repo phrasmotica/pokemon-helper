@@ -1,8 +1,10 @@
 import { useState } from "react"
-import { Accordion } from "semantic-ui-react"
+import { Accordion, Label } from "semantic-ui-react"
 
 import { getVersionGroupName, groupBy } from "./Helpers"
 import { PokemonMove } from "./SpeciesQuery"
+
+import "./MovesList.css"
 
 interface MovesTableProps {
     moves: PokemonMove[]
@@ -44,13 +46,25 @@ export const MovesTable = (props: MovesTableProps) => {
         }
 
         if (filteredMoveDetails.length > 0) {
+            let exampleMoveDetail = filteredMoveDetails[0]!
+            let move = exampleMoveDetail.move
+
             accordionItems.push(
                 <Accordion.Title
                     key={"title" + moveId}
                     className="move-header"
                     active={openMoves.includes(moveId)}
                     onClick={() => toggleMoveOpen(moveId)}>
-                    <span>{getName(filteredMoveDetails[0]!)}</span>
+                    <div className="move-name-container">
+                        <span>{getName(exampleMoveDetail)}</span>
+
+                        <div className="move-type">
+                            <Label className={"move-type-label " + move.type.name}>
+                                {move.type.names[0]!.name}
+                            </Label>
+                        </div>
+                    </div>
+
                     <span><em>{filteredMoveDetails.length} detail(s)</em></span>
                 </Accordion.Title>
             )
