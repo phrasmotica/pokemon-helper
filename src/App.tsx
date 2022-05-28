@@ -1,19 +1,18 @@
 import { useState } from "react"
-import { Button, Dropdown, Input, Menu } from "semantic-ui-react"
 
 import { BasicInfo } from "./BasicInfo"
-import { getVersionGroupName } from "./Helpers"
+import { HistoryMenu } from "./HistoryMenu"
 import { MovesTable } from "./MovesList"
 import { PokemonMove, PokemonStat, useSpeciesQuery } from "./SpeciesQuery"
+import { SpeciesSelector } from "./SpeciesSelector"
 import { StatsTable } from "./StatsTable"
 import { useVersionGroupsQuery } from "./VersionGroupQuery"
+import { VersionGroupSelector } from "./VersionGroupSelector"
 
 import "./App.css"
 
 const App = () => {
-    const [species, setSpecies] = useState("")
     const [versionGroup, setVersionGroup] = useState<number>()
-
     const [history, setHistory] = useState(["piplup"])
 
     const { loadingSpecies, error, speciesData, refetchSpecies } =
@@ -31,13 +30,7 @@ const App = () => {
             })
     }
 
-    let versionGroupOptions = loadingVersionGroups ? [] : versionGroupsData!.versionGroupInfo.map(vg => ({
-        key: vg.id,
-        text: getVersionGroupName(vg),
-        value: vg.id,
-    }))
-
-    let speciesInfo = loadingSpecies ? undefined : speciesData!.speciesInfo[0]
+    let speciesInfo = speciesData?.speciesInfo[0]
 
     let moves: PokemonMove[] = []
     let stats: PokemonStat[] = []
@@ -56,42 +49,18 @@ const App = () => {
                     <div className="input-container">
                         <h2>Species search</h2>
 
-                        <div className="species-input-container">
-                            <Input
-                                className="species-input"
-                                placeholder="Species..."
-                                loading={loadingSpecies}
-                                value={species}
-                                onChange={(e, data) => setSpecies(data.value)} />
+                        <SpeciesSelector
+                            loadingSpecies={loadingSpecies}
+                            findSpecies={findSpecies} />
 
-                            <div className="find-button-container">
-                                <Button onClick={() => findSpecies(species)}>
-                                    Find
-                                </Button>
-                            </div>
-                        </div>
-
-                        <Dropdown
-                            fluid
-                            selection
-                            loading={loadingVersionGroups}
-                            placeholder="Version group..."
-                            options={versionGroupOptions}
-                            value={versionGroup}
-                            onChange={(e, data) => setVersionGroup(Number(data.value))} />
+                        <VersionGroupSelector
+                            loadingVersionGroups={loadingVersionGroups}
+                            versionGroups={versionGroupsData?.versionGroupInfo ?? []}
+                            versionGroup={versionGroup}
+                            setVersionGroup={setVersionGroup} />
                     </div>
 
-                    <div className="history-container">
-                        <h4>History</h4>
-
-                        <Menu vertical fluid>
-                            {history.map(s => (
-                                <Menu.Item key={s} onClick={() => findSpecies(s)}>
-                                    {s}
-                                </Menu.Item>
-                            ))}
-                        </Menu>
-                    </div>
+                    <HistoryMenu history={history} findSpecies={findSpecies} />
                 </div>
 
                 {<div className="details-container">

@@ -72,7 +72,7 @@ export interface Species {
     varieties: Variety[]
 }
 
-interface SpeciesData {
+export interface SpeciesData {
     speciesInfo: Species[]
 }
 
