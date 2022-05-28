@@ -32,7 +32,16 @@
   color: black;
 }
 
+.stats-table > h4 {
+  text-align: start;
+}
+
+.stats-table > .ui.table {
+  text-align: center;
+}
+
 .moves-list {
+  margin-top: 1em;
   text-align: start;
 }
 
