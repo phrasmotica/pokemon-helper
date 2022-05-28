@@ -11,6 +11,12 @@ interface PokemonForm {
     names: Name[]
 }
 
+interface LearnMethod {
+    id: number
+    name: string
+    names: Name[]
+}
+
 interface Move {
     id: number
     name: string
@@ -19,6 +25,8 @@ interface Move {
 
 export interface PokemonMove {
     id: number
+    level: number
+    learnMethod: LearnMethod
     move: Move
     versionGroup: VersionGroup
 }
@@ -97,6 +105,15 @@ const getSpeciesQuery = gql`
                 }
                 moves: pokemon_v2_pokemonmoves(order_by: {order: asc}) {
                     id
+                    level
+                    learnMethod: pokemon_v2_movelearnmethod {
+                        id
+                        name
+                        names: pokemon_v2_movelearnmethodnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                            id
+                            name
+                        }
+                    }
                     move: pokemon_v2_move {
                         id
                         name

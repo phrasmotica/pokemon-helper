@@ -44,9 +44,14 @@
   text-align: center;
 }
 
-.moves-list {
+.moves-list-container {
   margin-top: 1em;
   text-align: start;
+}
+
+.moves-list {
+  height: 50vh;
+  overflow-y: scroll;
 }
 
 .move-header {

@@ -60,19 +60,28 @@ export const MovesTable = (props: MovesTableProps) => {
                     key={"content" + moveId}
                     className="move-content"
                     active={openMoves.includes(moveId)}>
-                    {filteredMoveDetails.map(md => (
-                        <div key={md.id}><span>{getVersionGroupName(md.versionGroup)}</span></div>
-                    ))}
+                    {filteredMoveDetails.map(md => {
+                        let learnMethodText = md.learnMethod.names[0]!.name
+                        if (md.learnMethod.id === 1) {
+                            learnMethodText = `level ${md.level}`
+                        }
+
+                        return (
+                            <div key={md.id}>
+                                <span>{getVersionGroupName(md.versionGroup)}: {learnMethodText}</span>
+                            </div>
+                        )
+                    })}
                 </Accordion.Content>
             )
         }
     }
 
     return (
-        <div className="moves-list">
+        <div className="moves-list-container">
             <h4>Moves</h4>
 
-            <Accordion styled>
+            <Accordion className="moves-list" styled>
                 {accordionItems}
             </Accordion>
         </div>
