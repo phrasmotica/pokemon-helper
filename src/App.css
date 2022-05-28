@@ -31,3 +31,9 @@
   text-align: start;
   color: black;
 }
+
+.move-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

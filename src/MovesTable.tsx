@@ -1,5 +1,6 @@
 import { Table } from "semantic-ui-react"
 
+import { groupBy } from "./Helpers"
 import { PokemonMove } from "./SpeciesQuery"
 
 interface MovesTableProps {
@@ -10,7 +11,9 @@ export const MovesTable = (props: MovesTableProps) => {
     const getName = (move: PokemonMove) => move.move.names[0]!.name
 
     let allMoves = props.moves
-    let uniqueMoveNames = [...new Set(allMoves.map(getName))]
+
+    let groupedMoves = groupBy(allMoves, m => m.move.name)
+    let uniqueMoves = Array.from(groupedMoves.values())
 
     return (
         <Table>
@@ -21,9 +24,14 @@ export const MovesTable = (props: MovesTableProps) => {
             </Table.Header>
 
             <Table.Body>
-                {uniqueMoveNames.map(n => (
-                    <Table.Row>
-                        <Table.Cell key={n}>{n}</Table.Cell>
+                {uniqueMoves.map(arr => (
+                    <Table.Row key={arr[0]!.id}>
+                        <Table.Cell>
+                            <div className="move-header">
+                                <span>{getName(arr[0]!)}</span>
+                                <span><em>{arr.length} learn methods</em></span>
+                            </div>
+                        </Table.Cell>
                     </Table.Row>
                 ))}
             </Table.Body>
