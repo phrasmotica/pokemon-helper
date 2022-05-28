@@ -6,6 +6,7 @@ import { PokemonMove } from "./SpeciesQuery"
 
 interface MovesTableProps {
     moves: PokemonMove[]
+    versionGroup: number | undefined
 }
 
 export const MovesTable = (props: MovesTableProps) => {
@@ -37,27 +38,34 @@ export const MovesTable = (props: MovesTableProps) => {
     for (let moveDetails of uniqueMoves) {
         let moveId = moveDetails[0]!.move.id
 
-        accordionItems.push(
-            <Accordion.Title
-                key={"title" + moveId}
-                className="move-header"
-                active={openMoves.includes(moveId)}
-                onClick={() => toggleMoveOpen(moveId)}>
-                <span>{getName(moveDetails[0]!)}</span>
-                <span><em>{moveDetails.length} details</em></span>
-            </Accordion.Title>
-        )
+        let filteredMoveDetails = moveDetails
+        if (props.versionGroup !== undefined) {
+            filteredMoveDetails = filteredMoveDetails.filter(md => md.versionGroup.id === props.versionGroup)
+        }
 
-        accordionItems.push(
-            <Accordion.Content
-                key={"content" + moveId}
-                className="move-content"
-                active={openMoves.includes(moveId)}>
-                {moveDetails.map(md => (
-                    <div key={md.id}><span>{getVersionGroupName(md.versionGroup)}</span></div>
-                ))}
-            </Accordion.Content>
-        )
+        if (filteredMoveDetails.length > 0) {
+            accordionItems.push(
+                <Accordion.Title
+                    key={"title" + moveId}
+                    className="move-header"
+                    active={openMoves.includes(moveId)}
+                    onClick={() => toggleMoveOpen(moveId)}>
+                    <span>{getName(filteredMoveDetails[0]!)}</span>
+                    <span><em>{filteredMoveDetails.length} detail(s)</em></span>
+                </Accordion.Title>
+            )
+
+            accordionItems.push(
+                <Accordion.Content
+                    key={"content" + moveId}
+                    className="move-content"
+                    active={openMoves.includes(moveId)}>
+                    {filteredMoveDetails.map(md => (
+                        <div key={md.id}><span>{getVersionGroupName(md.versionGroup)}</span></div>
+                    ))}
+                </Accordion.Content>
+            )
+        }
     }
 
     return (

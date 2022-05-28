@@ -1,10 +1,12 @@
 import { useState } from "react"
-import { Button, Input, Menu } from "semantic-ui-react"
+import { Button, Dropdown, Input, Menu } from "semantic-ui-react"
 
 import { BasicInfo } from "./BasicInfo"
+import { getVersionGroupName } from "./Helpers"
 import { MovesTable } from "./MovesList"
 import { useSpeciesQuery } from "./SpeciesQuery"
 import { StatsTable } from "./StatsTable"
+import { useVersionGroupsQuery } from "./VersionGroupQuery"
 
 import "./App.css"
 
@@ -12,9 +14,13 @@ const history = ["piplup"]
 
 const App = () => {
     const [species, setSpecies] = useState("")
+    const [versionGroup, setVersionGroup] = useState<number>()
 
     const { loadingSpecies, error, speciesData, refetchSpecies } =
         useSpeciesQuery("piplup")
+
+    const { loadingVersionGroups, versionGroupsError, versionGroupsData, refetchVersionGroups } =
+        useVersionGroupsQuery()
 
     const findSpecies = (speciesName: string) => {
         if (!history.includes(speciesName)) {
@@ -23,6 +29,12 @@ const App = () => {
 
         refetchSpecies(speciesName)
     }
+
+    let versionGroupOptions = loadingVersionGroups ? [] : versionGroupsData!.versionGroupInfo.map(vg => ({
+        key: vg.id,
+        text: getVersionGroupName(vg),
+        value: vg.id,
+    }))
 
     let speciesInfo = loadingSpecies ? undefined : speciesData!.speciesInfo[0]!
     let variety = loadingSpecies ? undefined : speciesInfo!.varieties.find(v => v.isDefault)!
@@ -38,13 +50,23 @@ const App = () => {
                         <h2>Species search</h2>
 
                         <Input
+                            className="species-input"
                             action={<Button onClick={() => findSpecies(species)}>
                                 Find
                             </Button>}
-                            placeholder="Search..."
+                            placeholder="Species..."
                             loading={loadingSpecies}
                             value={species}
                             onChange={(e, data) => setSpecies(data.value)} />
+
+                        <Dropdown
+                            fluid
+                            selection
+                            loading={loadingVersionGroups}
+                            placeholder="Version group..."
+                            options={versionGroupOptions}
+                            value={versionGroup}
+                            onChange={(e, data) => setVersionGroup(Number(data.value))} />
                     </div>
 
                     <div className="history-container">
@@ -63,7 +85,7 @@ const App = () => {
                 {!loadingSpecies && <div className="details-container">
                     <BasicInfo speciesInfo={speciesInfo!} />
                     <StatsTable stats={stats} />
-                    <MovesTable moves={moves} />
+                    <MovesTable moves={moves} versionGroup={versionGroup} />
                 </div>}
             </div>
         </div>
