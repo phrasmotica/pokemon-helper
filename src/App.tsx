@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react"
 
 import { BasicInfo } from "./BasicInfo"
+import { EfficacyList } from "./EfficacyList"
 import { FormSelector } from "./FormSelector"
+import { getEffectiveTypes } from "./Helpers"
 import { HistoryMenu } from "./HistoryMenu"
 import { MovesList } from "./MovesList"
 import { useSpeciesQuery } from "./SpeciesQuery"
 import { SpeciesSelector } from "./SpeciesSelector"
 import { StatsTable } from "./StatsTable"
+import { useTypesQuery } from "./TypeQuery"
 import { VarietySelector } from "./VarietySelector"
 import { useVersionGroupsQuery } from "./VersionGroupQuery"
 import { VersionGroupSelector } from "./VersionGroupSelector"
@@ -46,6 +49,8 @@ const App = () => {
     const { loadingVersionGroups, versionGroupsError, versionGroupsData, refetchVersionGroups } =
         useVersionGroupsQuery()
 
+    const { loadingTypes, typesError, typesData, refetchTypes } = useTypesQuery()
+
     const findSpecies = (speciesName: string) => {
         refetchSpecies(speciesName)
             .then(result => {
@@ -65,6 +70,7 @@ const App = () => {
 
     let versionGroup = versionGroupsData?.versionGroupInfo.find(vg => vg.id === versionGroupId)
 
+    let effectiveTypes = getEffectiveTypes(variety, form, versionGroup)
     let moves = variety?.moves ?? []
     let stats = variety?.stats ?? []
 
@@ -113,6 +119,8 @@ const App = () => {
                     <StatsTable stats={stats} />
 
                     <MovesList moves={moves} versionGroup={versionGroupId} />
+
+                    <EfficacyList types={typesData?.typeInfo ?? []} effectiveTypes={effectiveTypes} />
                 </div>
             </div>
         </div>

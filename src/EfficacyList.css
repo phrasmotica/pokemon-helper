@@ -1,0 +1,9 @@
+.efficacy-list-container {
+    margin-top: 1em;
+    text-align: start;
+}
+
+.efficacy-list {
+    height: 50vh;
+    overflow-y: scroll;
+}

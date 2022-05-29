@@ -3,7 +3,7 @@ import { Image, Segment } from "semantic-ui-react"
 
 import { VersionGroup } from "./models/VersionGroup"
 
-import { getName, getVarietyName } from "./Helpers"
+import { getEffectiveTypes, getName, getVarietyName } from "./Helpers"
 import { PokemonForm, Species, Variety } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
@@ -76,24 +76,7 @@ export const BasicInfo = (props: BasicInfoProps) => {
 
     let name = getName(species)
     let formName = getVarietyName(variety)
-
-    let effectiveTypes = variety.types.map(t => t.type)
-
-    let generationId = props.versionGroup?.generation.id
-    if (generationId) {
-        let pastTypesInGenerationOrder = [...variety.pastTypes]
-        pastTypesInGenerationOrder.sort((a, b) => a.generation.id - b.generation.id)
-
-        let relevantGenerationId = pastTypesInGenerationOrder.find(pt => pt.generation.id >= generationId!)?.generation.id
-        if (relevantGenerationId) {
-            let relevantEntries = pastTypesInGenerationOrder.filter(pt => pt.generation.id === relevantGenerationId)
-            effectiveTypes = relevantEntries.map(e => e.type)
-        }
-    }
-
-    if (form.types.length > 0) {
-        effectiveTypes = form.types.map(t => t.type)
-    }
+    let effectiveTypes = getEffectiveTypes(variety, form, props.versionGroup)
 
     return (
         <Segment className="basic-info">
