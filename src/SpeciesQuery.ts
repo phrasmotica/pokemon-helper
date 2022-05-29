@@ -2,6 +2,7 @@ import { gql, useQuery } from "@apollo/client"
 
 import { Generation } from "./models/Generation"
 import { Name } from "./models/Name"
+import { Type } from "./models/Type"
 import { VersionGroup } from "./models/VersionGroup"
 
 interface PokemonFormType {
@@ -37,12 +38,6 @@ export interface PokemonMove {
     learnMethod: LearnMethod
     move: Move
     versionGroup: VersionGroup
-}
-
-export interface Type {
-    id: number
-    name: string
-    names: Name[]
 }
 
 interface PokemonTypePast {

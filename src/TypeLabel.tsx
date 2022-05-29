@@ -1,7 +1,8 @@
 import { Label, SemanticSIZES } from "semantic-ui-react"
 
+import { Type } from "./models/Type"
+
 import { getName } from "./Helpers"
-import { Type } from "./SpeciesQuery"
 
 import "./TypeLabel.css"
 
