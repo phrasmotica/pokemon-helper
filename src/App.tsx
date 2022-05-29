@@ -35,6 +35,14 @@ const App = () => {
         }
     }, [speciesData])
 
+    useEffect(() => {
+        let variety = varieties.find(v => v.id === varietyId)
+        let firstForm = variety?.forms[0]
+        if (firstForm) {
+            setFormId(firstForm.id)
+        }
+    }, [varietyId])
+
     const { loadingVersionGroups, versionGroupsError, versionGroupsData, refetchVersionGroups } =
         useVersionGroupsQuery()
 
