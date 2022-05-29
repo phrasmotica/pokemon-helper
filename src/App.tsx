@@ -100,6 +100,7 @@ const App = () => {
                             setForm={setFormId} />
 
                         <VersionGroupSelector
+                            species={speciesInfo}
                             loadingVersionGroups={loadingVersionGroups}
                             versionGroups={versionGroupsData?.versionGroupInfo ?? []}
                             versionGroupId={versionGroupId}

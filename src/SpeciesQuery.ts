@@ -78,6 +78,7 @@ export interface Species {
     id: number
     name: string
     names: Name[]
+    generation: Generation
     varieties: Variety[]
 }
 
@@ -96,6 +97,10 @@ const getSpeciesQuery = gql`
             id
             name
             names: pokemon_v2_pokemonspeciesnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                id
+                name
+            }
+            generation: pokemon_v2_generation {
                 id
                 name
             }
