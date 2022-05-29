@@ -1,5 +1,6 @@
 import { gql, useQuery } from "@apollo/client"
 
+import { Generation } from "./models/Generation"
 import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
 
@@ -38,6 +39,18 @@ export interface PokemonMove {
     versionGroup: VersionGroup
 }
 
+export interface Type {
+    id: number
+    name: string
+    names: Name[]
+}
+
+interface PokemonTypePast {
+    id: number
+    generation: Generation
+    type: Type
+}
+
 interface Stat {
     id: number
     name: string
@@ -48,12 +61,6 @@ export interface PokemonStat {
     id: number
     stat: Stat
     baseValue: number
-}
-
-export interface Type {
-    id: number
-    name: string
-    names: Name[]
 }
 
 interface PokemonType {
@@ -67,6 +74,7 @@ export interface Variety {
     isDefault: boolean
     forms: PokemonForm[]
     moves: PokemonMove[]
+    pastTypes: PokemonTypePast[]
     types: PokemonType[]
     stats: PokemonStat[]
 }
@@ -158,6 +166,25 @@ const getSpeciesQuery = gql`
                                 id
                                 name
                             }
+                        }
+                    }
+                }
+                pastTypes: pokemon_v2_pokemontypepasts(order_by: {slot: asc}) {
+                    id
+                    generation: pokemon_v2_generation {
+                        id
+                        name
+                        names: pokemon_v2_generationnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                            id
+                            name
+                        }
+                    }
+                    type: pokemon_v2_type {
+                        id
+                        name
+                        names: pokemon_v2_typenames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                            id
+                            name
                         }
                     }
                 }
