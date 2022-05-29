@@ -49,6 +49,13 @@ const App = () => {
     const { loadingVersionGroups, versionGroupsError, versionGroupsData, refetchVersionGroups } =
         useVersionGroupsQuery()
 
+    useEffect(() => {
+        let firstVersionGroup = versionGroupsData?.versionGroupInfo[0]
+        if (firstVersionGroup) {
+            setVersionGroupId(firstVersionGroup.id)
+        }
+    }, [versionGroupsData])
+
     const { loadingTypes, typesError, typesData, refetchTypes } = useTypesQuery()
 
     const findSpecies = (speciesName: string) => {
