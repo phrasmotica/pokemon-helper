@@ -1,0 +1,27 @@
+.ui.progress.stat-bar > .bar > .progress {
+    color: white;
+}
+
+.ui.progress.stat-bar.hp > .bar {
+    background-color: #FF0000;
+}
+
+.ui.progress.stat-bar.attack > .bar {
+    background-color: #F08030;
+}
+
+.ui.progress.stat-bar.defense > .bar {
+    background-color: #F8D030;
+}
+
+.ui.progress.stat-bar.special-attack > .bar {
+    background-color: #6890F0;
+}
+
+.ui.progress.stat-bar.special-defense > .bar {
+    background-color: #78C850;
+}
+
+.ui.progress.stat-bar.speed > .bar {
+    background-color: #F85888;
+}

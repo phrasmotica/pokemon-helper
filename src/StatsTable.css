@@ -1,0 +1,8 @@
+.ui.table tr td.stat-header {
+    text-align: end;
+    font-weight: bold;
+}
+
+.ui.progress.stat-bar {
+    margin-bottom: 0em;
+}
