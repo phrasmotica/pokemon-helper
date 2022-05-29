@@ -15,6 +15,14 @@ const getVersionGroupsQuery = gql`
         versionGroupInfo: pokemon_v2_versiongroup(order_by: {order: asc}) {
             id
             name
+            generation: pokemon_v2_generation {
+                id
+                name
+                names: pokemon_v2_generationnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                    id
+                    name
+                }
+            }
             versions: pokemon_v2_versions {
                 id
                 name
