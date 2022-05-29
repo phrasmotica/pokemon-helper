@@ -6,8 +6,8 @@ import { VersionGroup } from "./models/VersionGroup"
 interface VersionGroupSelectorProps {
     loadingVersionGroups: boolean
     versionGroups: VersionGroup[]
-    versionGroup: number | undefined
-    setVersionGroup: (versionGroup: number | undefined) => void
+    versionGroupId: number | undefined
+    setVersionGroupId: (versionGroupId: number | undefined) => void
 }
 
 export const VersionGroupSelector = (props: VersionGroupSelectorProps) => {
@@ -24,7 +24,7 @@ export const VersionGroupSelector = (props: VersionGroupSelectorProps) => {
             loading={props.loadingVersionGroups}
             placeholder="Version group..."
             options={versionGroupOptions}
-            value={props.versionGroup}
-            onChange={(e, data) => props.setVersionGroup(Number(data.value))} />
+            value={props.versionGroupId}
+            onChange={(e, data) => props.setVersionGroupId(Number(data.value))} />
     )
 }

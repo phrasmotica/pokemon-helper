@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { Image, Segment } from "semantic-ui-react"
 
+import { VersionGroup } from "./models/VersionGroup"
+
 import { getName, getVarietyName } from "./Helpers"
 import { PokemonForm, Species, Variety } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
@@ -9,6 +11,7 @@ interface BasicInfoProps {
     speciesInfo: Species | undefined
     variety: Variety | undefined
     form: PokemonForm | undefined
+    versionGroup: VersionGroup | undefined
 }
 
 interface HasSprite {
@@ -74,9 +77,22 @@ export const BasicInfo = (props: BasicInfoProps) => {
     let name = getName(species)
     let formName = getVarietyName(variety)
 
-    let effectiveTypes = variety.types
+    let effectiveTypes = variety.types.map(t => t.type)
+
+    let generationId = props.versionGroup?.generation.id
+    if (generationId) {
+        let pastTypesInGenerationOrder = [...variety.pastTypes]
+        pastTypesInGenerationOrder.sort((a, b) => a.generation.id - b.generation.id)
+
+        let relevantGenerationId = pastTypesInGenerationOrder.find(pt => pt.generation.id >= generationId!)?.generation.id
+        if (relevantGenerationId) {
+            let relevantEntries = pastTypesInGenerationOrder.filter(pt => pt.generation.id === relevantGenerationId)
+            effectiveTypes = relevantEntries.map(e => e.type)
+        }
+    }
+
     if (form.types.length > 0) {
-        effectiveTypes = form.types
+        effectiveTypes = form.types.map(t => t.type)
     }
 
     return (
@@ -85,7 +101,7 @@ export const BasicInfo = (props: BasicInfoProps) => {
                 <h2>{name}</h2>
                 {formName.length > 0 && <p>{formName}</p>}
 
-                {effectiveTypes.map(t => <TypeLabel type={t.type} size="big" />)}
+                {effectiveTypes.map(t => <TypeLabel key={t.id} type={t} size="big" />)}
             </div>
 
             <div>

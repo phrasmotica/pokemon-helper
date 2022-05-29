@@ -17,7 +17,7 @@ const App = () => {
     const [varietyId, setVarietyId] = useState<number>()
     const [formId, setFormId] = useState<number>()
 
-    const [versionGroup, setVersionGroup] = useState<number>()
+    const [versionGroupId, setVersionGroupId] = useState<number>()
     const [history, setHistory] = useState(["piplup"])
 
     const { loadingSpecies, error, speciesData, refetchSpecies } =
@@ -55,6 +55,8 @@ const App = () => {
     let forms = variety?.forms ?? []
     let form = forms.find(f => f.id === formId)
 
+    let versionGroup = versionGroupsData?.versionGroupInfo.find(vg => vg.id === versionGroupId)
+
     let moves = variety?.moves ?? []
     let stats = variety?.stats ?? []
 
@@ -86,8 +88,8 @@ const App = () => {
                         <VersionGroupSelector
                             loadingVersionGroups={loadingVersionGroups}
                             versionGroups={versionGroupsData?.versionGroupInfo ?? []}
-                            versionGroup={versionGroup}
-                            setVersionGroup={setVersionGroup} />
+                            versionGroupId={versionGroupId}
+                            setVersionGroupId={setVersionGroupId} />
                     </div>
 
                     <HistoryMenu history={history} findSpecies={findSpecies} />
@@ -97,11 +99,12 @@ const App = () => {
                     <BasicInfo
                         speciesInfo={speciesInfo}
                         variety={variety}
-                        form={form} />
+                        form={form}
+                        versionGroup={versionGroup} />
 
                     <StatsTable stats={stats} />
 
-                    <MovesList moves={moves} versionGroup={versionGroup} />
+                    <MovesList moves={moves} versionGroup={versionGroupId} />
                 </div>
             </div>
         </div>
