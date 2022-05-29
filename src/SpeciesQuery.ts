@@ -77,6 +77,7 @@ export interface Variety {
 export interface Species {
     id: number
     name: string
+    order: number
     names: Name[]
     generation: Generation
     varieties: Variety[]
@@ -96,6 +97,7 @@ const getSpeciesQuery = gql`
         speciesInfo: pokemon_v2_pokemonspecies(where: {name: {_eq: $speciesName}}, order_by: {id: asc}) {
             id
             name
+            order
             names: pokemon_v2_pokemonspeciesnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
                 id
                 name

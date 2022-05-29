@@ -7,6 +7,8 @@ import { getEffectiveTypes, getName, getVarietyName } from "./Helpers"
 import { PokemonForm, Species, Variety } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
+import "./BasicInfo.css"
+
 interface BasicInfoProps {
     speciesInfo: Species | undefined
     variety: Variety | undefined
@@ -81,7 +83,7 @@ export const BasicInfo = (props: BasicInfoProps) => {
     return (
         <Segment className="basic-info">
             <div>
-                <h2>{name}</h2>
+                <h2>{name} <span className="species-order">(&#x00023;{species.order})</span></h2>
                 {formName.length > 0 && <p>{formName}</p>}
 
                 {effectiveTypes.map(t => <TypeLabel key={t.id} type={t} size="big" />)}
