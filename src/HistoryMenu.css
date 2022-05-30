@@ -1,0 +1,14 @@
+.ui.accordion.history-menu-container {
+    text-align: start;
+}
+
+.ui.accordion.history-menu-container > .title {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.history-menu {
+    max-height: 30vh;
+    overflow-y: auto;
+}

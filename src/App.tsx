@@ -15,8 +15,11 @@ import { useVersionGroupsQuery } from "./VersionGroupQuery"
 import { VersionGroupSelector } from "./VersionGroupSelector"
 
 import "./App.css"
+import { Accordion, Icon } from "semantic-ui-react"
 
 const App = () => {
+    const [searchActive, setSearchActive] = useState(true)
+
     const [varietyId, setVarietyId] = useState<number>()
     const [formId, setFormId] = useState<number>()
     const [versionGroupId, setVersionGroupId] = useState<number>()
@@ -80,54 +83,67 @@ const App = () => {
     return (
         <div className="App">
             <div className="App-header">
-                <div className="control-container">
-                    <div className="input-container">
-                        <h2>Species search</h2>
+                <h1>Pokémon Helper</h1>
 
-                        <SpeciesSelector
-                            loadingSpecies={loadingSpecies}
-                            findSpecies={refetchSpecies} />
+                <div className="main-container">
+                    <div className="control-container">
+                        <Accordion className="input-container">
+                            <Accordion.Title
+                                active={searchActive}
+                                onClick={() => setSearchActive(!searchActive)}>
+                                <Icon name="dropdown" />
+                                Search
+                            </Accordion.Title>
 
-                        <VarietySelector
-                            species={speciesInfo}
-                            loadingVarieties={loadingSpecies}
-                            varieties={varieties}
-                            variety={varietyId}
-                            setVariety={setVarietyId} />
+                            <Accordion.Content active={searchActive}>
+                                <div className="selectors-container">
+                                    <SpeciesSelector
+                                        loadingSpecies={loadingSpecies}
+                                        findSpecies={refetchSpecies} />
 
-                        <FormSelector
-                            species={speciesInfo}
-                            loadingForms={loadingSpecies}
-                            forms={forms}
-                            form={formId}
-                            setForm={setFormId} />
+                                    <VarietySelector
+                                        species={speciesInfo}
+                                        loadingVarieties={loadingSpecies}
+                                        varieties={varieties}
+                                        variety={varietyId}
+                                        setVariety={setVarietyId} />
 
-                        <VersionGroupSelector
-                            species={speciesInfo}
-                            loadingVersionGroups={loadingVersionGroups}
-                            versionGroups={versionGroupsData?.versionGroupInfo ?? []}
-                            versionGroupId={versionGroupId}
-                            setVersionGroupId={setVersionGroupId} />
+                                    <FormSelector
+                                        species={speciesInfo}
+                                        loadingForms={loadingSpecies}
+                                        forms={forms}
+                                        form={formId}
+                                        setForm={setFormId} />
+
+                                    <VersionGroupSelector
+                                        species={speciesInfo}
+                                        loadingVersionGroups={loadingVersionGroups}
+                                        versionGroups={versionGroupsData?.versionGroupInfo ?? []}
+                                        versionGroupId={versionGroupId}
+                                        setVersionGroupId={setVersionGroupId} />
+                                </div>
+
+                                <HistoryMenu
+                                    history={history}
+                                    findSpecies={refetchSpecies} />
+                            </Accordion.Content>
+                        </Accordion>
                     </div>
 
-                    <HistoryMenu
-                        history={history}
-                        findSpecies={refetchSpecies} />
-                </div>
+                    <div className="details-container">
+                        <BasicInfo
+                            speciesInfo={speciesInfo}
+                            variety={variety}
+                            form={form}
+                            versionGroup={versionGroup} />
 
-                <div className="details-container">
-                    <BasicInfo
-                        speciesInfo={speciesInfo}
-                        variety={variety}
-                        form={form}
-                        versionGroup={versionGroup} />
+                        <div className="battle-details-container">
+                            <StatsTable stats={stats} />
 
-                    <div className="battle-details-container">
-                        <StatsTable stats={stats} />
+                            <EfficacyList types={typesData?.typeInfo ?? []} effectiveTypes={effectiveTypes} />
 
-                        <EfficacyList types={typesData?.typeInfo ?? []} effectiveTypes={effectiveTypes} />
-
-                        <MovesList moves={moves} versionGroup={versionGroupId} />
+                            <MovesList moves={moves} versionGroup={versionGroupId} />
+                        </div>
                     </div>
                 </div>
             </div>

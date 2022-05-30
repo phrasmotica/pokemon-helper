@@ -7,12 +7,21 @@
   min-height: 100vh;
   padding: 1em;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   color: white;
 }
 
 .App-header > :not(:first-child) {
+  margin-top: 1em;
+}
+
+.main-container {
+  display: flex;
+}
+
+.main-container > :not(:first-child) {
   margin-left: 1em;
 }
 
@@ -24,12 +33,15 @@
   margin-top: 1em;
 }
 
-.input-container > :not(:first-child) {
+.selectors-container > :not(:first-child) {
   margin-top: 0.5em;
 }
 
-.input-container {
+.ui.accordion.input-container > .title {
   text-align: start;
+  color: white;
+  font-weight: bold;
+  font-size: 1.2rem;
 }
 
 .species-input-container {
@@ -64,15 +76,28 @@
     margin-left: 0em;
     margin-top: 1em;
   }
+
+  .main-container {
+    flex-direction: column;
+  }
+
+  .main-container > :not(:first-child) {
+    margin-left: 0em;
+    margin-top: 1em;
+  }
+
+  .control-container {
+    width: unset;
+  }
+
+  .details-container {
+    width: unset;
+  }
 }
 
 .find-button-container > .ui.button {
   margin: 0em;
   height: 100%;
-}
-
-.history-container {
-  text-align: start;
 }
 
 .battle-details-container > :not(:first-child) {
