@@ -1,3 +1,11 @@
+.basic-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-align: start;
+    color: black;
+}
+
 .species-order {
     color: grey;
 }

@@ -1,3 +1,7 @@
+.stats-table-container > h4 {
+    text-align: start;
+}
+
 .ui.table tr td.stat-header {
     text-align: end;
     font-weight: bold;

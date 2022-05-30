@@ -1,9 +1,3 @@
-.efficacy-list-container {
-    margin-top: 1em;
+.efficacy-list-container > h4 {
     text-align: start;
-}
-
-.efficacy-list {
-    height: 50vh;
-    overflow-y: scroll;
 }

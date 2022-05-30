@@ -32,34 +32,36 @@ export const StatsTable = (props: StatsTableProps) => {
     }
 
     return (
-        <div className="stats-table">
+        <div className="stats-table-container">
             <h4>Stats</h4>
 
-            <Table>
-                <Table.Body>
-                    {props.stats.map(s => (
-                        <Table.Row key={s.id}>
-                            <Table.Cell className="stat-header" width={1}>
-                                {getName(s.stat)}
+            <div className="stats-table">
+                <Table>
+                    <Table.Body>
+                        {props.stats.map(s => (
+                            <Table.Row key={s.id}>
+                                <Table.Cell className="stat-header" width={1}>
+                                    {getName(s.stat)}
+                                </Table.Cell>
+
+                                <Table.Cell width={4}>
+                                    {createProgressBar(s)}
+                                </Table.Cell>
+                            </Table.Row>
+                        ))}
+
+                        <Table.Row>
+                            <Table.Cell className="stat-header">
+                                <em>Total</em>
                             </Table.Cell>
 
-                            <Table.Cell width={4}>
-                                {createProgressBar(s)}
+                            <Table.Cell>
+                                {createTotalProgressBar()}
                             </Table.Cell>
                         </Table.Row>
-                    ))}
-
-                    <Table.Row>
-                        <Table.Cell className="stat-header">
-                            <em>Total</em>
-                        </Table.Cell>
-
-                        <Table.Cell>
-                            {createTotalProgressBar()}
-                        </Table.Cell>
-                    </Table.Row>
-                </Table.Body>
-            </Table>
+                    </Table.Body>
+                </Table>
+            </div>
         </div>
     )
 }

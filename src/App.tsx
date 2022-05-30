@@ -122,11 +122,13 @@ const App = () => {
                         form={form}
                         versionGroup={versionGroup} />
 
-                    <StatsTable stats={stats} />
+                    <div className="battle-details-container">
+                        <StatsTable stats={stats} />
+
+                        <EfficacyList types={typesData?.typeInfo ?? []} effectiveTypes={effectiveTypes} />
+                    </div>
 
                     <MovesList moves={moves} versionGroup={versionGroupId} />
-
-                    <EfficacyList types={typesData?.typeInfo ?? []} effectiveTypes={effectiveTypes} />
                 </div>
             </div>
         </div>
