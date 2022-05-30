@@ -12,7 +12,7 @@ interface StatsTableProps {
 }
 
 export const StatsTable = (props: StatsTableProps) => {
-    const [active, setActive] = useState(false)
+    const [active, setActive] = useState(true)
 
     const createProgressBar = (stat: PokemonStat) => (
         <Progress
@@ -34,15 +34,17 @@ export const StatsTable = (props: StatsTableProps) => {
         )
     }
 
+    let hasStats = props.stats.length > 0
+
     return (
         <Accordion className="stats-table-container">
-            <Accordion.Title active={active} onClick={() => setActive(!active)}>
+            <Accordion.Title active={active && hasStats} onClick={() => setActive(!active)}>
                 <Icon name="dropdown" />
                 Stats
             </Accordion.Title>
 
-            <Accordion.Content active={active}>
-                <Table className="stats-table">
+            <Accordion.Content active={active && hasStats}>
+                {hasStats && <Table className="stats-table">
                     <Table.Body>
                         {props.stats.map(s => (
                             <Table.Row key={s.id}>
@@ -66,7 +68,7 @@ export const StatsTable = (props: StatsTableProps) => {
                             </Table.Cell>
                         </Table.Row>
                     </Table.Body>
-                </Table>
+                </Table>}
             </Accordion.Content>
         </Accordion>
     )
