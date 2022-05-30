@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Accordion, Icon } from "semantic-ui-react"
 
-import { getName, getVersionGroupName, groupBy } from "./Helpers"
+import { getName, groupBy } from "./Helpers"
 import { PokemonMove } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
@@ -15,11 +15,6 @@ interface MovesTableProps {
 export const MovesList = (props: MovesTableProps) => {
     const [active, setActive] = useState(false)
     const [openMoves, setOpenMoves] = useState<number[]>([])
-
-    let allMoves = props.moves
-
-    let groupedMoves = groupBy(allMoves, m => m.move.name)
-    let uniqueMoves = Array.from(groupedMoves.values())
 
     const toggleMoveOpen = (moveId: number) => {
         let newOpenMoves = [...openMoves]
@@ -35,6 +30,28 @@ export const MovesList = (props: MovesTableProps) => {
         setOpenMoves(newOpenMoves)
     }
 
+    const sortMoves = (m1: PokemonMove[], m2: PokemonMove[]) => {
+        let m1FirstLearnMethod = m1[0].learnMethod.id
+        let m2FirstLearnMethod = m2[0].learnMethod.id
+
+        if (m1FirstLearnMethod === 1 && m2FirstLearnMethod === 1) {
+            return m1[0].level - m2[0].level
+        }
+
+        if (m1FirstLearnMethod === m2FirstLearnMethod) {
+            return getName(m1[0].move).localeCompare(getName(m2[0].move))
+        }
+
+        return m1[0].learnMethod.id - m2[0].learnMethod.id
+    }
+
+    let allMoves = props.moves
+
+    let groupedMoves = groupBy(allMoves, m => m.move.name)
+
+    let uniqueMoves = Array.from(groupedMoves.values())
+    uniqueMoves.sort(sortMoves)
+
     let moveAccordionItems = []
 
     for (let moveDetails of uniqueMoves) {
@@ -44,6 +61,7 @@ export const MovesList = (props: MovesTableProps) => {
         if (props.versionGroup !== undefined) {
             filteredMoveDetails = filteredMoveDetails.filter(md => md.versionGroup.id === props.versionGroup)
         }
+
 
         if (filteredMoveDetails.length > 0) {
             let exampleMoveDetail = filteredMoveDetails[0]!
@@ -75,12 +93,12 @@ export const MovesList = (props: MovesTableProps) => {
                     {filteredMoveDetails.map(md => {
                         let learnMethodText = getName(md.learnMethod)
                         if (md.learnMethod.id === 1) {
-                            learnMethodText = `level ${md.level}`
+                            learnMethodText = `Level ${md.level}`
                         }
 
                         return (
                             <div key={md.id}>
-                                <span>{getVersionGroupName(md.versionGroup)}: {learnMethodText}</span>
+                                <span>{learnMethodText}</span>
                             </div>
                         )
                     })}
