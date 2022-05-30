@@ -22,10 +22,12 @@
     align-items: center;
 }
 
-.move-type {
+.move-name-container > :not(:first-child) {
     margin-left: 0.5em;
 }
 
-.move-content {
+.move-content > div {
+    text-align: start;
     color: black;
+    padding: 0em 1em;
 }
