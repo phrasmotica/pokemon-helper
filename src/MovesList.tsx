@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Accordion } from "semantic-ui-react"
+import { Accordion, Icon } from "semantic-ui-react"
 
 import { getName, getVersionGroupName, groupBy } from "./Helpers"
 import { PokemonMove } from "./SpeciesQuery"
@@ -13,6 +13,7 @@ interface MovesTableProps {
 }
 
 export const MovesList = (props: MovesTableProps) => {
+    const [active, setActive] = useState(false)
     const [openMoves, setOpenMoves] = useState<number[]>([])
 
     let allMoves = props.moves
@@ -34,7 +35,7 @@ export const MovesList = (props: MovesTableProps) => {
         setOpenMoves(newOpenMoves)
     }
 
-    let accordionItems = []
+    let moveAccordionItems = []
 
     for (let moveDetails of uniqueMoves) {
         let moveId = moveDetails[0]!.move.id
@@ -48,7 +49,7 @@ export const MovesList = (props: MovesTableProps) => {
             let exampleMoveDetail = filteredMoveDetails[0]!
             let move = exampleMoveDetail.move
 
-            accordionItems.push(
+            moveAccordionItems.push(
                 <Accordion.Title
                     key={"title" + moveId}
                     className="move-header"
@@ -66,7 +67,7 @@ export const MovesList = (props: MovesTableProps) => {
                 </Accordion.Title>
             )
 
-            accordionItems.push(
+            moveAccordionItems.push(
                 <Accordion.Content
                     key={"content" + moveId}
                     className="move-content"
@@ -89,12 +90,17 @@ export const MovesList = (props: MovesTableProps) => {
     }
 
     return (
-        <div className="moves-list-container">
-            <h4>Moves</h4>
+        <Accordion className="moves-list-container">
+            <Accordion.Title active={active} onClick={() => setActive(!active)}>
+                <Icon name="dropdown" />
+                Moves
+            </Accordion.Title>
 
-            <Accordion className="moves-list" styled>
-                {accordionItems}
-            </Accordion>
-        </div>
+            <Accordion.Content active={active}>
+                <Accordion className="moves-list" styled>
+                    {moveAccordionItems}
+                </Accordion>
+            </Accordion.Content>
+        </Accordion>
     )
 }

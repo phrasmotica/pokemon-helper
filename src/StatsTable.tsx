@@ -1,4 +1,5 @@
-import { Progress, Table } from "semantic-ui-react"
+import { useState } from "react"
+import { Accordion, Icon, Progress, Table } from "semantic-ui-react"
 
 import { getName } from "./Helpers"
 import { PokemonStat } from "./SpeciesQuery"
@@ -11,6 +12,8 @@ interface StatsTableProps {
 }
 
 export const StatsTable = (props: StatsTableProps) => {
+    const [active, setActive] = useState(false)
+
     const createProgressBar = (stat: PokemonStat) => (
         <Progress
             className={"stat-bar " + stat.stat.name}
@@ -32,11 +35,14 @@ export const StatsTable = (props: StatsTableProps) => {
     }
 
     return (
-        <div className="stats-table-container">
-            <h4>Stats</h4>
+        <Accordion className="stats-table-container">
+            <Accordion.Title active={active} onClick={() => setActive(!active)}>
+                <Icon name="dropdown" />
+                Stats
+            </Accordion.Title>
 
-            <div className="stats-table">
-                <Table>
+            <Accordion.Content active={active}>
+                <Table className="stats-table">
                     <Table.Body>
                         {props.stats.map(s => (
                             <Table.Row key={s.id}>
@@ -61,7 +67,7 @@ export const StatsTable = (props: StatsTableProps) => {
                         </Table.Row>
                     </Table.Body>
                 </Table>
-            </div>
-        </div>
+            </Accordion.Content>
+        </Accordion>
     )
 }

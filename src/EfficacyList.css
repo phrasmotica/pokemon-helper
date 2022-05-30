@@ -1,3 +1,11 @@
-.efficacy-list-container > h4 {
+.ui.accordion.efficacy-list-container > .title {
     text-align: start;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.efficacy-list {
+    height: 50vh;
+    overflow-y: scroll;
 }

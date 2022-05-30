@@ -1,4 +1,5 @@
-import { Table } from "semantic-ui-react"
+import { useState } from "react"
+import { Accordion, Icon, Table } from "semantic-ui-react"
 
 import { Type } from "./models/Type"
 
@@ -13,6 +14,8 @@ interface EfficacyListProps {
 }
 
 export const EfficacyList = (props: EfficacyListProps) => {
+    const [active, setActive] = useState(false)
+
     const getDamageFactor = (type: TypeWithEfficacies, targetTypeId: number) => {
         return (type.efficacies.find(t => t.targetTypeId === targetTypeId)?.damageFactor ?? 100) / 100
     }
@@ -31,26 +34,31 @@ export const EfficacyList = (props: EfficacyListProps) => {
     }))
 
     return (
-        <div className="efficacy-list-container">
-            <h4>Type Effectiveness</h4>
+        <Accordion className="efficacy-list-container">
+            <Accordion.Title active={active} onClick={() => setActive(!active)}>
+                <Icon name="dropdown" />
+                Type Effectiveness
+            </Accordion.Title>
 
-            <div className="efficacy-list">
-                <Table>
-                    <Table.Body>
-                        {efficacies.map(e => (
-                            <Table.Row key={e.type.id}>
-                                <Table.Cell>
-                                    <TypeLabel type={e.type} />
-                                </Table.Cell>
+            <Accordion.Content active={active}>
+                <div className="efficacy-list">
+                    <Table>
+                        <Table.Body>
+                            {efficacies.map(e => (
+                                <Table.Row key={e.type.id}>
+                                    <Table.Cell>
+                                        <TypeLabel type={e.type} />
+                                    </Table.Cell>
 
-                                <Table.Cell>
-                                    <span>{e.efficacy}x</span>
-                                </Table.Cell>
-                            </Table.Row>
-                        ))}
-                    </Table.Body>
-                </Table>
-            </div>
-        </div>
+                                    <Table.Cell>
+                                        <span>{e.efficacy}x</span>
+                                    </Table.Cell>
+                                </Table.Row>
+                            ))}
+                        </Table.Body>
+                    </Table>
+                </div>
+            </Accordion.Content>
+        </Accordion>
     )
 }

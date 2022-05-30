@@ -126,9 +126,9 @@ const App = () => {
                         <StatsTable stats={stats} />
 
                         <EfficacyList types={typesData?.typeInfo ?? []} effectiveTypes={effectiveTypes} />
-                    </div>
 
-                    <MovesList moves={moves} versionGroup={versionGroupId} />
+                        <MovesList moves={moves} versionGroup={versionGroupId} />
+                    </div>
                 </div>
             </div>
         </div>

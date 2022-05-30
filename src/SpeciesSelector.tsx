@@ -12,6 +12,7 @@ export const SpeciesSelector = (props: SpeciesSelectorProps) => {
     return (
         <div className="species-input-container">
             <Input
+                fluid
                 className="species-input"
                 placeholder="Species..."
                 loading={props.loadingSpecies}
