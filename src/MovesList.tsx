@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Accordion, Icon } from "semantic-ui-react"
 
 import { getName, groupBy } from "./Helpers"
+import { MoveTypeSelector } from "./MoveTypeSelector"
 import { PokemonMove } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
@@ -9,12 +10,13 @@ import "./MovesList.css"
 
 interface MovesTableProps {
     moves: PokemonMove[]
-    versionGroup: number | undefined
+    versionGroupId: number | undefined
 }
 
 export const MovesList = (props: MovesTableProps) => {
     const [active, setActive] = useState(false)
     const [openMoves, setOpenMoves] = useState<number[]>([])
+    const [selectedMoveTypes, setSelectedMoveTypes] = useState<number[]>([])
 
     const toggleMoveOpen = (moveId: number) => {
         let newOpenMoves = [...openMoves]
@@ -28,6 +30,14 @@ export const MovesList = (props: MovesTableProps) => {
         }
 
         setOpenMoves(newOpenMoves)
+    }
+
+    const showMove = (m: PokemonMove[]) => {
+        if (props.versionGroupId && !m.some(md => md.versionGroup.id === props.versionGroupId!)) {
+            return false
+        }
+
+        return selectedMoveTypes.length <= 0 || selectedMoveTypes.includes(m[0]!.move.type.id)
     }
 
     const sortMoves = (m1: PokemonMove[], m2: PokemonMove[]) => {
@@ -63,18 +73,19 @@ export const MovesList = (props: MovesTableProps) => {
     let groupedMoves = groupBy(allMoves, m => m.move.name)
 
     let uniqueMoves = Array.from(groupedMoves.values())
-    uniqueMoves.sort(sortMoves)
+    let filteredMoves = uniqueMoves.filter(showMove)
+
+    filteredMoves.sort(sortMoves)
 
     let moveAccordionItems = []
 
-    for (let moveDetails of uniqueMoves) {
+    for (let moveDetails of filteredMoves) {
         let moveId = moveDetails[0]!.move.id
 
         let filteredMoveDetails = moveDetails
-        if (props.versionGroup !== undefined) {
-            filteredMoveDetails = filteredMoveDetails.filter(md => md.versionGroup.id === props.versionGroup)
+        if (props.versionGroupId !== undefined) {
+            filteredMoveDetails = filteredMoveDetails.filter(md => md.versionGroup.id === props.versionGroupId)
         }
-
 
         if (filteredMoveDetails.length > 0) {
             let exampleMoveDetail = filteredMoveDetails[0]!
@@ -119,6 +130,11 @@ export const MovesList = (props: MovesTableProps) => {
             </Accordion.Title>
 
             <Accordion.Content active={active}>
+                <MoveTypeSelector
+                    moves={filteredMoves}
+                    selectedMoveTypes={selectedMoveTypes}
+                    setSelectedMoveTypes={setSelectedMoveTypes} />
+
                 <Accordion className="moves-list" styled>
                     {moveAccordionItems}
                 </Accordion>

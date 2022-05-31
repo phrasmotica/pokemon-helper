@@ -142,7 +142,7 @@ const App = () => {
 
                             <EfficacyList types={typesData?.typeInfo ?? []} effectiveTypes={effectiveTypes} />
 
-                            <MovesList moves={moves} versionGroup={versionGroupId} />
+                            <MovesList moves={moves} versionGroupId={versionGroupId} />
                         </div>
                     </div>
                 </div>

@@ -12,6 +12,14 @@ export const groupBy = <T>(arr: T[], func: (x: T) => string) => arr.reduce(
     new Map<string, T[]>()
 )
 
+/**
+ * Returns values in the given array that are unique based on the given key function.
+ * Taken from https://stackoverflow.com/a/58429784
+ */
+export const uniqueBy = <T>(arr: T[], func: (x: T) => string | number) => [
+    ...new Map(arr.map(x => [func(x), x])).values()
+]
+
 export const getName = (x: { names: Name[] }) => x.names[0]!.name
 
 export const getVarietyName = (v: Variety) => {
