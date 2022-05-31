@@ -45,6 +45,19 @@ export const MovesList = (props: MovesTableProps) => {
         return m1[0].learnMethod.id - m2[0].learnMethod.id
     }
 
+    const getDisplayText = (md: PokemonMove, index: number) => {
+        let learnMethodText = getName(md.learnMethod)
+        if (md.learnMethod.id === 1) {
+            learnMethodText = `Level ${md.level}`
+        }
+
+        if (index > 0) {
+            learnMethodText = " / " + learnMethodText
+        }
+
+        return learnMethodText
+    }
+
     let allMoves = props.moves
 
     let groupedMoves = groupBy(allMoves, m => m.move.name)
@@ -90,18 +103,9 @@ export const MovesList = (props: MovesTableProps) => {
                     key={"content" + moveId}
                     className="move-content"
                     active={openMoves.includes(moveId)}>
-                    {filteredMoveDetails.map(md => {
-                        let learnMethodText = getName(md.learnMethod)
-                        if (md.learnMethod.id === 1) {
-                            learnMethodText = `Level ${md.level}`
-                        }
-
-                        return (
-                            <div key={md.id}>
-                                <span>{learnMethodText}</span>
-                            </div>
-                        )
-                    })}
+                    <div>
+                        {filteredMoveDetails.map((md, i) => <span key={md.id}>{getDisplayText(md, i)}</span>)}
+                    </div>
                 </Accordion.Content>
             )
         }
