@@ -60,12 +60,26 @@ const App = () => {
     const { loadingVersionGroups, versionGroupsData } =
         useVersionGroupsQuery()
 
+    let versionGroups = versionGroupsData?.versionGroupInfo
+    let disabledVersionGroups = versionGroups?.filter(vg => vg.generation.id < speciesInfo!.generation.id) ?? []
+    let disabledVersionGroupIds = disabledVersionGroups.map(vg => vg.id)
+
     useEffect(() => {
         let firstVersionGroup = versionGroupsData?.versionGroupInfo[0]
         if (firstVersionGroup) {
             setVersionGroupId(firstVersionGroup.id)
         }
     }, [versionGroupsData])
+
+    useEffect(() => {
+        if (speciesInfo && versionGroups) {
+            // ensure a valid version group is selected
+            if (versionGroupId && disabledVersionGroupIds.includes(versionGroupId)) {
+                let newVersionGroupId = versionGroups.find(vg => !disabledVersionGroupIds.includes(vg.id))?.id
+                setVersionGroupId(newVersionGroupId)
+            }
+        }
+    }, [speciesInfo, versionGroupsData, disabledVersionGroupIds, versionGroupId, versionGroups])
 
     const { typesData } = useTypesQuery()
 
@@ -120,6 +134,7 @@ const App = () => {
                                         loadingVersionGroups={loadingVersionGroups}
                                         versionGroups={versionGroupsData?.versionGroupInfo ?? []}
                                         versionGroupId={versionGroupId}
+                                        disabledVersionGroupIds={disabledVersionGroupIds}
                                         setVersionGroupId={setVersionGroupId} />
                                 </div>
 
