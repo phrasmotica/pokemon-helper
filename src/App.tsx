@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
+import { Accordion, Icon } from "semantic-ui-react"
 
 import { BasicInfo } from "./BasicInfo"
 import { EfficacyList } from "./EfficacyList"
@@ -15,7 +16,6 @@ import { useVersionGroupsQuery } from "./VersionGroupQuery"
 import { VersionGroupSelector } from "./VersionGroupSelector"
 
 import "./App.css"
-import { Accordion, Icon } from "semantic-ui-react"
 
 const App = () => {
     const [searchActive, setSearchActive] = useState(true)
@@ -26,16 +26,17 @@ const App = () => {
 
     const [history, setHistory] = useState<Species[]>([])
 
-    const { loadingSpecies, error, speciesData, refetchSpecies } =
+    const { loadingSpecies, speciesData, refetchSpecies } =
         useSpeciesQuery("piplup")
 
+    let speciesInfo = loadingSpecies ? undefined : speciesData?.speciesInfo[0]
+
     useEffect(() => {
-        let species = speciesData?.speciesInfo[0]
-        if (species && !history.some(s => s.name === species!.name)) {
-            setHistory([...history, species])
+        if (speciesInfo && !history.some(s => s.name === speciesInfo!.name)) {
+            setHistory([...history, speciesInfo])
         }
 
-        let firstVariety = speciesData?.speciesInfo[0].varieties[0]
+        let firstVariety = speciesInfo?.varieties[0]
         if (firstVariety) {
             setVarietyId(firstVariety.id)
 
@@ -44,7 +45,9 @@ const App = () => {
                 setFormId(firstForm.id)
             }
         }
-    }, [speciesData])
+    }, [speciesData, history, speciesInfo])
+
+    let varieties = useMemo(() => speciesInfo?.varieties ?? [], [speciesInfo])
 
     useEffect(() => {
         let variety = varieties.find(v => v.id === varietyId)
@@ -52,9 +55,9 @@ const App = () => {
         if (firstForm) {
             setFormId(firstForm.id)
         }
-    }, [varietyId])
+    }, [varietyId, varieties])
 
-    const { loadingVersionGroups, versionGroupsError, versionGroupsData, refetchVersionGroups } =
+    const { loadingVersionGroups, versionGroupsData } =
         useVersionGroupsQuery()
 
     useEffect(() => {
@@ -64,11 +67,8 @@ const App = () => {
         }
     }, [versionGroupsData])
 
-    const { loadingTypes, typesError, typesData, refetchTypes } = useTypesQuery()
+    const { typesData } = useTypesQuery()
 
-    let speciesInfo = loadingSpecies ? undefined : speciesData?.speciesInfo[0]
-
-    let varieties = speciesInfo?.varieties ?? []
     let variety = varieties.find(v => v.id === varietyId)
 
     let forms = variety?.forms ?? []
