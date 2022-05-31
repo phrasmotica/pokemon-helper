@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Accordion, Icon } from "semantic-ui-react"
 
-import { getName, groupBy } from "./Helpers"
+import { getName, groupBy, sortMoves } from "./Helpers"
 import { MoveLearnMethodSelector } from "./MoveLearnMethodSelector"
 import { MoveTypeSelector } from "./MoveTypeSelector"
 import { PokemonMove } from "./SpeciesQuery"
@@ -50,21 +50,6 @@ export const MovesList = (props: MovesTableProps) => {
 
     const passesFilters = (m: PokemonMove[]) => passesTypesFilter(m) && m.some(isValidDetailWithLearnMethod)
 
-    const sortMoves = (m1: PokemonMove[], m2: PokemonMove[]) => {
-        let m1FirstLearnMethod = m1[0].learnMethod.id
-        let m2FirstLearnMethod = m2[0].learnMethod.id
-
-        if (m1FirstLearnMethod === 1 && m2FirstLearnMethod === 1) {
-            return m1[0].level - m2[0].level
-        }
-
-        if (m1FirstLearnMethod === m2FirstLearnMethod) {
-            return getName(m1[0].move).localeCompare(getName(m2[0].move))
-        }
-
-        return m1[0].learnMethod.id - m2[0].learnMethod.id
-    }
-
     const getDisplayText = (md: PokemonMove, index: number) => {
         let learnMethodText = getName(md.learnMethod)
         if (md.learnMethod.id === 1) {
@@ -78,10 +63,7 @@ export const MovesList = (props: MovesTableProps) => {
         return learnMethodText
     }
 
-    let allMoves = props.moves
-
-    let groupedMoves = groupBy(allMoves, m => m.move.name)
-
+    let groupedMoves = groupBy(props.moves, m => m.move.name)
     let uniqueMoves = Array.from(groupedMoves.values())
     let relevantMoves = uniqueMoves.filter(m => m.some(isValidDetail))
     let filteredMoves = relevantMoves.filter(passesFilters)

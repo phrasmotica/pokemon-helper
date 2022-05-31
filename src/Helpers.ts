@@ -1,6 +1,6 @@
 import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
-import { PokemonForm, Variety } from "./SpeciesQuery"
+import { PokemonForm, PokemonMove, Variety } from "./SpeciesQuery"
 
 /**
  * Groups elements of the given array by the given key function, and returns the
@@ -70,4 +70,22 @@ export const getEffectiveTypes = (variety: Variety | undefined, form: PokemonFor
     }
 
     return effectiveTypes
+}
+
+/**
+ * Sorts the given moves.
+ */
+export const sortMoves = (m1: PokemonMove[], m2: PokemonMove[]) => {
+    let m1FirstLearnMethod = m1[0].learnMethod.id
+    let m2FirstLearnMethod = m2[0].learnMethod.id
+
+    if (m1FirstLearnMethod === 1 && m2FirstLearnMethod === 1) {
+        return m1[0].level - m2[0].level
+    }
+
+    if (m1FirstLearnMethod === m2FirstLearnMethod) {
+        return getName(m1[0].move).localeCompare(getName(m2[0].move))
+    }
+
+    return m1[0].learnMethod.id - m2[0].learnMethod.id
 }
