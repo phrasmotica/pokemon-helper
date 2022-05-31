@@ -29,7 +29,7 @@ export const StatsTable = (props: StatsTableProps) => {
             <Progress
                 className="stat-bar total"
                 value={statTotal}
-                total={720}
+                total={1125}
                 progress="value" />
         )
     }
