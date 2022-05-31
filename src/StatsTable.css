@@ -34,8 +34,8 @@
     margin-left: 0.5em;
 }
 
-.stats-table > .stat-bars > :not(:first-child) {
-    margin-top: 0.2em;
+.stats-table > * > :not(:first-child) {
+    margin-top: 0.25em;
 }
 
 .stats-table > .stat-bars > .stat-bar > .ui.progress.stat-bar {
