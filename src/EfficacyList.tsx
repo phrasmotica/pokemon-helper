@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Accordion, Icon, Table } from "semantic-ui-react"
+import { Accordion, Icon, Segment } from "semantic-ui-react"
 
 import { Type } from "./models/Type"
 
@@ -25,13 +25,41 @@ export const EfficacyList = (props: EfficacyListProps) => {
         return damageFactors.reduce((a, b) => a * b, 1)
     }
 
-    let concreteTypes = props.types.filter(t => t.efficacies.length > 0)
+    const renderEfficacies = () => {
+        let concreteTypes = props.types.filter(t => t.efficacies.length > 0)
+        let effectiveTypeIds = props.effectiveTypes.map(t => t.id)
 
-    let effectiveTypeIds = props.effectiveTypes.map(t => t.id)
-    let efficacies = concreteTypes.map(t => ({
-        type: t,
-        efficacy: computeEfficacy(t, effectiveTypeIds)
-    }))
+        let efficacies = concreteTypes.map(t => ({
+            type: t,
+            efficacy: computeEfficacy(t, effectiveTypeIds)
+        }))
+
+        return (
+            <Segment>
+                <div className="efficacy-list">
+                    {efficacies.map(e => {
+                        let strengthClassName = ""
+                        if (e.efficacy > 1) {
+                            strengthClassName = "strong"
+                        }
+                        else if (e.efficacy < 1) {
+                            strengthClassName = "weak"
+                        }
+
+                        return (
+                            <div key={e.type.id} className="efficacy">
+                                <TypeLabel type={e.type} />
+
+                                <span className={strengthClassName}>
+                                    {e.efficacy}x
+                                </span>
+                            </div>
+                        )
+                    })}
+                </div>
+            </Segment>
+        )
+    }
 
     return (
         <Accordion className="efficacy-list-container">
@@ -41,23 +69,7 @@ export const EfficacyList = (props: EfficacyListProps) => {
             </Accordion.Title>
 
             <Accordion.Content active={active}>
-                <div className="efficacy-list">
-                    <Table>
-                        <Table.Body>
-                            {efficacies.map(e => (
-                                <Table.Row key={e.type.id}>
-                                    <Table.Cell>
-                                        <TypeLabel type={e.type} />
-                                    </Table.Cell>
-
-                                    <Table.Cell>
-                                        <span>{e.efficacy}x</span>
-                                    </Table.Cell>
-                                </Table.Row>
-                            ))}
-                        </Table.Body>
-                    </Table>
-                </div>
+                {renderEfficacies()}
             </Accordion.Content>
         </Accordion>
     )

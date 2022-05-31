@@ -5,7 +5,29 @@
     font-size: 1.2rem;
 }
 
+.ui.accordion.efficacy-list-container > .content > .ui.segment {
+    padding: 0.5em;
+}
+
 .efficacy-list {
-    height: 50vh;
-    overflow-y: scroll;
+    color: black;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    row-gap: 0.5em;
+    column-gap: 0.5em;
+}
+
+.efficacy-list > .efficacy {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0.25em;
+    border-bottom: 1px solid lightgrey;
+}
+
+.efficacy > .strong {
+    font-weight: bold;
+}
+
+.efficacy > .weak {
+    font-style: italic;
 }
