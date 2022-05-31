@@ -11,6 +11,14 @@
     overflow-y: scroll;
 }
 
+.move-filters-container {
+    display: flex;
+}
+
+.move-filters-container > :not(:first-child) {
+    margin-left: 0.5em;
+}
+
 .move-header {
     display: flex;
     align-items: center;

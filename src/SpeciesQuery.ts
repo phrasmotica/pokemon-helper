@@ -19,7 +19,7 @@ export interface PokemonForm {
     types: PokemonFormType[]
 }
 
-interface LearnMethod {
+export interface LearnMethod {
     id: number
     name: string
     names: Name[]

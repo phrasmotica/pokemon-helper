@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Accordion, Icon } from "semantic-ui-react"
 
 import { getName, groupBy } from "./Helpers"
+import { MoveLearnMethodSelector } from "./MoveLearnMethodSelector"
 import { MoveTypeSelector } from "./MoveTypeSelector"
 import { PokemonMove } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
@@ -16,7 +17,9 @@ interface MovesTableProps {
 export const MovesList = (props: MovesTableProps) => {
     const [active, setActive] = useState(false)
     const [openMoves, setOpenMoves] = useState<number[]>([])
+
     const [selectedMoveTypes, setSelectedMoveTypes] = useState<number[]>([])
+    const [selectedMoveLearnMethods, setSelectedMoveLearnMethods] = useState<number[]>([])
 
     const toggleMoveOpen = (moveId: number) => {
         let newOpenMoves = [...openMoves]
@@ -32,13 +35,20 @@ export const MovesList = (props: MovesTableProps) => {
         setOpenMoves(newOpenMoves)
     }
 
-    const showMove = (m: PokemonMove[]) => {
-        if (props.versionGroupId && !m.some(md => md.versionGroup.id === props.versionGroupId!)) {
-            return false
-        }
+    const isValidDetail = (md: PokemonMove) => (
+        !props.versionGroupId || md.versionGroup.id === props.versionGroupId!
+    )
 
-        return selectedMoveTypes.length <= 0 || selectedMoveTypes.includes(m[0]!.move.type.id)
+    const passesTypesFilter = (m: PokemonMove[]) => (
+        selectedMoveTypes.length <= 0 || selectedMoveTypes.includes(m[0]!.move.type.id)
+    )
+
+    const isValidDetailWithLearnMethod = (md: PokemonMove) => {
+        let hasLearnMethod = selectedMoveLearnMethods.length <= 0 || selectedMoveLearnMethods.includes(md.learnMethod.id)
+        return isValidDetail(md) && hasLearnMethod
     }
+
+    const passesFilters = (m: PokemonMove[]) => passesTypesFilter(m) && m.some(isValidDetailWithLearnMethod)
 
     const sortMoves = (m1: PokemonMove[], m2: PokemonMove[]) => {
         let m1FirstLearnMethod = m1[0].learnMethod.id
@@ -73,7 +83,8 @@ export const MovesList = (props: MovesTableProps) => {
     let groupedMoves = groupBy(allMoves, m => m.move.name)
 
     let uniqueMoves = Array.from(groupedMoves.values())
-    let filteredMoves = uniqueMoves.filter(showMove)
+    let relevantMoves = uniqueMoves.filter(m => m.some(isValidDetail))
+    let filteredMoves = relevantMoves.filter(passesFilters)
 
     filteredMoves.sort(sortMoves)
 
@@ -130,10 +141,19 @@ export const MovesList = (props: MovesTableProps) => {
             </Accordion.Title>
 
             <Accordion.Content active={active}>
-                <MoveTypeSelector
-                    moves={filteredMoves}
-                    selectedMoveTypes={selectedMoveTypes}
-                    setSelectedMoveTypes={setSelectedMoveTypes} />
+                <div className="move-filters-container">
+                    <MoveTypeSelector
+                        moves={relevantMoves}
+                        passesOtherFilters={m => m.some(isValidDetailWithLearnMethod)}
+                        selectedMoveTypes={selectedMoveTypes}
+                        setSelectedMoveTypes={setSelectedMoveTypes} />
+
+                    <MoveLearnMethodSelector
+                        moves={relevantMoves.filter(passesTypesFilter)}
+                        isValidDetail={isValidDetail}
+                        selectedMoveLearnMethods={selectedMoveLearnMethods}
+                        setSelectedMoveLearnMethods={setSelectedMoveLearnMethods} />
+                </div>
 
                 <Accordion className="moves-list" styled>
                     {moveAccordionItems}

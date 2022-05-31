@@ -1,24 +1,44 @@
 import { Dropdown } from "semantic-ui-react"
 
+import { Type } from "./models/Type"
+
 import { getName, uniqueBy } from "./Helpers"
 import { PokemonMove } from "./SpeciesQuery"
 
 interface MoveTypeSelectorProps {
     moves: PokemonMove[][]
+    passesOtherFilters: (m: PokemonMove[]) => boolean
     selectedMoveTypes: number[]
     setSelectedMoveTypes: (types: number[]) => void
 }
 
 export const MoveTypeSelector = (props: MoveTypeSelectorProps) => {
+    const getCount = (t: Type) => {
+        // moves passed in props already pass the version group filter
+
+        // moves that also pass the learn method filter
+        let movesWithValidDetail = props.moves.filter(props.passesOtherFilters)
+
+        // moves that also pass the learn method filter and that have this type
+        let movesWithValidDetailAndType = movesWithValidDetail.filter(m => m[0]!.move.type.id === t.id)
+
+        return movesWithValidDetailAndType.length
+    }
+
     let moveTypes = props.moves.map(m => m[0]!.move.type)
     let uniqueMoveTypes = uniqueBy(moveTypes, t => t.id)
     uniqueMoveTypes.sort((a, b) => a.id - b.id)
 
-    let typeFilterOptions = uniqueMoveTypes.map(t => ({
-        key: t.id,
-        text: getName(t) + ` (${props.moves.filter(m => m[0]!.move.type.id === t.id).length})`,
-        value: t.id,
-    }))
+    let options = uniqueMoveTypes.map(t => {
+        let count = getCount(t)
+
+        return {
+            key: t.id,
+            text: getName(t) + ` (${count})`,
+            value: t.id,
+            disabled: count <= 0,
+        }
+    })
 
     return (
         <Dropdown
@@ -28,7 +48,7 @@ export const MoveTypeSelector = (props: MoveTypeSelectorProps) => {
             search
             selection
             clearable
-            options={typeFilterOptions}
+            options={options}
             value={props.selectedMoveTypes}
             onChange={(e, data) => props.setSelectedMoveTypes(data.value as number[])} />
     )
