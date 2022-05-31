@@ -5,11 +5,39 @@
     font-size: 1.2rem;
 }
 
-.ui.table tr td.stat-header {
-    text-align: end;
-    font-weight: bold;
+.ui.accordion.stats-table-container > .content > .ui.segment {
+    padding: 0.5em;
 }
 
-.ui.progress.stat-bar {
+.stats-table {
+    display: flex;
+}
+
+.stat-headers {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-headers > .stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 1;
+    font-weight: bold;
+    color: black;
+}
+
+.stats-table > .stat-bars {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin-left: 0.5em;
+}
+
+.stats-table > .stat-bars > :not(:first-child) {
+    margin-top: 0.2em;
+}
+
+.stats-table > .stat-bars > .stat-bar > .ui.progress.stat-bar {
     margin-bottom: 0em;
 }

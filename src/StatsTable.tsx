@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Accordion, Icon, Progress, Table } from "semantic-ui-react"
+import { Accordion, Icon, Progress, Segment } from "semantic-ui-react"
 
 import { getName } from "./Helpers"
 import { PokemonStat } from "./SpeciesQuery"
@@ -22,8 +22,8 @@ export const StatsTable = (props: StatsTableProps) => {
             progress="value" />
     )
 
-    const createTotalProgressBar = () => {
-        let statTotal = props.stats.map(s => s.baseValue).reduce((a, b) => a + b, 0)
+    const createTotalProgressBar = (stats: PokemonStat[]) => {
+        let statTotal = stats.map(s => s.baseValue).reduce((a, b) => a + b, 0)
 
         return (
             <Progress
@@ -33,6 +33,36 @@ export const StatsTable = (props: StatsTableProps) => {
                 progress="value" />
         )
     }
+
+    const renderStats = (stats: PokemonStat[]) => (
+        <Segment>
+            <div className="stats-table">
+                <div className="stat-headers">
+                    {stats.map(s => (
+                        <div key={s.id} className="stat-header">
+                            <span>{getName(s.stat)}</span>
+                        </div>
+                    ))}
+
+                    <div className="stat-header">
+                        <em>Total</em>
+                    </div>
+                </div>
+
+                <div className="stat-bars">
+                    {stats.map(s => (
+                        <div className="stat-bar">
+                            {createProgressBar(s)}
+                        </div>
+                    ))}
+
+                    <div className="stat-bar">
+                        {createTotalProgressBar(stats)}
+                    </div>
+                </div>
+            </div>
+        </Segment>
+    )
 
     let hasStats = props.stats.length > 0
 
@@ -44,31 +74,7 @@ export const StatsTable = (props: StatsTableProps) => {
             </Accordion.Title>
 
             <Accordion.Content active={active && hasStats}>
-                {hasStats && <Table className="stats-table">
-                    <Table.Body>
-                        {props.stats.map(s => (
-                            <Table.Row key={s.id}>
-                                <Table.Cell className="stat-header" width={1}>
-                                    {getName(s.stat)}
-                                </Table.Cell>
-
-                                <Table.Cell width={4}>
-                                    {createProgressBar(s)}
-                                </Table.Cell>
-                            </Table.Row>
-                        ))}
-
-                        <Table.Row>
-                            <Table.Cell className="stat-header">
-                                <em>Total</em>
-                            </Table.Cell>
-
-                            <Table.Cell>
-                                {createTotalProgressBar()}
-                            </Table.Cell>
-                        </Table.Row>
-                    </Table.Body>
-                </Table>}
+                {hasStats && renderStats(props.stats)}
             </Accordion.Content>
         </Accordion>
     )
