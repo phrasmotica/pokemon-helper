@@ -26,8 +26,7 @@ const App = () => {
 
     const [history, setHistory] = useState<Species[]>([])
 
-    const { loadingSpecies, speciesData, refetchSpecies } =
-        useSpeciesQuery("piplup")
+    const { loadingSpecies, speciesData, refetchSpecies } = useSpeciesQuery("piplup")
 
     let speciesInfo = loadingSpecies ? undefined : speciesData?.speciesInfo[0]
 
@@ -57,10 +56,9 @@ const App = () => {
         }
     }, [varietyId, varieties])
 
-    const { loadingVersionGroups, versionGroupsData } =
-        useVersionGroupsQuery()
+    const { loadingVersionGroups, versionGroupsData } = useVersionGroupsQuery()
 
-    let versionGroups = versionGroupsData?.versionGroupInfo ?? []
+    let versionGroups = useMemo(() => versionGroupsData?.versionGroupInfo ?? [], [versionGroupsData])
     let disabledVersionGroups = versionGroups.filter(vg => vg.generation.id < speciesInfo!.generation.id)
     let disabledVersionGroupIds = disabledVersionGroups.map(vg => vg.id)
 
