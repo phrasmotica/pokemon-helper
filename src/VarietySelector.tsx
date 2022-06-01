@@ -22,10 +22,12 @@ export const VarietySelector = (props: VarietySelectorProps) => {
         return displayName
     }
 
-    let versionGroupOptions: DropdownItemProps[] = []
+    const isDisabled = props.varieties.length < 2
 
-    if (!props.loadingVarieties && props.species) {
-        versionGroupOptions = props.varieties.map(v => ({
+    let options: DropdownItemProps[] = []
+
+    if (!isDisabled && !props.loadingVarieties && props.species) {
+        options = props.varieties.map(v => ({
             key: v.id,
             text: getDisplayName(v),
             value: v.id,
@@ -33,16 +35,14 @@ export const VarietySelector = (props: VarietySelectorProps) => {
     }
 
     return (
-        <div className="variety-input-container">
-            <Dropdown
-                fluid
-                selection
-                loading={props.loadingVarieties}
-                placeholder="Variety..."
-                options={versionGroupOptions}
-                disabled={versionGroupOptions.length < 2}
-                value={props.variety}
-                onChange={(e, data) => props.setVariety(Number(data.value))} />
-        </div>
+        <Dropdown
+            fluid
+            selection
+            loading={props.loadingVarieties}
+            placeholder={isDisabled ? "-" : "Variety..."}
+            options={options}
+            disabled={isDisabled}
+            value={props.variety}
+            onChange={(e, data) => props.setVariety(Number(data.value))} />
     )
 }

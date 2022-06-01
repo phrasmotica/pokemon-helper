@@ -22,10 +22,12 @@ export const FormSelector = (props: FormSelectorProps) => {
         return displayName
     }
 
-    let versionGroupOptions: DropdownItemProps[] = []
+    const isDisabled = props.forms.length < 2
 
-    if (!props.loadingForms && props.species) {
-        versionGroupOptions = props.forms.map(f => ({
+    let options: DropdownItemProps[] = []
+
+    if (!isDisabled && !props.loadingForms && props.species) {
+        options = props.forms.map(f => ({
             key: f.id,
             text: getDisplayName(f),
             value: f.id,
@@ -33,16 +35,14 @@ export const FormSelector = (props: FormSelectorProps) => {
     }
 
     return (
-        <div className="form-input-container">
-            <Dropdown
-                fluid
-                selection
-                loading={props.loadingForms}
-                placeholder="Form..."
-                options={versionGroupOptions}
-                disabled={versionGroupOptions.length < 2}
-                value={props.form}
-                onChange={(e, data) => props.setForm(Number(data.value))} />
-        </div>
+        <Dropdown
+            fluid
+            selection
+            loading={props.loadingForms}
+            placeholder={isDisabled ? "-" : "Form..."}
+            options={options}
+            disabled={isDisabled}
+            value={props.form}
+            onChange={(e, data) => props.setForm(Number(data.value))} />
     )
 }
