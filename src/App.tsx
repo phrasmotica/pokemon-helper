@@ -59,7 +59,7 @@ const App = () => {
     const { loadingVersionGroups, versionGroupsData } = useVersionGroupsQuery()
 
     let versionGroups = useMemo(() => versionGroupsData?.versionGroupInfo ?? [], [versionGroupsData])
-    let disabledVersionGroups = versionGroups.filter(vg => vg.generation.id < speciesInfo!.generation.id)
+    let disabledVersionGroups = speciesInfo ? versionGroups.filter(vg => vg.generation.id < speciesInfo!.generation.id) : []
     let disabledVersionGroupIds = disabledVersionGroups.map(vg => vg.id)
 
     useEffect(() => {
