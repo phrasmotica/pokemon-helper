@@ -1,29 +1,34 @@
-import { useState } from "react"
-import { Button, Input } from "semantic-ui-react"
+import { Dropdown } from "semantic-ui-react"
+
+import { getName } from "./Helpers"
+import { useSpeciesOptionsQuery } from "./SpeciesOptionsQuery"
+import { Species } from "./SpeciesQuery"
 
 interface SpeciesSelectorProps {
+    species: Species | undefined
     loadingSpecies: boolean
     findSpecies: (species: string) => void
 }
 
 export const SpeciesSelector = (props: SpeciesSelectorProps) => {
-    const [species, setSpecies] = useState("")
+    const { loadingSpeciesOptions, speciesOptionsData } = useSpeciesOptionsQuery()
+
+    let options = (speciesOptionsData?.speciesOptions ?? []).map(s => ({
+        key: s.name,
+        text: getName(s),
+        value: s.name,
+    }))
 
     return (
-        <div className="species-input-container">
-            <Input
-                fluid
-                className="species-input"
-                placeholder="Species..."
-                loading={props.loadingSpecies}
-                value={species}
-                onChange={(e, data) => setSpecies(data.value)} />
-
-            <div className="find-button-container">
-                <Button onClick={() => props.findSpecies(species)}>
-                    Find
-                </Button>
-            </div>
-        </div>
+        <Dropdown
+            fluid
+            selection
+            search
+            className="species-input"
+            loading={props.loadingSpecies || loadingSpeciesOptions}
+            placeholder="Species..."
+            options={options}
+            value={props.species?.name}
+            onChange={(e, data) => props.findSpecies(data.value as string)} />
     )
 }

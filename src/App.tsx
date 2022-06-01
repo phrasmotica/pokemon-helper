@@ -110,6 +110,7 @@ const App = () => {
                             <Accordion.Content active={searchActive}>
                                 <div className="selectors-container">
                                     <SpeciesSelector
+                                        species={speciesInfo}
                                         loadingSpecies={loadingSpecies}
                                         findSpecies={refetchSpecies} />
 
