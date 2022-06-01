@@ -6,9 +6,11 @@ import reportWebVitals from "./reportWebVitals"
 
 import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client"
 
+const apiUrl = process.env.REACT_APP_API_URL || "https://beta.pokeapi.co/graphql/v1beta"
+
 const client = new ApolloClient({
     cache: new InMemoryCache(),
-    uri: "https://beta.pokeapi.co/graphql/v1beta",
+    uri: apiUrl,
 })
 
 ReactDOM.render(
