@@ -26,6 +26,7 @@ export const VersionGroupSelector = (props: VersionGroupSelectorProps) => {
         <Dropdown
             fluid
             selection
+            search
             loading={props.loadingVersionGroups}
             placeholder="Version group..."
             options={versionGroupOptions}
