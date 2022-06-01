@@ -60,8 +60,8 @@ const App = () => {
     const { loadingVersionGroups, versionGroupsData } =
         useVersionGroupsQuery()
 
-    let versionGroups = versionGroupsData?.versionGroupInfo
-    let disabledVersionGroups = versionGroups?.filter(vg => vg.generation.id < speciesInfo!.generation.id) ?? []
+    let versionGroups = versionGroupsData?.versionGroupInfo ?? []
+    let disabledVersionGroups = versionGroups.filter(vg => vg.generation.id < speciesInfo!.generation.id)
     let disabledVersionGroupIds = disabledVersionGroups.map(vg => vg.id)
 
     useEffect(() => {
