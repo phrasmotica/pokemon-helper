@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Accordion, Icon } from "semantic-ui-react"
+import { Accordion, Icon, Input } from "semantic-ui-react"
 
 import { getName, groupBy, sortMoves } from "./Helpers"
 import { MoveLearnMethodSelector } from "./MoveLearnMethodSelector"
@@ -18,6 +18,7 @@ export const MovesList = (props: MovesTableProps) => {
     const [active, setActive] = useState(false)
     const [openMoves, setOpenMoves] = useState<number[]>([])
 
+    const [searchTerm, setSearchTerm] = useState("")
     const [selectedMoveTypes, setSelectedMoveTypes] = useState<number[]>([])
     const [selectedMoveLearnMethods, setSelectedMoveLearnMethods] = useState<number[]>([])
 
@@ -39,6 +40,11 @@ export const MovesList = (props: MovesTableProps) => {
         !props.versionGroupId || md.versionGroup.id === props.versionGroupId!
     )
 
+    const matchesSearchTerm = (m: PokemonMove[]) => (
+        // TODO: match using fuzzy search package
+        getName(m[0]!.move).toLowerCase().includes(searchTerm.toLowerCase())
+    )
+
     const passesTypesFilter = (m: PokemonMove[]) => (
         selectedMoveTypes.length <= 0 || selectedMoveTypes.includes(m[0]!.move.type.id)
     )
@@ -48,7 +54,7 @@ export const MovesList = (props: MovesTableProps) => {
         return isValidDetail(md) && hasLearnMethod
     }
 
-    const passesFilters = (m: PokemonMove[]) => passesTypesFilter(m) && m.some(isValidDetailWithLearnMethod)
+    const passesFilters = (m: PokemonMove[]) => matchesSearchTerm(m) && passesTypesFilter(m) && m.some(isValidDetailWithLearnMethod)
 
     const getDisplayText = (md: PokemonMove, index: number) => {
         let learnMethodText = getName(md.learnMethod)
@@ -115,6 +121,9 @@ export const MovesList = (props: MovesTableProps) => {
         }
     }
 
+    // TODO: update MoveTypeSelector and MoveLearnMethodSelector so that they only consider
+    // moves that also pass the search filter
+
     return (
         <Accordion className="moves-list-container">
             <Accordion.Title active={active} onClick={() => setActive(!active)}>
@@ -124,6 +133,11 @@ export const MovesList = (props: MovesTableProps) => {
 
             <Accordion.Content active={active}>
                 <div className="move-filters-container">
+                    <Input
+                        placeholder="Search..."
+                        value={searchTerm}
+                        onChange={(e, data) => setSearchTerm(data.value)} />
+
                     <MoveTypeSelector
                         moves={relevantMoves}
                         passesOtherFilters={m => m.some(isValidDetailWithLearnMethod)}
