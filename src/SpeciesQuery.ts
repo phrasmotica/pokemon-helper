@@ -219,7 +219,7 @@ const getSpeciesQuery = gql`
 `
 
 export const useSpeciesQuery = (speciesName: string) => {
-    const { loading, error, data, refetch } = useQuery<SpeciesData, SpeciesVars>(
+    const { loading, error, data } = useQuery<SpeciesData, SpeciesVars>(
         getSpeciesQuery,
         {
             variables: {
@@ -229,15 +229,9 @@ export const useSpeciesQuery = (speciesName: string) => {
         }
     )
 
-    const refetchSpecies = (speciesName: string) => refetch({
-        speciesName: speciesName,
-        languageId: 9,
-    })
-
     return {
         loadingSpecies: loading,
-        error,
+        speciesDataError: error,
         speciesData: data,
-        refetchSpecies
     }
 }

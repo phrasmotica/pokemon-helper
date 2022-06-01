@@ -36,7 +36,7 @@ const getVersionGroupsQuery = gql`
 `
 
 export const useVersionGroupsQuery = () => {
-    const { loading, error, data, refetch } = useQuery<VersionGroupData, VersionGroupVars>(
+    const { loading, error, data } = useQuery<VersionGroupData, VersionGroupVars>(
         getVersionGroupsQuery,
         {
             variables: {
@@ -45,14 +45,9 @@ export const useVersionGroupsQuery = () => {
         }
     )
 
-    const refetchVersionGroups = () => refetch({
-        languageId: 9,
-    })
-
     return {
         loadingVersionGroups: loading,
         versionGroupsError: error,
         versionGroupsData: data,
-        refetchVersionGroups
     }
 }

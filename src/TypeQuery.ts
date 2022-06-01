@@ -39,7 +39,7 @@ const getTypesQuery = gql`
 `
 
 export const useTypesQuery = () => {
-    const { loading, error, data, refetch } = useQuery<TypeData, TypeVars>(
+    const { loading, error, data } = useQuery<TypeData, TypeVars>(
         getTypesQuery,
         {
             variables: {
@@ -48,14 +48,9 @@ export const useTypesQuery = () => {
         }
     )
 
-    const refetchTypes = () => refetch({
-        languageId: 9,
-    })
-
     return {
         loadingTypes: loading,
         typesError: error,
         typesData: data,
-        refetchTypes
     }
 }

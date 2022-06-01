@@ -7,7 +7,7 @@ import { Species } from "./SpeciesQuery"
 interface SpeciesSelectorProps {
     species: Species | undefined
     loadingSpecies: boolean
-    findSpecies: (species: string) => void
+    setSpecies: (species: string) => void
 }
 
 export const SpeciesSelector = (props: SpeciesSelectorProps) => {
@@ -29,6 +29,6 @@ export const SpeciesSelector = (props: SpeciesSelectorProps) => {
             placeholder="Species..."
             options={options}
             value={props.species?.name}
-            onChange={(e, data) => props.findSpecies(data.value as string)} />
+            onChange={(e, data) => props.setSpecies(data.value as string)} />
     )
 }

@@ -20,13 +20,14 @@ import "./App.css"
 const App = () => {
     const [searchActive, setSearchActive] = useState(true)
 
+    const [speciesName, setSpeciesName] = useState("piplup")
     const [varietyId, setVarietyId] = useState<number>()
     const [formId, setFormId] = useState<number>()
     const [versionGroupId, setVersionGroupId] = useState<number>()
 
     const [history, setHistory] = useState<Species[]>([])
 
-    const { loadingSpecies, speciesData, refetchSpecies } = useSpeciesQuery("piplup")
+    const { loadingSpecies, speciesData } = useSpeciesQuery(speciesName)
 
     let speciesInfo = loadingSpecies ? undefined : speciesData?.speciesInfo[0]
 
@@ -112,7 +113,7 @@ const App = () => {
                                     <SpeciesSelector
                                         species={speciesInfo}
                                         loadingSpecies={loadingSpecies}
-                                        findSpecies={refetchSpecies} />
+                                        setSpecies={setSpeciesName} />
 
                                     <VarietySelector
                                         species={speciesInfo}
@@ -139,7 +140,7 @@ const App = () => {
 
                                 <HistoryMenu
                                     history={history}
-                                    findSpecies={refetchSpecies} />
+                                    setSpecies={setSpeciesName} />
                             </Accordion.Content>
                         </Accordion>
                     </div>
