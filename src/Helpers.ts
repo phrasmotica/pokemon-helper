@@ -50,14 +50,19 @@ export const uniqueBy = <T>(arr: T[], func: (x: T) => string | number) => [
     ...new Map(arr.map(x => [func(x), x])).values()
 ]
 
+/**
+ * Moves the given element of the given array to the start of the array.
+ */
 export const moveToFront = <T>(arr: T[], elem: T) => {
-    let index = arr.indexOf(elem)
+    let newArr = [...arr]
+
+    let index = newArr.indexOf(elem)
     if (index > 0) {
-        arr.splice(index, 1)
-        arr.unshift(elem)
+        newArr.splice(index, 1)
+        newArr.unshift(elem)
     }
 
-    return arr
+    return newArr
 }
 
 export const getGenus = (x: Species) => x.names[0]!.genus
