@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Image, Segment } from "semantic-ui-react"
+import { Checkbox, Image, Segment } from "semantic-ui-react"
 
 import { VersionGroup } from "./models/VersionGroup"
 
@@ -18,12 +18,14 @@ interface BasicInfoProps {
 
 interface HasSprite {
     sprites: {
-        front_default: string
+        front_default: string,
+        front_shiny: string,
     }
 }
 
 export const BasicInfo = (props: BasicInfoProps) => {
-    const [sprite, setSprite] = useState("")
+    const [sprite, setSprite] = useState<HasSprite>()
+    const [showShiny, setShowShiny] = useState(false)
 
     useEffect(() => {
         if (props.form && !props.form.isDefault) {
@@ -33,20 +35,20 @@ export const BasicInfo = (props: BasicInfoProps) => {
             fetchSprite(props.variety.name)
         }
         else {
-            setSprite("")
+            setSprite(undefined)
         }
     }, [props.variety, props.form])
 
     const fetchFormSprite = (formName: string) => {
         fetch(`https://pokeapi.co/api/v2/pokemon-form/${formName}`)
             .then(res => res.json())
-            .then((p: HasSprite) => setSprite(p.sprites.front_default))
+            .then(setSprite)
     }
 
     const fetchSprite = (pokemonName: string) => {
         fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
             .then(res => res.json())
-            .then((p: HasSprite) => setSprite(p.sprites.front_default))
+            .then(setSprite)
     }
 
     let species = props.speciesInfo
@@ -98,8 +100,13 @@ export const BasicInfo = (props: BasicInfoProps) => {
                 </div>
             </div>
 
-            <div>
-                <Image src={sprite} />
+            <div className="sprite-container">
+                <Image src={showShiny ? sprite?.sprites.front_shiny : sprite?.sprites.front_default} />
+
+                <Checkbox
+                    toggle
+                    label="Shiny"
+                    onChange={(e, data) => setShowShiny(data.checked ?? false)} />
             </div>
         </Segment>
     )

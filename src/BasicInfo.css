@@ -17,3 +17,7 @@
 .basic-info .type-labels-container > :not(:first-child) {
     margin-left: 0.2em;
 }
+
+.basic-info .sprite-container > :not(:first-child) {
+    margin-top: 0.5em;
+}
