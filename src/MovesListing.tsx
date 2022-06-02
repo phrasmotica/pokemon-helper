@@ -13,7 +13,7 @@ interface MovesListingProps {
 }
 
 export const MovesListing = (props: MovesListingProps) => {
-    const [active, setActive] = useState(false)
+    const [active, setActive] = useState(true)
 
     const isValidDetail = (md: PokemonMove) => (
         !props.versionGroupId || md.versionGroup.id === props.versionGroupId!

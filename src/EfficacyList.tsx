@@ -14,7 +14,7 @@ interface EfficacyListProps {
 }
 
 export const EfficacyList = (props: EfficacyListProps) => {
-    const [active, setActive] = useState(false)
+    const [active, setActive] = useState(true)
 
     const getDamageFactor = (type: TypeWithEfficacies, targetTypeId: number) => {
         return (type.efficacies.find(t => t.targetTypeId === targetTypeId)?.damageFactor ?? 100) / 100
