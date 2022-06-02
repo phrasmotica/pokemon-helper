@@ -121,9 +121,6 @@ export const MovesList = (props: MovesTableProps) => {
         }
     }
 
-    // TODO: update MoveTypeSelector and MoveLearnMethodSelector so that they only consider
-    // moves that also pass the search filter
-
     return (
         <Accordion className="moves-list-container">
             <Accordion.Title active={active} onClick={() => setActive(!active)}>
@@ -140,12 +137,13 @@ export const MovesList = (props: MovesTableProps) => {
 
                     <MoveTypeSelector
                         moves={relevantMoves}
-                        passesOtherFilters={m => m.some(isValidDetailWithLearnMethod)}
+                        passesOtherFilters={m => matchesSearchTerm(m) && m.some(isValidDetailWithLearnMethod)}
                         selectedMoveTypes={selectedMoveTypes}
                         setSelectedMoveTypes={setSelectedMoveTypes} />
 
                     <MoveLearnMethodSelector
-                        moves={relevantMoves.filter(passesTypesFilter)}
+                        moves={relevantMoves}
+                        passesOtherFilters={m => matchesSearchTerm(m) && passesTypesFilter(m)}
                         isValidDetail={isValidDetail}
                         selectedMoveLearnMethods={selectedMoveLearnMethods}
                         setSelectedMoveLearnMethods={setSelectedMoveLearnMethods} />

@@ -5,6 +5,7 @@ import { LearnMethod, PokemonMove } from "./SpeciesQuery"
 
 interface MoveLearnMethodSelectorProps {
     moves: PokemonMove[][]
+    passesOtherFilters: (m: PokemonMove[]) => boolean
     isValidDetail: (md: PokemonMove) => boolean
     selectedMoveLearnMethods: number[]
     setSelectedMoveLearnMethods: (types: number[]) => void
@@ -16,10 +17,10 @@ export const MoveLearnMethodSelector = (props: MoveLearnMethodSelectorProps) => 
     )
 
     const getCount = (lm: LearnMethod) => {
-        // moves passed in props already pass the version group filter and types filter
+        let movesPassingOtherFilters = props.moves.filter(props.passesOtherFilters)
 
         // moves that also have this learn method
-        let movesWithValidTypeAndLearnMethod = props.moves.filter(m => m.some(md => isValidDetailWithLearnMethod(md, lm)))
+        let movesWithValidTypeAndLearnMethod = movesPassingOtherFilters.filter(m => m.some(md => isValidDetailWithLearnMethod(md, lm)))
 
         return movesWithValidTypeAndLearnMethod.length
     }
