@@ -12,15 +12,9 @@ interface FormSelectorProps {
 }
 
 export const FormSelector = (props: FormSelectorProps) => {
-    const getDisplayName = (f: PokemonForm) => {
-        let displayName = getName(props.species!)
-
-        if (!f.isDefault) {
-            displayName += " (" + (getName(f) || f.name) + ")"
-        }
-
-        return displayName
-    }
+    const getDisplayName = (f: PokemonForm) => (
+        getName(props.species!) + " (" + (getName(f) || "default") + ")"
+    )
 
     const isDisabled = props.forms.length < 2
 

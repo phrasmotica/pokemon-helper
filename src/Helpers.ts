@@ -67,13 +67,9 @@ export const moveToFront = <T>(arr: T[], elem: T) => {
 
 export const getGenus = (x: Species) => x.names[0]!.genus
 
-export const getName = (x: { names: Name[] }) => x.names[0]!.name
+export const getName = (x: { names: Name[] }) => x.names[0]?.name ?? ""
 
 export const getVarietyName = (v: Variety) => {
-    if (v.isDefault) {
-        return ""
-    }
-
     let formName = ""
 
     let form = v.forms[0]!
@@ -97,10 +93,6 @@ export const getDisplayText = (md: PokemonMove) => {
 
 /**
  * Returns the effective type of a Pokemon in the given version group.
- * @param variety
- * @param form
- * @param versionGroup
- * @returns
  */
 export const getEffectiveTypes = (variety: Variety | undefined, form: PokemonForm | undefined, versionGroup: VersionGroup | undefined) => {
     if (!variety || !form) {

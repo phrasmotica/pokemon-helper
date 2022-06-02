@@ -12,15 +12,9 @@ interface VarietySelectorProps {
 }
 
 export const VarietySelector = (props: VarietySelectorProps) => {
-    const getDisplayName = (v: Variety) => {
-        let displayName = getName(props.species!)
-
-        if (!v.isDefault) {
-            displayName += " (" + (getVarietyName(v) || "???") + ")"
-        }
-
-        return displayName
-    }
+    const getDisplayName = (v: Variety) => (
+        getName(props.species!) + " (" + (getVarietyName(v) || "default") + ")"
+    )
 
     const isDisabled = props.varieties.length < 2
 
