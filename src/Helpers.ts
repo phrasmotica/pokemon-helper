@@ -3,6 +3,12 @@ import { VersionGroup } from "./models/VersionGroup"
 import { PokemonForm, PokemonMove, Species, Variety } from "./SpeciesQuery"
 
 /**
+ * Returns an array of consecutive integers of a given length.
+ * Taken from https://stackoverflow.com/a/29559488
+ */
+export const range = (start: number, length: number) => Array(length).fill(0).map((_, i) => i + start)
+
+/**
  * Groups elements of the given array by the given key function, and returns the
  * grouping as a Map<string, T[]>.
  * Taken from https://stackoverflow.com/a/47752730

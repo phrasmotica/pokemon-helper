@@ -4,7 +4,7 @@ import { Accordion, Icon } from "semantic-ui-react"
 import { BasicInfo } from "./BasicInfo"
 import { EfficacyList } from "./EfficacyList"
 import { FormSelector } from "./FormSelector"
-import { getEffectiveTypes } from "./Helpers"
+import { getEffectiveTypes, range } from "./Helpers"
 import { HistoryMenu } from "./HistoryMenu"
 import { MovesList } from "./MovesList"
 import { Species, useSpeciesQuery } from "./SpeciesQuery"
@@ -87,7 +87,17 @@ const App = () => {
     let forms = variety?.forms ?? []
     let form = forms.find(f => f.id === formId)
 
-    let versionGroup = versionGroupsData?.versionGroupInfo.find(vg => vg.id === versionGroupId)
+    if (form?.formName === "gmax") {
+        // version groups before gen 8 are invalid
+        disabledVersionGroupIds = [...new Set([...disabledVersionGroupIds, ...range(1, 19)])]
+    }
+
+    if (form?.formName === "mega") {
+        // version groups before gen 6 are invalid
+        disabledVersionGroupIds = [...new Set([...disabledVersionGroupIds, ...range(1, 14)])]
+    }
+
+    let versionGroup = versionGroups.find(vg => vg.id === versionGroupId)
 
     let effectiveTypes = getEffectiveTypes(variety, form, versionGroup)
     let moves = variety?.moves ?? []
