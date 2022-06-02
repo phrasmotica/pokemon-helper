@@ -9,12 +9,12 @@ import { TypeLabel } from "./TypeLabel"
 
 import "./MovesList.css"
 
-interface MovesTableProps {
+interface MovesListProps {
     moves: PokemonMove[]
     versionGroupId: number | undefined
 }
 
-export const MovesList = (props: MovesTableProps) => {
+export const MovesList = (props: MovesListProps) => {
     const [active, setActive] = useState(false)
     const [openMoves, setOpenMoves] = useState<number[]>([])
 
@@ -86,13 +86,8 @@ export const MovesList = (props: MovesTableProps) => {
     for (let moveDetails of filteredMoves) {
         let moveId = moveDetails[0]!.move.id
 
-        let filteredMoveDetails = moveDetails
-        if (props.versionGroupId !== undefined) {
-            filteredMoveDetails = filteredMoveDetails.filter(md => md.versionGroup.id === props.versionGroupId)
-        }
-
-        if (filteredMoveDetails.length > 0) {
-            let exampleMoveDetail = filteredMoveDetails[0]!
+        if (moveDetails.length > 0) {
+            let exampleMoveDetail = moveDetails[0]!
             let move = exampleMoveDetail.move
 
             moveAccordionItems.push(
@@ -109,7 +104,7 @@ export const MovesList = (props: MovesTableProps) => {
                         </div>
                     </div>
 
-                    <span><em>{filteredMoveDetails.length} detail(s)</em></span>
+                    <span><em>{moveDetails.length} detail(s)</em></span>
                 </Accordion.Title>
             )
 
@@ -119,7 +114,7 @@ export const MovesList = (props: MovesTableProps) => {
                     className="move-content"
                     active={openMoves.includes(moveId)}>
                     <div>
-                        {filteredMoveDetails.map((md, i) => <span key={md.id}>{getDisplayText(md, i)}</span>)}
+                        {moveDetails.map((md, i) => <span key={md.id}>{getDisplayText(md, i)}</span>)}
                     </div>
                 </Accordion.Content>
             )
