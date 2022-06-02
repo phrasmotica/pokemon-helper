@@ -33,12 +33,13 @@ const App = () => {
 
     useEffect(() => {
         if (speciesInfo) {
-            if (!history.some(s => s.name === speciesInfo!.name)) {
-                setHistory([speciesInfo, ...history])
-            }
-            else {
-                setHistory(moveToFront(history, speciesInfo))
-            }
+            setHistory(h => {
+                if (!h.some(s => s.name === speciesInfo!.name)) {
+                    return [speciesInfo!, ...h]
+                }
+
+                return moveToFront(h, speciesInfo!)
+            })
 
             let firstVariety = speciesInfo.varieties[0]
             if (firstVariety) {
@@ -50,7 +51,7 @@ const App = () => {
                 }
             }
         }
-    }, [speciesData, history, speciesInfo])
+    }, [speciesData, speciesInfo])
 
     let varieties = useMemo(() => speciesInfo?.varieties ?? [], [speciesInfo])
 
