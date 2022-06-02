@@ -51,7 +51,7 @@ export const StatsTable = (props: StatsTableProps) => {
 
                 <div className="stat-bars">
                     {stats.map(s => (
-                        <div className="stat-bar">
+                        <div key={s.id} className="stat-bar">
                             {createProgressBar(s)}
                         </div>
                     ))}
