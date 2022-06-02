@@ -148,3 +148,5 @@ const sortMoveDetails = (md1: PokemonMove, md2: PokemonMove) => {
 
     return getName(md1.move).localeCompare(getName(md1.move))
 }
+
+export const sortById = (a: { id: number }, b: { id: number }) => a.id - b.id

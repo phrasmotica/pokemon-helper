@@ -1,6 +1,6 @@
 import { Dropdown } from "semantic-ui-react"
 
-import { getName, uniqueBy } from "./Helpers"
+import { getName, sortById, uniqueBy } from "./Helpers"
 import { LearnMethod, PokemonMove } from "./SpeciesQuery"
 
 interface MoveLearnMethodSelectorProps {
@@ -27,7 +27,7 @@ export const MoveLearnMethodSelector = (props: MoveLearnMethodSelectorProps) => 
 
     let moveLearnMethods = props.moves.flatMap(m => m).map(md => md.learnMethod)
     let uniqueMoveLearnMethods = uniqueBy(moveLearnMethods, lm => lm.id)
-    uniqueMoveLearnMethods.sort((a, b) => a.id - b.id)
+    uniqueMoveLearnMethods.sort(sortById)
 
     let options = uniqueMoveLearnMethods.map(lm => {
         let count = getCount(lm)

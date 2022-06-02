@@ -2,7 +2,7 @@ import { Dropdown } from "semantic-ui-react"
 
 import { Type } from "./models/Type"
 
-import { getName, uniqueBy } from "./Helpers"
+import { getName, sortById, uniqueBy } from "./Helpers"
 import { PokemonMove } from "./SpeciesQuery"
 
 interface MoveTypeSelectorProps {
@@ -27,7 +27,7 @@ export const MoveTypeSelector = (props: MoveTypeSelectorProps) => {
 
     let moveTypes = props.moves.map(m => m[0]!.move.type)
     let uniqueMoveTypes = uniqueBy(moveTypes, t => t.id)
-    uniqueMoveTypes.sort((a, b) => a.id - b.id)
+    uniqueMoveTypes.sort(sortById)
 
     let options = uniqueMoveTypes.map(t => {
         let count = getCount(t)
