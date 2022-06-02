@@ -79,6 +79,7 @@ export const BasicInfo = (props: BasicInfoProps) => {
     }
 
     let name = getName(species)
+    let formName = getName(form)
     let genus = getGenus(species)
     let effectiveTypes = getEffectiveTypes(variety, form, props.versionGroup)
 
@@ -92,6 +93,8 @@ export const BasicInfo = (props: BasicInfoProps) => {
                         (&#x00023;{species.order})
                     </span>
                 </h2>
+
+                {formName.length > 0 && <p>{formName}</p>}
 
                 {genus.length > 0 && <p>{genus}</p>}
 
