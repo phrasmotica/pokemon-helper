@@ -129,7 +129,7 @@ const App = () => {
                                 active={searchActive}
                                 onClick={() => setSearchActive(!searchActive)}>
                                 <Icon name="dropdown" />
-                                Search
+                                Select Pokemon
                             </Accordion.Title>
 
                             <Accordion.Content active={searchActive}>
