@@ -86,6 +86,15 @@ export const getVarietyName = (v: Variety) => {
 
 export const getVersionGroupName = (versionGroup: VersionGroup) => versionGroup.versions.map(getName).join("/")
 
+export const getDisplayText = (md: PokemonMove) => {
+    let learnMethodText = getName(md.learnMethod)
+    if (md.learnMethod.id === 1) {
+        learnMethodText = `Level ${md.level}`
+    }
+
+    return learnMethodText
+}
+
 /**
  * Returns the effective type of a Pokemon in the given version group.
  * @param variety
@@ -136,7 +145,7 @@ export const sortMoves = (m1: PokemonMove[], m2: PokemonMove[]) => {
 /**
  * Sorts the given move details.
  */
-const sortMoveDetails = (md1: PokemonMove, md2: PokemonMove) => {
+export const sortMoveDetails = (md1: PokemonMove, md2: PokemonMove) => {
     if (md1.learnMethod.id !== md2.learnMethod.id) {
         return md1.learnMethod.id - md2.learnMethod.id
     }

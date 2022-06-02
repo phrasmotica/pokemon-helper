@@ -1,0 +1,13 @@
+.move-details-list {
+    color: black;
+}
+
+.move-details-list .item > .move-detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.move-name-container > .ui.label.type-label {
+    margin-left: 0.5em;
+}
