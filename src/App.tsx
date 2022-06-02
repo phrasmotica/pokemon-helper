@@ -6,7 +6,7 @@ import { EfficacyList } from "./EfficacyList"
 import { FormSelector } from "./FormSelector"
 import { getEffectiveTypes, moveToFront, range } from "./Helpers"
 import { HistoryMenu } from "./HistoryMenu"
-import { MovesList } from "./MovesList"
+import { MovesListing } from "./MovesListing"
 import { Species, useSpeciesQuery } from "./SpeciesQuery"
 import { SpeciesSelector } from "./SpeciesSelector"
 import { StatsTable } from "./StatsTable"
@@ -173,7 +173,7 @@ const App = () => {
 
                             <EfficacyList types={typesData?.typeInfo ?? []} effectiveTypes={effectiveTypes} />
 
-                            <MovesList moves={moves} versionGroupId={versionGroupId} />
+                            <MovesListing moves={moves} versionGroupId={versionGroupId} />
                         </div>
                     </div>
                 </div>

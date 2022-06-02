@@ -1,0 +1,12 @@
+.ui.accordion.moves-listing-container > .title {
+    text-align: start;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.move-details-list-container {
+    width: unset;
+    max-height: 50vh;
+    overflow-y: scroll;
+}
