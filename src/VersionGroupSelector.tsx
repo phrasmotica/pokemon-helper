@@ -5,6 +5,8 @@ import { VersionGroup } from "./models/VersionGroup"
 import { getVersionGroupName } from "./Helpers"
 import { Species } from "./SpeciesQuery"
 
+import "./VersionGroupSelector.css"
+
 interface VersionGroupSelectorProps {
     species: Species | undefined
     loadingVersionGroups: boolean
@@ -23,14 +25,18 @@ export const VersionGroupSelector = (props: VersionGroupSelectorProps) => {
     }))
 
     return (
-        <Dropdown
-            fluid
-            selection
-            search
-            loading={props.loadingVersionGroups}
-            placeholder="Version group..."
-            options={versionGroupOptions}
-            value={props.versionGroupId}
-            onChange={(e, data) => props.setVersionGroupId(Number(data.value))} />
+        <div className="version-group-selector-container">
+            <h4>Version Group</h4>
+
+            <Dropdown
+                fluid
+                selection
+                search
+                loading={props.loadingVersionGroups}
+                placeholder="Version group..."
+                options={versionGroupOptions}
+                value={props.versionGroupId}
+                onChange={(e, data) => props.setVersionGroupId(Number(data.value))} />
+        </div>
     )
 }

@@ -115,6 +115,14 @@ const App = () => {
 
                 <div className="main-container">
                     <div className="control-container">
+                        <VersionGroupSelector
+                            species={speciesInfo}
+                            loadingVersionGroups={loadingVersionGroups}
+                            versionGroups={versionGroups}
+                            versionGroupId={versionGroupId}
+                            disabledVersionGroupIds={disabledVersionGroupIds}
+                            setVersionGroupId={setVersionGroupId} />
+
                         <Accordion className="input-container">
                             <Accordion.Title
                                 active={searchActive}
@@ -143,14 +151,6 @@ const App = () => {
                                         forms={forms}
                                         form={formId}
                                         setForm={setFormId} />
-
-                                    <VersionGroupSelector
-                                        species={speciesInfo}
-                                        loadingVersionGroups={loadingVersionGroups}
-                                        versionGroups={versionGroupsData?.versionGroupInfo ?? []}
-                                        versionGroupId={versionGroupId}
-                                        disabledVersionGroupIds={disabledVersionGroupIds}
-                                        setVersionGroupId={setVersionGroupId} />
                                 </div>
 
                                 <HistoryMenu
