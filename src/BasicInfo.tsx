@@ -3,7 +3,7 @@ import { Image, Segment } from "semantic-ui-react"
 
 import { VersionGroup } from "./models/VersionGroup"
 
-import { getEffectiveTypes, getName, getVarietyName } from "./Helpers"
+import { getEffectiveTypes, getGenus, getName } from "./Helpers"
 import { PokemonForm, Species, Variety } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
@@ -77,16 +77,25 @@ export const BasicInfo = (props: BasicInfoProps) => {
     }
 
     let name = getName(species)
-    let formName = getVarietyName(variety)
+    let genus = getGenus(species)
     let effectiveTypes = getEffectiveTypes(variety, form, props.versionGroup)
 
     return (
         <Segment className="basic-info">
             <div>
-                <h2>{name} <span className="species-order">(&#x00023;{species.order})</span></h2>
-                {formName.length > 0 && <p>{formName}</p>}
+                <h2 className="species-name">
+                    {name}&nbsp;
 
-                {effectiveTypes.map(t => <TypeLabel key={t.id} type={t} size="big" />)}
+                    <span className="species-order">
+                        (&#x00023;{species.order})
+                    </span>
+                </h2>
+
+                {genus.length > 0 && <p>{genus}</p>}
+
+                <div className="type-labels-container">
+                    {effectiveTypes.map(t => <TypeLabel key={t.id} type={t} size="big" />)}
+                </div>
             </div>
 
             <div>

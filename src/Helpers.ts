@@ -1,6 +1,6 @@
 import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
-import { PokemonForm, PokemonMove, Variety } from "./SpeciesQuery"
+import { PokemonForm, PokemonMove, Species, Variety } from "./SpeciesQuery"
 
 /**
  * Groups elements of the given array by the given key function, and returns the
@@ -19,6 +19,8 @@ export const groupBy = <T>(arr: T[], func: (x: T) => string) => arr.reduce(
 export const uniqueBy = <T>(arr: T[], func: (x: T) => string | number) => [
     ...new Map(arr.map(x => [func(x), x])).values()
 ]
+
+export const getGenus = (x: Species) => x.names[0]!.genus
 
 export const getName = (x: { names: Name[] }) => x.names[0]!.name
 

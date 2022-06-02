@@ -5,6 +5,10 @@ import { Name } from "./models/Name"
 import { Type } from "./models/Type"
 import { VersionGroup } from "./models/VersionGroup"
 
+type SpeciesName = Name & {
+    genus: string
+}
+
 interface PokemonFormType {
     id: number
     type: Type
@@ -78,7 +82,7 @@ export interface Species {
     id: number
     name: string
     order: number
-    names: Name[]
+    names: SpeciesName[]
     generation: Generation
     varieties: Variety[]
 }
@@ -101,6 +105,7 @@ const getSpeciesQuery = gql`
             names: pokemon_v2_pokemonspeciesnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
                 id
                 name
+                genus
             }
             generation: pokemon_v2_generation {
                 id
