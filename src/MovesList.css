@@ -9,14 +9,31 @@
     width: unset;
     height: 50vh;
     overflow-y: scroll;
+    margin-top: 0.5em;
 }
 
 .move-filters-container {
     display: flex;
 }
 
+.move-filters-container > * {
+    flex: 1;
+}
+
 .move-filters-container > :not(:first-child) {
     margin-left: 0.5em;
+}
+
+
+@media only screen and (max-width: 900px) {
+    .move-filters-container {
+        display: unset;
+    }
+
+    .move-filters-container > :not(:first-child) {
+        margin-left: 0em;
+        margin-top: 0.5em;
+    }
 }
 
 .move-header {

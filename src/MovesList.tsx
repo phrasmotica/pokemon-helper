@@ -131,6 +131,7 @@ export const MovesList = (props: MovesTableProps) => {
             <Accordion.Content active={active}>
                 <div className="move-filters-container">
                     <Input
+                        fluid
                         placeholder="Search..."
                         value={searchTerm}
                         onChange={(e, data) => setSearchTerm(data.value)} />
