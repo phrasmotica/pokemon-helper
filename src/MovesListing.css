@@ -1,3 +1,7 @@
+.ui.accordion.moves-listing-container {
+    color: black;
+}
+
 .ui.accordion.moves-listing-container > .title {
     text-align: start;
     color: white;

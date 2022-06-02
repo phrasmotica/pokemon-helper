@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Accordion, Icon, Tab } from "semantic-ui-react"
+import { Accordion, Icon, Segment, Tab } from "semantic-ui-react"
 import { getName, sortById, uniqueBy } from "./Helpers"
 
 import { MoveDetailsList } from "./MoveDetailsList"
@@ -35,6 +35,12 @@ export const MovesListing = (props: MovesListingProps) => {
         </Tab.Pane>,
     }))
 
+    let content = <Tab menu={{ pointing: true, }} panes={panes} />
+
+    if (validDetails.length <= 0) {
+        content = <Segment><span>No moves to show!</span></Segment>
+    }
+
     return (
         <Accordion className="moves-listing-container">
             <Accordion.Title active={active} onClick={() => setActive(!active)}>
@@ -43,7 +49,7 @@ export const MovesListing = (props: MovesListingProps) => {
             </Accordion.Title>
 
             <Accordion.Content active={active}>
-                <Tab menu={{ pointing: true, }} panes={panes} />
+                {content}
             </Accordion.Content>
         </Accordion>
     )
