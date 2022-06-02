@@ -16,6 +16,7 @@ import { useVersionGroupsQuery } from "./VersionGroupQuery"
 import { VersionGroupSelector } from "./VersionGroupSelector"
 
 import "./App.css"
+import { WelcomeMessage } from "./WelcomeMessage"
 
 const App = () => {
     const [searchActive, setSearchActive] = useState(true)
@@ -160,6 +161,8 @@ const App = () => {
                             </Accordion.Content>
                         </Accordion>
                     </div>
+
+                    {!speciesInfo && <WelcomeMessage />}
 
                     {speciesInfo && <div className="details-container">
                         <BasicInfo
