@@ -101,7 +101,9 @@ export const BasicInfo = (props: BasicInfoProps) => {
             </div>
 
             <div className="sprite-container">
-                <Image src={showShiny ? sprite?.sprites.front_shiny : sprite?.sprites.front_default} />
+                <Image
+                    className="sprite"
+                    src={showShiny ? sprite?.sprites.front_shiny : sprite?.sprites.front_default} />
 
                 <Checkbox
                     toggle
