@@ -74,6 +74,11 @@ export const MovesList = (props: MovesTableProps) => {
     let relevantMoves = uniqueMoves.filter(m => m.some(isValidDetail))
     let filteredMoves = relevantMoves.filter(passesFilters)
 
+    // only consider move details in the selected version group
+    for (let i = 0; i < filteredMoves.length; i++) {
+        filteredMoves[i] = filteredMoves[i].filter(isValidDetail)
+    }
+
     filteredMoves.sort(sortMoves)
 
     let moveAccordionItems = []

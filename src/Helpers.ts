@@ -9,6 +9,30 @@ import { PokemonForm, PokemonMove, Species, Variety } from "./SpeciesQuery"
 export const range = (start: number, length: number) => Array(length).fill(0).map((_, i) => i + start)
 
 /**
+ *
+ */
+export const min = (...arr: number[]) => {
+    let min = null
+
+    for (let i = 0; i < arr.length; i++) {
+        if (min === null || arr[i] < min) {
+            min = arr[i]
+        }
+    }
+
+    return min
+}
+
+/**
+ *
+ */
+export const minBy = <T>(arr: T[], func: (x: T) => number) => {
+    let sortedArr = [...arr]
+    sortedArr.sort((a, b) => func(a) - func(b))
+    return sortedArr[0]
+}
+
+/**
  * Groups elements of the given array by the given key function, and returns the
  * grouping as a Map<string, T[]>.
  * Taken from https://stackoverflow.com/a/47752730
@@ -91,19 +115,31 @@ export const getEffectiveTypes = (variety: Variety | undefined, form: PokemonFor
 }
 
 /**
- * Sorts the given moves.
+ * Sorts the given moves by their details in a lexicographical fashion.
  */
 export const sortMoves = (m1: PokemonMove[], m2: PokemonMove[]) => {
-    let m1FirstLearnMethod = m1[0].learnMethod.id
-    let m2FirstLearnMethod = m2[0].learnMethod.id
-
-    if (m1FirstLearnMethod === 1 && m2FirstLearnMethod === 1) {
-        return m1[0].level - m2[0].level
+    for (let i = 0; i < (min(m1.length, m2.length) ?? 0); i++) {
+        let comp = sortMoveDetails(m1[i], m2[i])
+        if (comp !== 0) {
+            return comp
+        }
     }
 
-    if (m1FirstLearnMethod === m2FirstLearnMethod) {
-        return getName(m1[0].move).localeCompare(getName(m2[0].move))
+    return 0
+}
+
+/**
+ * Sorts the given move details.
+ */
+const sortMoveDetails = (md1: PokemonMove, md2: PokemonMove) => {
+    if (md1.learnMethod.id !== md2.learnMethod.id) {
+        return md1.learnMethod.id - md2.learnMethod.id
     }
 
-    return m1[0].learnMethod.id - m2[0].learnMethod.id
+    if (md1.learnMethod.id === 1) {
+        // sort level up move details by level
+        return md1.level - md2.level
+    }
+
+    return getName(md1.move).localeCompare(getName(md1.move))
 }
