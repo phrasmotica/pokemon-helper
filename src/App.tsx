@@ -99,8 +99,8 @@ const App = () => {
     }
 
     if (form?.formName === "mega") {
-        // version groups before gen 6 are invalid
-        disabledVersionGroupIds = [...new Set([...disabledVersionGroupIds, ...range(1, 14)])]
+        // version groups before gen 6 and after gen 7 are invalid
+        disabledVersionGroupIds = [...new Set([...disabledVersionGroupIds, ...range(1, 14), 20])]
     }
 
     let versionGroup = versionGroups.find(vg => vg.id === versionGroupId)
