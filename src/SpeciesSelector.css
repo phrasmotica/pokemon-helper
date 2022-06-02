@@ -1,0 +1,11 @@
+.species-selector-container {
+    display: flex;
+}
+
+.species-selector-container > :not(:first-child) {
+    margin-left: 0.5em;
+}
+
+.species-selector-container > .ui.button  {
+    margin-right: 0em!important;
+}

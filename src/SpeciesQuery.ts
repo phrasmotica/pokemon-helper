@@ -230,7 +230,8 @@ export const useSpeciesQuery = (speciesName: string) => {
             variables: {
                 speciesName: speciesName,
                 languageId: 9,
-            }
+            },
+            skip: !speciesName
         }
     )
 

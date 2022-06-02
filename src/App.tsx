@@ -136,7 +136,7 @@ const App = () => {
                             <Accordion.Content active={searchActive}>
                                 <div className="selectors-container">
                                     <SpeciesSelector
-                                        species={speciesInfo}
+                                        species={speciesName}
                                         loadingSpecies={loadingSpecies}
                                         setSpecies={setSpeciesName} />
 

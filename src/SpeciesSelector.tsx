@@ -1,11 +1,12 @@
-import { Dropdown } from "semantic-ui-react"
+import { Button, Dropdown } from "semantic-ui-react"
 
 import { getName } from "./Helpers"
 import { useSpeciesOptionsQuery } from "./SpeciesOptionsQuery"
-import { Species } from "./SpeciesQuery"
+
+import "./SpeciesSelector.css"
 
 interface SpeciesSelectorProps {
-    species: Species | undefined
+    species: string
     loadingSpecies: boolean
     setSpecies: (species: string) => void
 }
@@ -20,15 +21,22 @@ export const SpeciesSelector = (props: SpeciesSelectorProps) => {
     }))
 
     return (
-        <Dropdown
-            fluid
-            selection
-            search
-            className="species-input"
-            loading={props.loadingSpecies || loadingSpeciesOptions}
-            placeholder="Species..."
-            options={options}
-            value={props.species?.name}
-            onChange={(e, data) => props.setSpecies(data.value as string)} />
+        <div className="species-selector-container">
+            <Dropdown
+                fluid
+                selection
+                search
+                className="species-input"
+                loading={props.loadingSpecies || loadingSpeciesOptions}
+                placeholder="Species..."
+                options={options}
+                value={props.species}
+                onChange={(e, data) => props.setSpecies(data.value as string)} />
+
+            <Button
+                icon="cancel"
+                disabled={!props.species}
+                onClick={() => props.setSpecies("")}  />
+        </div>
     )
 }
