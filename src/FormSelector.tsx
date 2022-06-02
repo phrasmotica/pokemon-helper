@@ -24,9 +24,13 @@ export const FormSelector = (props: FormSelectorProps) => {
 
     const isDisabled = props.forms.length < 2
 
+    if (isDisabled) {
+        return null
+    }
+
     let options: DropdownItemProps[] = []
 
-    if (!isDisabled && !props.loadingForms && props.species) {
+    if (!props.loadingForms && props.species) {
         options = props.forms.map(f => ({
             key: f.id,
             text: getDisplayName(f),
@@ -39,9 +43,8 @@ export const FormSelector = (props: FormSelectorProps) => {
             fluid
             selection
             loading={props.loadingForms}
-            placeholder={isDisabled ? "-" : "Form..."}
+            placeholder="Form..."
             options={options}
-            disabled={isDisabled}
             value={props.form}
             onChange={(e, data) => props.setForm(Number(data.value))} />
     )

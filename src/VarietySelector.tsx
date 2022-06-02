@@ -24,9 +24,13 @@ export const VarietySelector = (props: VarietySelectorProps) => {
 
     const isDisabled = props.varieties.length < 2
 
+    if (isDisabled) {
+        return null
+    }
+
     let options: DropdownItemProps[] = []
 
-    if (!isDisabled && !props.loadingVarieties && props.species) {
+    if (!props.loadingVarieties && props.species) {
         options = props.varieties.map(v => ({
             key: v.id,
             text: getDisplayName(v),
@@ -39,9 +43,8 @@ export const VarietySelector = (props: VarietySelectorProps) => {
             fluid
             selection
             loading={props.loadingVarieties}
-            placeholder={isDisabled ? "-" : "Variety..."}
+            placeholder="Variety..."
             options={options}
-            disabled={isDisabled}
             value={props.variety}
             onChange={(e, data) => props.setVariety(Number(data.value))} />
     )
