@@ -20,7 +20,7 @@ import "./App.css"
 const App = () => {
     const [searchActive, setSearchActive] = useState(true)
 
-    const [speciesName, setSpeciesName] = useState("piplup")
+    const [speciesName, setSpeciesName] = useState("")
     const [varietyId, setVarietyId] = useState<number>()
     const [formId, setFormId] = useState<number>()
     const [versionGroupId, setVersionGroupId] = useState<number>()
@@ -161,7 +161,7 @@ const App = () => {
                         </Accordion>
                     </div>
 
-                    <div className="details-container">
+                    {speciesInfo && <div className="details-container">
                         <BasicInfo
                             speciesInfo={speciesInfo}
                             variety={variety}
@@ -175,7 +175,7 @@ const App = () => {
 
                             <MovesListing moves={moves} versionGroupId={versionGroupId} />
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </div>
         </div>

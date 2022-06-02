@@ -23,6 +23,11 @@ export const MovesListing = (props: MovesListingProps) => {
         details.filter(md => md.learnMethod.id === learnMethodId)
     )
 
+    let hasMoves = props.moves.length > 0
+    if (!hasMoves) {
+        return null
+    }
+
     let validDetails = props.moves.filter(isValidDetail)
 
     let learnMethods = uniqueBy(validDetails, md => md.learnMethod.id).map(md => md.learnMethod)
@@ -43,12 +48,12 @@ export const MovesListing = (props: MovesListingProps) => {
 
     return (
         <Accordion className="moves-listing-container">
-            <Accordion.Title active={active} onClick={() => setActive(!active)}>
+            <Accordion.Title active={active && hasMoves} onClick={() => setActive(!active)}>
                 <Icon name="dropdown" />
                 Moves
             </Accordion.Title>
 
-            <Accordion.Content active={active}>
+            <Accordion.Content active={active && hasMoves}>
                 {content}
             </Accordion.Content>
         </Accordion>

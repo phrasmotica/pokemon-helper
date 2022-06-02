@@ -52,30 +52,11 @@ export const BasicInfo = (props: BasicInfoProps) => {
     }
 
     let species = props.speciesInfo
-    if (!species) {
-        return (
-            <Segment className="basic-info">
-                <h2>Search for a species!</h2>
-            </Segment>
-        )
-    }
-
     let variety = props.variety
-    if (!variety) {
-        return (
-            <Segment className="basic-info">
-                <h2>Select a variety!</h2>
-            </Segment>
-        )
-    }
-
     let form = props.form
-    if (!form) {
-        return (
-            <Segment className="basic-info">
-                <h2>Select a form!</h2>
-            </Segment>
-        )
+
+    if (!species || !variety || !form) {
+        return null
     }
 
     let name = getName(species)

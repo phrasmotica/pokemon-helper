@@ -65,15 +65,18 @@ export const StatsTable = (props: StatsTableProps) => {
     )
 
     let hasStats = props.stats.length > 0
+    if (!hasStats) {
+        return null
+    }
 
     return (
         <Accordion className="stats-table-container">
-            <Accordion.Title active={active && hasStats} onClick={() => setActive(!active)}>
+            <Accordion.Title active={active} onClick={() => setActive(!active)}>
                 <Icon name="dropdown" />
                 Stats
             </Accordion.Title>
 
-            <Accordion.Content active={active && hasStats}>
+            <Accordion.Content active={active}>
                 {hasStats && renderStats(props.stats)}
             </Accordion.Content>
         </Accordion>

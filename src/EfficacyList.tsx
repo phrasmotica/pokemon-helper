@@ -25,9 +25,9 @@ export const EfficacyList = (props: EfficacyListProps) => {
         return damageFactors.reduce((a, b) => a * b, 1)
     }
 
-    const renderEfficacies = () => {
-        let concreteTypes = props.types.filter(t => t.efficacies.length > 0)
-        let effectiveTypeIds = props.effectiveTypes.map(t => t.id)
+    const renderEfficacies = (types: TypeWithEfficacies[], effectiveTypes: Type[]) => {
+        let concreteTypes = types.filter(t => t.efficacies.length > 0)
+        let effectiveTypeIds = effectiveTypes.map(t => t.id)
 
         let efficacies = concreteTypes.map(t => ({
             type: t,
@@ -61,6 +61,11 @@ export const EfficacyList = (props: EfficacyListProps) => {
         )
     }
 
+    let hasEffectiveTypes = props.effectiveTypes.length > 0
+    if (!hasEffectiveTypes) {
+        return null
+    }
+
     return (
         <Accordion className="efficacy-list-container">
             <Accordion.Title active={active} onClick={() => setActive(!active)}>
@@ -69,7 +74,7 @@ export const EfficacyList = (props: EfficacyListProps) => {
             </Accordion.Title>
 
             <Accordion.Content active={active}>
-                {renderEfficacies()}
+                {renderEfficacies(props.types, props.effectiveTypes)}
             </Accordion.Content>
         </Accordion>
     )
