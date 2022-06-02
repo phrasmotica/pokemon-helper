@@ -4,7 +4,7 @@ import { Accordion, Icon } from "semantic-ui-react"
 import { BasicInfo } from "./BasicInfo"
 import { EfficacyList } from "./EfficacyList"
 import { FormSelector } from "./FormSelector"
-import { getEffectiveTypes, range } from "./Helpers"
+import { getEffectiveTypes, moveToFront, range } from "./Helpers"
 import { HistoryMenu } from "./HistoryMenu"
 import { MovesList } from "./MovesList"
 import { Species, useSpeciesQuery } from "./SpeciesQuery"
@@ -32,17 +32,22 @@ const App = () => {
     let speciesInfo = loadingSpecies ? undefined : speciesData?.speciesInfo[0]
 
     useEffect(() => {
-        if (speciesInfo && !history.some(s => s.name === speciesInfo!.name)) {
-            setHistory([...history, speciesInfo])
-        }
+        if (speciesInfo) {
+            if (!history.some(s => s.name === speciesInfo!.name)) {
+                setHistory([speciesInfo, ...history])
+            }
+            else {
+                setHistory(moveToFront(history, speciesInfo))
+            }
 
-        let firstVariety = speciesInfo?.varieties[0]
-        if (firstVariety) {
-            setVarietyId(firstVariety.id)
+            let firstVariety = speciesInfo.varieties[0]
+            if (firstVariety) {
+                setVarietyId(firstVariety.id)
 
-            let firstForm = firstVariety.forms[0]
-            if (firstForm) {
-                setFormId(firstForm.id)
+                let firstForm = firstVariety.forms[0]
+                if (firstForm) {
+                    setFormId(firstForm.id)
+                }
             }
         }
     }, [speciesData, history, speciesInfo])

@@ -26,6 +26,16 @@ export const uniqueBy = <T>(arr: T[], func: (x: T) => string | number) => [
     ...new Map(arr.map(x => [func(x), x])).values()
 ]
 
+export const moveToFront = <T>(arr: T[], elem: T) => {
+    let index = arr.indexOf(elem)
+    if (index > 0) {
+        arr.splice(index, 1)
+        arr.unshift(elem)
+    }
+
+    return arr
+}
+
 export const getGenus = (x: Species) => x.names[0]!.genus
 
 export const getName = (x: { names: Name[] }) => x.names[0]!.name
