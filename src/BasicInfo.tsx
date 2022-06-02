@@ -106,6 +106,7 @@ export const BasicInfo = (props: BasicInfoProps) => {
                 <Checkbox
                     toggle
                     label="Shiny"
+                    checked={showShiny}
                     onChange={(e, data) => setShowShiny(data.checked ?? false)} />
             </div>
         </Segment>
