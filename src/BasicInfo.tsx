@@ -40,13 +40,13 @@ export const BasicInfo = (props: BasicInfoProps) => {
     }, [props.variety, props.form])
 
     const fetchFormSprite = (formName: string) => {
-        fetch(`https://pokeapi.co/api/v2/pokemon-form/${formName}`)
+        fetch(`${process.env.REACT_APP_API_URL}/pokemon-form/${formName}`)
             .then(res => res.json())
             .then(setSprite)
     }
 
     const fetchSprite = (pokemonName: string) => {
-        fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
+        fetch(`${process.env.REACT_APP_API_URL}/pokemon/${pokemonName}`)
             .then(res => res.json())
             .then(setSprite)
     }
