@@ -184,6 +184,12 @@ const App = () => {
                     </div>}
                 </div>
             </div>
+
+            <footer>
+                <a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">
+                    Pokemon icons created by Nikita Golubev - Flaticon
+                </a>
+            </footer>
         </div>
     )
 }
