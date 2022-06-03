@@ -174,7 +174,10 @@ const App = () => {
                         <div className="battle-details-container">
                             <StatsTable stats={stats} />
 
-                            <EfficacyList types={typesData?.typeInfo ?? []} effectiveTypes={effectiveTypes} />
+                            <EfficacyList
+                                types={typesData?.typeInfo ?? []}
+                                effectiveTypes={effectiveTypes}
+                                versionGroup={versionGroup} />
 
                             <MovesListing moves={moves} versionGroupId={versionGroupId} />
                         </div>

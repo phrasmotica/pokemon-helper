@@ -29,6 +29,10 @@ const getTypesQuery = gql`
                 id
                 name
             }
+            generation: pokemon_v2_generation {
+                id
+                name
+            }
             efficacies: pokemon_v2_typeefficacies {
                 id
                 targetTypeId: target_type_id

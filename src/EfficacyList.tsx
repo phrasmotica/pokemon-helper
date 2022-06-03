@@ -2,6 +2,7 @@ import { useState } from "react"
 import { Accordion, Icon, Segment } from "semantic-ui-react"
 
 import { Type } from "./models/Type"
+import { VersionGroup } from "./models/VersionGroup"
 
 import { TypeLabel } from "./TypeLabel"
 import { TypeWithEfficacies } from "./TypeQuery"
@@ -11,6 +12,7 @@ import "./EfficacyList.css"
 interface EfficacyListProps {
     types: TypeWithEfficacies[]
     effectiveTypes: Type[]
+    versionGroup: VersionGroup | undefined
 }
 
 export const EfficacyList = (props: EfficacyListProps) => {
@@ -21,6 +23,11 @@ export const EfficacyList = (props: EfficacyListProps) => {
     }
 
     const computeEfficacy = (type: TypeWithEfficacies, targetTypeIds: number[]) => {
+        if (props.versionGroup && type.generation.id > props.versionGroup.generation.id) {
+            // type not present in this version group
+            return null
+        }
+
         let damageFactors = targetTypeIds.map(id => getDamageFactor(type, id))
         return damageFactors.reduce((a, b) => a * b, 1)
     }
@@ -38,8 +45,14 @@ export const EfficacyList = (props: EfficacyListProps) => {
             <Segment>
                 <div className="efficacy-list">
                     {efficacies.map(e => {
+                        let text = e.efficacy + "x"
                         let strengthClassName = ""
-                        if (e.efficacy > 1) {
+
+                        if (e.efficacy === null) {
+                            text = "N/A"
+                            strengthClassName = "absent"
+                        }
+                        else if (e.efficacy > 1) {
                             strengthClassName = "strong"
                         }
                         else if (e.efficacy < 1) {
@@ -51,7 +64,7 @@ export const EfficacyList = (props: EfficacyListProps) => {
                                 <TypeLabel type={e.type} />
 
                                 <span className={strengthClassName}>
-                                    {e.efficacy}x
+                                    {text}
                                 </span>
                             </div>
                         )

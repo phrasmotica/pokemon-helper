@@ -31,3 +31,7 @@
 .efficacy > .weak {
     font-style: italic;
 }
+
+.efficacy > .absent {
+    font-style: italic;
+}
