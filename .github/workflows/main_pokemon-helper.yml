@@ -49,11 +49,6 @@ jobs:
         with:
           name: node-app
 
-      - name: unzip artifact for deployment
-        run: |
-          unzip release.zip
-          rm release.zip
-
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -61,4 +56,4 @@ jobs:
           app-name: 'pokemon-helper'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_3978E607F556409CA73B0998F074430A }}
-          package: .
+          package: release.zip
