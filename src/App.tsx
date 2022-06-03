@@ -186,6 +186,10 @@ const App = () => {
             </div>
 
             <footer>
+                <a href="https://github.com/phrasmotica/pokemon-helper/issues" target="_blank" rel="noopener noreferrer">
+                    Found a bug? Report it here!
+                </a>
+
                 <a href="https://www.flaticon.com/free-icons/pokemon" title="pokemon icons">
                     Pokemon icons created by Nikita Golubev - Flaticon
                 </a>
