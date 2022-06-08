@@ -36,7 +36,10 @@ export const MovesListing = (props: MovesListingProps) => {
     const panes = learnMethods.map(lm => ({
         menuItem: getName(lm),
         render: () => <Tab.Pane className="move-details-list-container">
-            <MoveDetailsList key={lm.name} moveDetails={getDetailsWithLearnMethod(validDetails, lm.id)} />
+            <MoveDetailsList
+                key={lm.name}
+                moveDetails={getDetailsWithLearnMethod(validDetails, lm.id)}
+                versionGroupId={props.versionGroupId} />
         </Tab.Pane>,
     }))
 

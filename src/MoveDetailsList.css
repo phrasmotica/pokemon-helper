@@ -8,6 +8,10 @@
     justify-content: space-between;
 }
 
-.move-name-container > .ui.label.type-label {
+.move-name-container > :not(:first-child) {
+    margin-left: 0.5em;
+}
+
+.move-name-container > .ui.label.type-label:not(:first-child) {
     margin-left: 0.5em;
 }
