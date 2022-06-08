@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client"
 
 import { Generation } from "./models/Generation"
+import { Move } from "./models/Move"
 import { Name } from "./models/Name"
 import { Type } from "./models/Type"
 import { VersionGroup } from "./models/VersionGroup"
@@ -27,13 +28,6 @@ export interface LearnMethod {
     id: number
     name: string
     names: Name[]
-}
-
-interface Move {
-    id: number
-    name: string
-    names: Name[]
-    type: Type
 }
 
 export interface PokemonMove {

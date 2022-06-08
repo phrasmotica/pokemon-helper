@@ -1,5 +1,7 @@
 import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
+
+import { FlavourText } from "./MoveQuery"
 import { PokemonForm, PokemonMove, Species, Variety } from "./SpeciesQuery"
 
 /**
@@ -68,6 +70,18 @@ export const moveToFront = <T>(arr: T[], elem: T) => {
 export const getGenus = (x: Species) => x.names[0]!.genus
 
 export const getName = (x: { names: Name[] }) => x.names[0]?.name ?? ""
+
+export const getFlavourText = (x: { flavourTexts: FlavourText[] }, versionGroupId: number | undefined) => {
+    if (!versionGroupId) {
+        return "Please select a version group!"
+    }
+
+    let text = x.flavourTexts.find(ft => ft.versionGroup.id === versionGroupId)
+    let rawText = (text ?? x.flavourTexts[0])?.text ?? "(no flavour text available)"
+
+    // clean up some new line characters
+    return rawText.replaceAll("\n", " ").replaceAll("- ", "-")
+}
 
 export const getVarietyName = (v: Variety) => {
     let formName = ""

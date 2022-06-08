@@ -1,0 +1,37 @@
+.ui.modal.move-info-modal > .header {
+    display: flex;
+    align-items: center;
+}
+
+.ui.modal.move-info-modal > .header > :not(:first-child) {
+    margin-left: 0.5em;
+}
+
+.ui.modal.move-info-modal > .content {
+    display: flex;
+    align-items: flex-start;
+}
+
+.ui.modal.move-info-modal > .content > :first-child {
+    flex: 2;
+}
+
+.ui.modal.move-info-modal > .content > :not(:first-child) {
+    margin-left: 1em;
+    flex: 1;
+}
+
+.ui.icon.button.move-info-button {
+    margin: 0em;
+}
+
+@media only screen and (max-width: 900px)  {
+    .ui.modal.move-info-modal > .content {
+        flex-direction: column;
+    }
+
+    .ui.modal.move-info-modal > .content > :not(:first-child) {
+        margin-left: 0em;
+        margin-top: 1em;
+    }
+}
