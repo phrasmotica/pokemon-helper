@@ -21,6 +21,20 @@
     flex: 1;
 }
 
+.ui.modal.move-info-modal > .content > .move-target-indicator-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ui.modal.move-info-modal > .content > .move-target-indicator-container > :not(:first-child) {
+    margin-top: 0.5em;
+}
+
+.ui.modal.move-info-modal > .content > .move-target-indicator-container .move-target-name {
+    white-space: nowrap;
+}
+
 .ui.icon.button.move-info-button {
     margin: 0em;
 }

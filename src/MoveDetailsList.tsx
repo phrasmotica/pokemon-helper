@@ -1,6 +1,5 @@
 import { List } from "semantic-ui-react"
 
-import { Move } from "./models/Move"
 import { PokemonMove } from "./models/Variety"
 
 import { getDisplayText, getName, sortMoveDetails } from "./Helpers"
@@ -18,10 +17,6 @@ export const MoveDetailsList = (props: MoveDetailsListProps) => {
     let moveDetails = [...props.moveDetails]
     moveDetails.sort(sortMoveDetails)
 
-    const renderModal = (move: Move) => {
-        return <MoveInformation move={move} versionGroupId={props.versionGroupId} />
-    }
-
     return (
         <div className="move-details-list">
             <List divided relaxed>
@@ -29,7 +24,9 @@ export const MoveDetailsList = (props: MoveDetailsListProps) => {
                     <List.Item key={md.id}>
                         <div className="move-detail">
                             <div className="move-name-container">
-                                {renderModal(md.move)}
+                                <MoveInformation
+                                    moveId={md.move.id}
+                                    versionGroupId={props.versionGroupId} />
 
                                 <span>{getName(md.move)}</span>
 

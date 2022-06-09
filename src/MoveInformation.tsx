@@ -1,25 +1,23 @@
 import { useState } from "react"
-import { Button, Modal } from "semantic-ui-react"
+import { Button, Icon, Modal } from "semantic-ui-react"
 
-import { Move } from "./models/Move"
+import { useMoveQuery } from "./queries/MoveQuery"
 
 import { getFlavourText, getName } from "./Helpers"
-import { useMoveQuery } from "./queries/MoveQuery"
+import { MoveTargetIndicator } from "./MoveTargetIndicator"
 import { TypeLabel } from "./TypeLabel"
 
 import "./MoveInformation.css"
 
 interface MoveInformationProps {
-    move: Move
+    moveId: number
     versionGroupId: number | undefined
 }
 
 export const MoveInformation = (props: MoveInformationProps) => {
     const [open, setOpen] = useState(false)
 
-    const { moveData } = useMoveQuery(props.move.id)
-
-    const move = moveData?.moveInfo[0]
+    const { moveData } = useMoveQuery(props.moveId)
 
     const renderTrigger = (disabled: boolean) => (
         <Button
@@ -30,6 +28,22 @@ export const MoveInformation = (props: MoveInformationProps) => {
             color="blue"
             icon="info" />
     )
+
+    const renderPriority = (p: number) => {
+        if (p > 0) {
+            let icon = <Icon fitted name="arrow up" />
+            return <span>Priority: {icon} (+{p})</span>
+        }
+
+        if (p < 0) {
+            let icon = <Icon fitted name="arrow down" />
+            return <span>Priority: {icon} ({p})</span>
+        }
+
+        return <span>Priority: -</span>
+    }
+
+    const move = moveData?.moveInfo[0]
 
     if (!move) {
         return renderTrigger(true)
@@ -66,13 +80,22 @@ export const MoveInformation = (props: MoveInformationProps) => {
                 </div>
 
                 <div>
-                    <div><span>Priority: {move.priority ?? "-"}</span></div>
+                    <div>
+                        {renderPriority(move.priority)}
+                    </div>
+
                     <div><span>Damage Class: {getName(move.damageClass)}</span></div>
-                    <div><span>Target: {getName(move.target)}</span></div>
+                    <div><span>Machine(s): {machineNames}</span></div>
                 </div>
 
-                <div>
-                    <div><span>Machine(s): {machineNames}</span></div>
+                <div className="move-target-indicator-container">
+                    <div>
+                        <span className="move-target-name">
+                            Target: {getName(move.target)}
+                        </span>
+                    </div>
+
+                    <MoveTargetIndicator target={move.target} />
                 </div>
             </Modal.Content>
         </Modal>
