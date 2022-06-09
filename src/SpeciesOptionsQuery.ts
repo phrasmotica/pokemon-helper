@@ -1,12 +1,9 @@
 import { gql, useQuery } from "@apollo/client"
 
-import { Name } from "./models/Name"
+import { NamedModel } from "./models/NamedModel"
 
-interface SpeciesOption {
-    id: number
-    name: string
+type SpeciesOption = NamedModel & {
     order: number
-    names: Name[]
 }
 
 interface SpeciesData {

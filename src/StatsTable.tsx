@@ -1,8 +1,9 @@
 import { useState } from "react"
 import { Accordion, Icon, Progress, Segment } from "semantic-ui-react"
 
+import { PokemonStat } from "./models/Variety"
+
 import { getName } from "./Helpers"
-import { PokemonStat } from "./SpeciesQuery"
 
 import "./StatBars.css"
 import "./StatsTable.css"

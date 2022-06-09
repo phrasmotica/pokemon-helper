@@ -1,10 +1,10 @@
 import { List } from "semantic-ui-react"
 
 import { Move } from "./models/Move"
+import { PokemonMove } from "./models/Variety"
 
 import { getDisplayText, getName, sortMoveDetails } from "./Helpers"
 import { MoveInformation } from "./MoveInformation"
-import { PokemonMove } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
 import "./MoveDetailsList.css"

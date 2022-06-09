@@ -1,7 +1,9 @@
 import { Dropdown } from "semantic-ui-react"
 
+import { MoveLearnMethod } from "./models/MoveLearnMethod"
+import { PokemonMove } from "./models/Variety"
+
 import { getName, sortById, uniqueBy } from "./Helpers"
-import { LearnMethod, PokemonMove } from "./SpeciesQuery"
 
 interface MoveLearnMethodSelectorProps {
     moves: PokemonMove[][]
@@ -12,11 +14,11 @@ interface MoveLearnMethodSelectorProps {
 }
 
 export const MoveLearnMethodSelector = (props: MoveLearnMethodSelectorProps) => {
-    const isValidDetailWithLearnMethod = (md: PokemonMove, lm: LearnMethod) => (
+    const isValidDetailWithLearnMethod = (md: PokemonMove, lm: MoveLearnMethod) => (
         props.isValidDetail(md) && md.learnMethod.id === lm.id
     )
 
-    const getCount = (lm: LearnMethod) => {
+    const getCount = (lm: MoveLearnMethod) => {
         let movesPassingOtherFilters = props.moves.filter(props.passesOtherFilters)
 
         // moves that also have this learn method

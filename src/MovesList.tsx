@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { Accordion, Icon, Input } from "semantic-ui-react"
 
+import { PokemonMove } from "./models/Variety"
+
 import { getName, groupBy, sortMoves } from "./Helpers"
 import { MoveLearnMethodSelector } from "./MoveLearnMethodSelector"
 import { MoveTypeSelector } from "./MoveTypeSelector"
-import { PokemonMove } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
 import "./MovesList.css"

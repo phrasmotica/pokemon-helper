@@ -1,3 +1,3 @@
 import { NamedModel } from "./NamedModel"
 
-export type Version = NamedModel
+export type MoveLearnMethod = NamedModel

@@ -8,9 +8,9 @@ interface TypeEfficacy {
     damageFactor: number
 }
 
-export type TypeWithEfficacies = (Type & {
+export type TypeWithEfficacies = Type & {
     efficacies: TypeEfficacy[]
-})
+}
 
 interface TypeData {
     typeInfo: TypeWithEfficacies[]

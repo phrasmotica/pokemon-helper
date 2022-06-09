@@ -1,9 +1,6 @@
 import { Generation } from "./Generation"
-import { Name } from "./Name"
+import { NamedModel } from "./NamedModel"
 
-export interface Type {
-    id: number
-    name: string
-    names: Name[]
+export type Type = NamedModel & {
     generation: Generation
 }

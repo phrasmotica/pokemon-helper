@@ -1,8 +1,10 @@
 import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
 
-import { FlavourText } from "./MoveQuery"
-import { PokemonForm, PokemonMove, Species, Variety } from "./SpeciesQuery"
+import { FlavourText } from "./models/FlavourText"
+import { PokemonForm } from "./models/PokemonForm"
+import { Species } from "./models/Species"
+import { PokemonMove, Variety } from "./models/Variety"
 
 /**
  * Returns an array of consecutive integers of a given length.

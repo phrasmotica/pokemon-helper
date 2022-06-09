@@ -1,7 +1,3 @@
-import { Name } from "./Name"
+import { NamedModel } from "./NamedModel"
 
-export interface Generation {
-    id: number
-    name: string
-    names: Name[]
-}
+export type Generation = NamedModel

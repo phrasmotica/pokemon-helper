@@ -1,13 +1,15 @@
 import { useEffect, useMemo, useState } from "react"
 import { Accordion, Icon } from "semantic-ui-react"
 
+import { Species } from "./models/Species"
+
 import { BasicInfo } from "./BasicInfo"
 import { EfficacyList } from "./EfficacyList"
 import { FormSelector } from "./FormSelector"
 import { getEffectiveTypes, moveToFront, range } from "./Helpers"
 import { HistoryMenu } from "./HistoryMenu"
 import { MovesListing } from "./MovesListing"
-import { Species, useSpeciesQuery } from "./SpeciesQuery"
+import { useSpeciesQuery } from "./SpeciesQuery"
 import { SpeciesSelector } from "./SpeciesSelector"
 import { StatsTable } from "./StatsTable"
 import { useTypesQuery } from "./TypeQuery"

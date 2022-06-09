@@ -3,8 +3,11 @@ import { Checkbox, Image, Segment } from "semantic-ui-react"
 
 import { VersionGroup } from "./models/VersionGroup"
 
+import { PokemonForm } from "./models/PokemonForm"
+import { Species } from "./models/Species"
+import { Variety } from "./models/Variety"
+
 import { getEffectiveTypes, getGenus, getName } from "./Helpers"
-import { PokemonForm, Species, Variety } from "./SpeciesQuery"
 import { TypeLabel } from "./TypeLabel"
 
 import "./BasicInfo.css"

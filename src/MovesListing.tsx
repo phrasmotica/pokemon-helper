@@ -1,9 +1,10 @@
 import { useState } from "react"
 import { Accordion, Icon, Segment, Tab } from "semantic-ui-react"
-import { getName, sortById, uniqueBy } from "./Helpers"
 
+import { PokemonMove } from "./models/Variety"
+
+import { getName, sortById, uniqueBy } from "./Helpers"
 import { MoveDetailsList } from "./MoveDetailsList"
-import { PokemonMove } from "./SpeciesQuery"
 
 import "./MovesListing.css"
 

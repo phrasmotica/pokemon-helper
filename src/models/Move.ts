@@ -1,9 +1,6 @@
-import { Name } from "./Name"
+import { NamedModel } from "./NamedModel"
 import { Type } from "./Type"
 
-export interface Move {
-    id: number
-    name: string
-    names: Name[]
+export type Move = NamedModel & {
     type: Type
 }

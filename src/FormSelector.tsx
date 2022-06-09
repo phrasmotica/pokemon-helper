@@ -1,7 +1,9 @@
 import { Dropdown, DropdownItemProps } from "semantic-ui-react"
 
+import { PokemonForm } from "./models/PokemonForm"
+import { Species } from "./models/Species"
+
 import { getName } from "./Helpers"
-import { PokemonForm, Species } from "./SpeciesQuery"
 
 interface FormSelectorProps {
     species: Species | undefined
