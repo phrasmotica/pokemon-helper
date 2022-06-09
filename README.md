@@ -11,11 +11,11 @@ Currently available:
 * [x] type effectiveness
 * [x] moves learnt
 * [x] detailed information about learnt moves
+* [x] Pokédex flavour text
 
 To be added:
 
 * [ ] catch rate
 * [ ] gender rate
-* [ ] Pokédex flavour text
 * [ ] encounter information
 * [ ] evolution chain
