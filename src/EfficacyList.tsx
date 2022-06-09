@@ -4,8 +4,9 @@ import { Accordion, Icon, Segment } from "semantic-ui-react"
 import { Type } from "./models/Type"
 import { VersionGroup } from "./models/VersionGroup"
 
+import { TypeWithEfficacies } from "./queries/TypeQuery"
+
 import { TypeLabel } from "./TypeLabel"
-import { TypeWithEfficacies } from "./TypeQuery"
 
 import "./EfficacyList.css"
 
