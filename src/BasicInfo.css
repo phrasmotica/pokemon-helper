@@ -1,3 +1,7 @@
+.basic-info-container > :not(:first-child) {
+    margin-top: 1em;
+}
+
 .basic-info {
     display: flex;
     align-items: center;

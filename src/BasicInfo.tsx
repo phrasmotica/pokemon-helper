@@ -8,6 +8,7 @@ import { Species } from "./models/Species"
 import { Variety } from "./models/Variety"
 
 import { getEffectiveTypes, getGenus, getName } from "./Helpers"
+import { SpeciesFlavourText } from "./SpeciesFlavourText"
 import { TypeLabel } from "./TypeLabel"
 
 import "./BasicInfo.css"
@@ -68,36 +69,40 @@ export const BasicInfo = (props: BasicInfoProps) => {
     let effectiveTypes = getEffectiveTypes(variety, form, props.versionGroup)
 
     return (
-        <Segment className="basic-info">
-            <div>
-                <h2 className="species-name">
-                    {name}&nbsp;
+        <Segment className="basic-info-container">
+            <div className="basic-info">
+                <div>
+                    <h2 className="species-name">
+                        {name}&nbsp;
 
-                    <span className="species-order">
-                        (&#x00023;{species.order})
-                    </span>
-                </h2>
+                        <span className="species-order">
+                            (&#x00023;{species.order})
+                        </span>
+                    </h2>
 
-                {formName.length > 0 && <p>{formName}</p>}
+                    {formName.length > 0 && <p>{formName}</p>}
 
-                {genus.length > 0 && <p>{genus}</p>}
+                    {genus.length > 0 && <p>{genus}</p>}
 
-                <div className="type-labels-container">
-                    {effectiveTypes.map(t => <TypeLabel key={t.id} type={t} size="big" />)}
+                    <div className="type-labels-container">
+                        {effectiveTypes.map(t => <TypeLabel key={t.id} type={t} size="big" />)}
+                    </div>
+                </div>
+
+                <div className="sprite-container">
+                    <Image
+                        className="sprite"
+                        src={showShiny ? sprite?.sprites.front_shiny : sprite?.sprites.front_default} />
+
+                    <Checkbox
+                        toggle
+                        label="Shiny"
+                        checked={showShiny}
+                        onChange={(e, data) => setShowShiny(data.checked ?? false)} />
                 </div>
             </div>
 
-            <div className="sprite-container">
-                <Image
-                    className="sprite"
-                    src={showShiny ? sprite?.sprites.front_shiny : sprite?.sprites.front_default} />
-
-                <Checkbox
-                    toggle
-                    label="Shiny"
-                    checked={showShiny}
-                    onChange={(e, data) => setShowShiny(data.checked ?? false)} />
-            </div>
+            <SpeciesFlavourText speciesInfo={species} versionGroup={props.versionGroup} />
         </Segment>
     )
 }
