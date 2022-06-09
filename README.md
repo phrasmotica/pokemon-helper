@@ -10,10 +10,10 @@ Currently available:
 * [x] stats
 * [x] type effectiveness
 * [x] moves learnt
+* [x] detailed information about learnt moves
 
 To be added:
 
-* [ ] detailed information about learnt moves
 * [ ] catch rate
 * [ ] gender rate
 * [ ] Pokédex flavour text
