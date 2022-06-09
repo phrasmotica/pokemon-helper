@@ -4,7 +4,7 @@ import { Button, Modal } from "semantic-ui-react"
 import { Move } from "./models/Move"
 
 import { getFlavourText, getName } from "./Helpers"
-import { useMoveQuery } from "./MoveQuery"
+import { useMoveQuery } from "./queries/MoveQuery"
 import { TypeLabel } from "./TypeLabel"
 
 import "./MoveInformation.css"

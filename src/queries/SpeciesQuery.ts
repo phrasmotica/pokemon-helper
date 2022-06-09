@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client"
 
-import { Species } from "./models/Species"
+import { Species } from "../models/Species"
 
 export interface SpeciesData {
     speciesInfo: Species[]

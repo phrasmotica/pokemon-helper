@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client"
 
-import { NamedModel } from "./models/NamedModel"
+import { NamedModel } from "../models/NamedModel"
 
 type SpeciesOption = NamedModel & {
     order: number

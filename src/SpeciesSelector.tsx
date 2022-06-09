@@ -1,7 +1,8 @@
 import { Button, Dropdown } from "semantic-ui-react"
 
+import { useSpeciesOptionsQuery } from "./queries/SpeciesOptionsQuery"
+
 import { getName } from "./Helpers"
-import { useSpeciesOptionsQuery } from "./SpeciesOptionsQuery"
 
 import "./SpeciesSelector.css"
 

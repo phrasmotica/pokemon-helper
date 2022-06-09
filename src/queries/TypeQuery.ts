@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client"
 
-import { Type } from "./models/Type"
+import { Type } from "../models/Type"
 
 interface TypeEfficacy {
     id: number

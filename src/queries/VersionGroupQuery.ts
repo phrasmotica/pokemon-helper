@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client"
 
-import { VersionGroup } from "./models/VersionGroup"
+import { VersionGroup } from "../models/VersionGroup"
 
 interface VersionGroupData {
     versionGroupInfo: VersionGroup[]

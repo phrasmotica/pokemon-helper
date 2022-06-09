@@ -3,22 +3,23 @@ import { Accordion, Icon } from "semantic-ui-react"
 
 import { Species } from "./models/Species"
 
+import { useSpeciesQuery } from "./queries/SpeciesQuery"
+import { useTypesQuery } from "./queries/TypeQuery"
+import { useVersionGroupsQuery } from "./queries/VersionGroupQuery"
+
 import { BasicInfo } from "./BasicInfo"
 import { EfficacyList } from "./EfficacyList"
 import { FormSelector } from "./FormSelector"
 import { getEffectiveTypes, moveToFront, range } from "./Helpers"
 import { HistoryMenu } from "./HistoryMenu"
 import { MovesListing } from "./MovesListing"
-import { useSpeciesQuery } from "./SpeciesQuery"
 import { SpeciesSelector } from "./SpeciesSelector"
 import { StatsTable } from "./StatsTable"
-import { useTypesQuery } from "./TypeQuery"
 import { VarietySelector } from "./VarietySelector"
-import { useVersionGroupsQuery } from "./VersionGroupQuery"
 import { VersionGroupSelector } from "./VersionGroupSelector"
+import { WelcomeMessage } from "./WelcomeMessage"
 
 import "./App.css"
-import { WelcomeMessage } from "./WelcomeMessage"
 
 const App = () => {
     const [searchActive, setSearchActive] = useState(true)
