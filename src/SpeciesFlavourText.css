@@ -1,0 +1,10 @@
+.species-flavour-text {
+    text-align: start;
+    color: black;
+}
+
+.species-flavour-text > :not(:first-child) {
+    margin-top: 0.25em;
+    border-top: 1px solid lightgrey;
+    padding-top: 0.25em;
+}

@@ -1,7 +1,7 @@
 import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
 
-import { FlavourText } from "./models/FlavourText"
+import { FlavourText, VersionFlavourText } from "./models/FlavourText"
 import { PokemonForm } from "./models/PokemonForm"
 import { Species } from "./models/Species"
 import { PokemonMove, Variety } from "./models/Variety"
@@ -77,16 +77,23 @@ export const getName = (x: { names: Name[] }) => x.names[0]?.name ?? ""
  * Removes unnecessary spacing and newline characters from the given string.
  * \u00AD (&shy;) replacement taken from https://stackoverflow.com/a/34838501
  */
-const clean = (str: string) => str.replaceAll("\n", " ").replaceAll("- ", "-").replaceAll("\u00AD ", "")
+const clean = (str: string) => str
+    .replaceAll("\n", " ")
+    .replaceAll("\f", " ")
+    .replaceAll("- ", "-")
+    .replaceAll("\u00AD ", "")
 
 export const getFlavourText = (x: { flavourTexts: FlavourText[] }, versionGroupId: number | undefined) => {
     if (!versionGroupId) {
         return "Please select a version group!"
     }
 
-    let text = x.flavourTexts.find(ft => ft.versionGroup.id === versionGroupId)
-    let rawText = (text ?? x.flavourTexts[0])?.text ?? "(no flavour text available)"
+    let index = Math.max(x.flavourTexts.findIndex(ft => ft.versionGroup.id === versionGroupId), 0)
+    return getCleanFlavourText(x.flavourTexts[index])
+}
 
+export const getCleanFlavourText = (ft: FlavourText | VersionFlavourText | undefined) => {
+    let rawText = ft?.text ?? "(no flavour text available)"
     return clean(rawText)
 }
 

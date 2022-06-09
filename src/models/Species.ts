@@ -1,3 +1,4 @@
+import { VersionFlavourText } from "./FlavourText"
 import { Generation } from "./Generation"
 import { Name } from "./Name"
 import { Variety } from "./Variety"
@@ -7,6 +8,7 @@ export interface Species {
     name: string
     order: number
     names: SpeciesName[]
+    flavourTexts: VersionFlavourText[]
     generation: Generation
     varieties: Variety[]
 }
