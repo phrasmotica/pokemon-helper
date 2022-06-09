@@ -73,6 +73,12 @@ export const getGenus = (x: Species) => x.names[0]!.genus
 
 export const getName = (x: { names: Name[] }) => x.names[0]?.name ?? ""
 
+/**
+ * Removes unnecessary spacing and newline characters from the given string.
+ * \u00AD (&shy;) replacement taken from https://stackoverflow.com/a/34838501
+ */
+const clean = (str: string) => str.replaceAll("\n", " ").replaceAll("- ", "-").replaceAll("\u00AD ", "")
+
 export const getFlavourText = (x: { flavourTexts: FlavourText[] }, versionGroupId: number | undefined) => {
     if (!versionGroupId) {
         return "Please select a version group!"
@@ -81,8 +87,7 @@ export const getFlavourText = (x: { flavourTexts: FlavourText[] }, versionGroupI
     let text = x.flavourTexts.find(ft => ft.versionGroup.id === versionGroupId)
     let rawText = (text ?? x.flavourTexts[0])?.text ?? "(no flavour text available)"
 
-    // clean up some new line characters
-    return rawText.replaceAll("\n", " ").replaceAll("- ", "-")
+    return clean(rawText)
 }
 
 export const getVarietyName = (v: Variety) => {
