@@ -1,6 +1,6 @@
 import { Dropdown } from "semantic-ui-react"
 
-import { MoveLearnMethod } from "./models/MoveLearnMethod"
+import { MoveLearnMethod } from "./models/Move"
 import { PokemonMove } from "./models/Variety"
 
 import { getName, sortById, uniqueBy } from "./Helpers"

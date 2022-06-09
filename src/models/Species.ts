@@ -11,6 +11,6 @@ export interface Species {
     varieties: Variety[]
 }
 
-export type SpeciesName = Name & {
+export interface SpeciesName extends Name {
     genus: string
 }

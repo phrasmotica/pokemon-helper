@@ -8,7 +8,7 @@ interface TypeEfficacy {
     damageFactor: number
 }
 
-export type TypeWithEfficacies = Type & {
+export interface TypeWithEfficacies extends Type {
     efficacies: TypeEfficacy[]
 }
 

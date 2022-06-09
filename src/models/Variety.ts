@@ -1,6 +1,5 @@
 import { Generation } from "./Generation"
-import { Move } from "./Move"
-import { MoveLearnMethod } from "./MoveLearnMethod"
+import { Move, MoveLearnMethod } from "./Move"
 import { NamedModel } from "./NamedModel"
 import { PokemonForm } from "./PokemonForm"
 import { Type } from "./Type"
@@ -31,7 +30,9 @@ export interface PokemonTypePast {
     type: Type
 }
 
-type Stat = NamedModel
+interface Stat extends NamedModel {
+
+}
 
 export interface PokemonStat {
     id: number

@@ -1,6 +1,6 @@
 import { Generation } from "./Generation"
 import { NamedModel } from "./NamedModel"
 
-export type Type = NamedModel & {
+export interface Type extends NamedModel {
     generation: Generation
 }

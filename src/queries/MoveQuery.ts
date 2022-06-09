@@ -1,11 +1,13 @@
 import { gql, useQuery } from "@apollo/client"
 
 import { FlavourText } from "../models/FlavourText"
-import { Move } from "../models/Move"
+import { Move, MoveTarget } from "../models/Move"
 import { NamedModel } from "../models/NamedModel"
 import { VersionGroup } from "../models/VersionGroup"
 
-type Item = NamedModel
+interface Item extends NamedModel {
+
+}
 
 interface MoveMachine {
     id: number
@@ -14,11 +16,11 @@ interface MoveMachine {
     item: Item
 }
 
-type MoveDamageClass = NamedModel
+interface MoveDamageClass extends NamedModel {
 
-type MoveTarget = NamedModel
+}
 
-type MoveWithInformation = Move & {
+interface MoveWithInformation extends Move {
     accuracy: number | null
     power: number | null
     pp: number

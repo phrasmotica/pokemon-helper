@@ -1,3 +1,5 @@
 import { NamedModel } from "./NamedModel"
 
-export type Version = NamedModel
+export interface Version extends NamedModel {
+
+}

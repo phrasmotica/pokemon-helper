@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client"
 
 import { NamedModel } from "../models/NamedModel"
 
-type SpeciesOption = NamedModel & {
+interface SpeciesOption extends NamedModel {
     order: number
 }
 
