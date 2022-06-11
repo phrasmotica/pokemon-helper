@@ -52,6 +52,9 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
         content = <Segment><span>No locations to show!</span></Segment>
     }
 
+    // TODO: add secondary detached menu for selecting which version to view
+    // encounters for
+
     return (
         <Accordion className="capture-locations-listing-container">
             <Accordion.Title active={active} onClick={() => setActive(!active)}>

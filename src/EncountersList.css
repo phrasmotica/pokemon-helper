@@ -2,10 +2,28 @@
     color: black;
 }
 
-.encounters-list .item > .encounter {
+.encounters-list .item > :not(:first-child) {
+    margin-top: 0.5em;
+}
+
+.encounters-list .item .version-header {
+    font-weight: bold;
+}
+
+.encounters-list .item .location-area-header {
+    text-align: start;
+    font-weight: bold;
+}
+
+.encounters-list .item .encounter {
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+
+.encounters-list .item .encounter-condition-values {
+    font-style: italic;
+    color: grey;
 }
 
 .encounter-name-container > :not(:first-child) {
