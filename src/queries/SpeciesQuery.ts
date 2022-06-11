@@ -11,6 +11,8 @@ interface SpeciesVars {
     languageId: number
 }
 
+// TODO: put encounters information in a new query?
+
 const getSpeciesQuery = gql`
     query speciesInfo($languageId: Int, $speciesName: String) {
         speciesInfo: pokemon_v2_pokemonspecies(where: {name: {_eq: $speciesName}}, order_by: {id: asc}) {
@@ -46,6 +48,60 @@ const getSpeciesQuery = gql`
                 id
                 name
                 isDefault: is_default
+                encounters: pokemon_v2_encounters {
+                    id
+                    minLevel: min_level
+                    maxLevel: max_level
+                    version: pokemon_v2_version {
+                        id
+                        name
+                        names: pokemon_v2_versionnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                            id
+                            name
+                        }
+                    }
+                    conditionValues: pokemon_v2_encounterconditionvaluemaps {
+                        id
+                        value: pokemon_v2_encounterconditionvalue {
+                            id
+                            isDefault: is_default
+                            name
+                            names: pokemon_v2_encounterconditionvaluenames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                                id
+                                name
+                            }
+                        }
+                    }
+                    locationArea: pokemon_v2_locationarea {
+                        id
+                        name
+                        names: pokemon_v2_locationareanames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                            id
+                            name
+                        }
+                        location: pokemon_v2_location {
+                            id
+                            name
+                            names: pokemon_v2_locationnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                                id
+                                name
+                            }
+                        }
+                    }
+                    encounterSlot: pokemon_v2_encounterslot {
+                        id
+                        rarity
+                        slot
+                        method: pokemon_v2_encountermethod {
+                            id
+                            name
+                            names: pokemon_v2_encountermethodnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                                id
+                                name
+                            }
+                        }
+                    }
+                }
                 forms: pokemon_v2_pokemonforms(order_by: {form_order: asc}) {
                     id
                     name

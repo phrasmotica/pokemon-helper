@@ -9,6 +9,7 @@ import { useVersionGroupsQuery } from "./queries/VersionGroupQuery"
 
 import { BasicInfo } from "./BasicInfo"
 import { EfficacyList } from "./EfficacyList"
+import { CaptureLocationsListing } from "./CaptureLocationsListing"
 import { FormSelector } from "./FormSelector"
 import { getEffectiveTypes, moveToFront, range } from "./Helpers"
 import { HistoryMenu } from "./HistoryMenu"
@@ -180,6 +181,10 @@ const App = () => {
                             <EfficacyList
                                 types={typesData?.typeInfo ?? []}
                                 effectiveTypes={effectiveTypes}
+                                versionGroup={versionGroup} />
+
+                            <CaptureLocationsListing
+                                encounters={variety?.encounters ?? []}
                                 versionGroup={versionGroup} />
 
                             <MovesListing moves={moves} versionGroupId={versionGroupId} />

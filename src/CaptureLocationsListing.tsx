@@ -4,7 +4,7 @@ import { Accordion, Icon, Segment, Tab } from "semantic-ui-react"
 import { Encounter } from "./models/Encounter"
 import { VersionGroup } from "./models/VersionGroup"
 
-import { EncounterDetailsList } from "./EncounterDetailsList"
+import { EncountersList } from "./EncountersList"
 import { getName, sortById, uniqueBy } from "./Helpers"
 
 import "./CaptureLocationsListing.css"
@@ -38,10 +38,10 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
 
     const panes = encounterMethods.map(em => ({
         menuItem: getName(em),
-        render: () => <Tab.Pane className="encounter-details-list-container">
-            <EncounterDetailsList
+        render: () => <Tab.Pane className="encounters-list-container">
+            <EncountersList
                 key={em.name}
-                encounterDetails={getEncountersWithMethod(validEncounters, em.id)}
+                encounters={getEncountersWithMethod(validEncounters, em.id)}
                 versionGroupId={props.versionGroup?.id} />
         </Tab.Pane>,
     }))

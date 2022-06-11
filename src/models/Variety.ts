@@ -1,3 +1,4 @@
+import { Encounter } from "./Encounter"
 import { Generation } from "./Generation"
 import { Move, MoveLearnMethod } from "./Move"
 import { NamedModel } from "./NamedModel"
@@ -9,6 +10,7 @@ export interface Variety {
     id: number
     name: string
     isDefault: boolean
+    encounters: Encounter[]
     forms: PokemonForm[]
     moves: PokemonMove[]
     pastTypes: PokemonTypePast[]

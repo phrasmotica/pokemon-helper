@@ -4,14 +4,14 @@ import { Encounter } from "./models/Encounter"
 
 import { getLocationAreaName, getName, sortEncounters } from "./Helpers"
 
-import "./EncounterDetailsList.css"
+import "./EncountersList.css"
 
-interface EncounterDetailsListProps {
-    encounterDetails: Encounter[]
+interface EncountersListProps {
+    encounters: Encounter[]
     versionGroupId: number | undefined
 }
 
-export const EncounterDetailsList = (props: EncounterDetailsListProps) => {
+export const EncountersList = (props: EncountersListProps) => {
     const renderLevels = (e: Encounter) => {
         if (e.minLevel === e.maxLevel) {
             return <span>Level {e.maxLevel}</span>
@@ -20,15 +20,15 @@ export const EncounterDetailsList = (props: EncounterDetailsListProps) => {
         return <span>Levels {e.minLevel}-{e.maxLevel}</span>
     }
 
-    let encounterDetails = [...props.encounterDetails]
-    encounterDetails.sort(sortEncounters)
+    let encounters = [...props.encounters]
+    encounters.sort(sortEncounters)
 
     return (
-        <div className="encounter-details-list">
+        <div className="encounters-list">
             <List divided relaxed>
-                {encounterDetails.map(e => (
+                {encounters.map(e => (
                     <List.Item key={e.id}>
-                        <div className="encounter-detail">
+                        <div className="encounter">
                             <div className="encounter-name-container">
                                 <span>{getName(e.version)}</span>
                                 <span>{getLocationAreaName(e.locationArea)}</span>

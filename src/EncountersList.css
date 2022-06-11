@@ -1,8 +1,8 @@
-.encounter-details-list {
+.encounters-list {
     color: black;
 }
 
-.encounter-details-list .item > .encounter-detail {
+.encounters-list .item > .encounter {
     display: flex;
     align-items: center;
     justify-content: space-between;

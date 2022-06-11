@@ -9,7 +9,7 @@
     font-size: 1.2rem;
 }
 
-.encounter-details-list-container {
+.encounters-list-container {
     width: unset;
     max-height: 50vh;
     overflow-y: scroll;
