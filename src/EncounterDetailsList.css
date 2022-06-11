@@ -1,0 +1,17 @@
+.encounter-details-list {
+    color: black;
+}
+
+.encounter-details-list .item > .encounter-detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.encounter-name-container > :not(:first-child) {
+    margin-left: 0.5em;
+}
+
+.encounter-name-container > .ui.label.type-label:not(:first-child) {
+    margin-left: 0.5em;
+}

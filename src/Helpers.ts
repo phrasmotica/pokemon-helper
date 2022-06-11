@@ -1,6 +1,7 @@
 import { Name } from "./models/Name"
 import { VersionGroup } from "./models/VersionGroup"
 
+import { Encounter, LocationArea } from "./models/Encounter"
 import { FlavourText, VersionFlavourText } from "./models/FlavourText"
 import { PokemonForm } from "./models/PokemonForm"
 import { Species } from "./models/Species"
@@ -110,6 +111,15 @@ export const getVarietyName = (v: Variety) => {
 
 export const getVersionGroupName = (versionGroup: VersionGroup) => versionGroup.versions.map(getName).join("/")
 
+export const getLocationAreaName = (la: LocationArea) => {
+    let locationAreaName = getName(la)
+    if (locationAreaName.length > 0) {
+        return getName(la.location) + ` (${locationAreaName})`
+    }
+
+    return getName(la.location)
+}
+
 export const getDisplayText = (md: PokemonMove) => {
     let learnMethodText = getName(md.learnMethod)
     if (md.learnMethod.id === 1) {
@@ -157,6 +167,42 @@ export const sortMoves = (m1: PokemonMove[], m2: PokemonMove[]) => {
         if (comp !== 0) {
             return comp
         }
+    }
+
+    return 0
+}
+
+/**
+ * Sorts the given encounters.
+ */
+export const sortEncounters = (e1: Encounter, e2: Encounter) => {
+    if (e1.version.id !== e2.version.id) {
+        return e1.version.id - e2.version.id
+    }
+
+    if (e1.encounterSlot.method.id !== e2.encounterSlot.method.id) {
+        return e1.encounterSlot.method.id - e2.encounterSlot.method.id
+    }
+
+    if (e1.locationArea.location.id !== e2.locationArea.location.id) {
+        return e1.locationArea.location.id - e2.locationArea.location.id
+    }
+
+    if (e1.locationArea.id !== e2.locationArea.id) {
+        return e1.locationArea.id - e2.locationArea.id
+    }
+
+    if (e1.minLevel !== e2.minLevel) {
+        return e1.minLevel - e2.minLevel
+    }
+
+    if (e1.maxLevel !== e2.maxLevel) {
+        return e1.maxLevel - e2.maxLevel
+    }
+
+    if (e1.encounterSlot.rarity !== e2.encounterSlot.rarity) {
+        // descending order of rarity
+        return e2.encounterSlot.rarity - e1.encounterSlot.rarity
     }
 
     return 0
