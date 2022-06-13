@@ -11,7 +11,7 @@ export interface Encounter {
     encounterSlot: EncounterSlot
 }
 
-interface EncounterConditionValueMap {
+export interface EncounterConditionValueMap {
     id: number
     value: EncounterConditionValue
 }

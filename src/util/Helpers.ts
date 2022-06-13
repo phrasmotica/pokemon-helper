@@ -1,11 +1,10 @@
-import { Name } from "../models/Name"
-import { VersionGroup } from "../models/VersionGroup"
-
 import { Encounter, LocationArea } from "../models/Encounter"
 import { FlavourText, VersionFlavourText } from "../models/FlavourText"
+import { Name } from "../models/Name"
 import { PokemonForm } from "../models/PokemonForm"
 import { Species } from "../models/Species"
 import { PokemonMove, Variety } from "../models/Variety"
+import { VersionGroup } from "../models/VersionGroup"
 
 /**
  * Returns an array of consecutive integers of a given length.
@@ -225,3 +224,58 @@ export const sortMoveDetails = (md1: PokemonMove, md2: PokemonMove) => {
 }
 
 export const sortById = (a: { id: number }, b: { id: number }) => a.id - b.id
+
+/**
+ * Returns whether the two encounters can be merged, i.e. whether their level
+ * ranges merged together and their rarities summed together form a well-defined
+ * set of information.
+ */
+export const canBeMerged = (e: Encounter, f: Encounter) => {
+    let firstConditionsAreAllDefault = e.conditionValues.length <= 0 || e.conditionValues.every(cv => cv.value.isDefault)
+    let secondConditionsAreAllDefault = f.conditionValues.length <= 0 || f.conditionValues.every(cv => cv.value.isDefault)
+
+    if (firstConditionsAreAllDefault && secondConditionsAreAllDefault) {
+        // both encounters require no conditions
+        return true
+    }
+
+    // default conditions do not matter now, only care about non-default ones
+    let firstConditions = e.conditionValues.map(cv => cv.value).filter(v => !v.isDefault)
+    let secondConditions = f.conditionValues.map(cv => cv.value).filter(v => !v.isDefault)
+
+    if (firstConditions.length !== secondConditions.length) {
+        return false
+    }
+
+    let firstConditionsIds = firstConditions.map(v => v.id)
+    let secondConditionsIds = secondConditions.map(v => v.id)
+
+    // both encounters require the same set of conditions
+    return firstConditionsIds.every(i => secondConditionsIds.includes(i))
+}
+
+/**
+ * Groups the given encounters into an array of arrays of encounters.
+ * Encounters are matched (put in the same array as each other) based on
+ * whether they have matching condition values, and so can be considered
+ * together as sets of coherent information.
+ */
+export const createMergedEncounters = (encounters: Encounter[]) => {
+    let mergeMap = [
+        [encounters[0]]
+    ]
+
+    for (let i = 1; i < encounters.length; i++) {
+        let e = encounters[i]
+
+        let matchIndex = mergeMap.findIndex(arr => canBeMerged(e, arr[0]))
+        if (matchIndex < 0) {
+            mergeMap.push([e])
+        }
+        else {
+            mergeMap[matchIndex].push(e)
+        }
+    }
+
+    return mergeMap
+}

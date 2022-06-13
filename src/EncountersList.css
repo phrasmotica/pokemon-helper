@@ -21,8 +21,18 @@
     justify-content: space-between;
 }
 
-.encounters-list .item .encounter-condition-values {
+.encounters-list .item .matched-encounters {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.encounters-list .item .matched-encounters .conditions {
     font-style: italic;
+    text-align: end;
+}
+
+.encounters-list .item .matched-encounters .conditions .condition-values {
     color: grey;
 }
 
