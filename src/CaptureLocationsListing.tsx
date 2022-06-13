@@ -39,6 +39,9 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
             return <Segment><span>No locations to show!</span></Segment>
         }
 
+        let encounterMethods = uniqueBy(encounters, ed => ed.encounterSlot.method.id).map(ed => ed.encounterSlot.method)
+        encounterMethods.sort(sortById)
+
         const methodPanes = encounterMethods.map(em => ({
             menuItem: getName(em),
             render: () => <Tab.Pane className="encounters-list-container">
@@ -52,9 +55,6 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
     }
 
     let validEncounters = props.encounters.filter(isValidEncounter)
-
-    let encounterMethods = uniqueBy(validEncounters, ed => ed.encounterSlot.method.id).map(ed => ed.encounterSlot.method)
-    encounterMethods.sort(sortById)
 
     const versionPanes = props.versionGroup.versions.map(v => ({
         menuItem: getName(v),
