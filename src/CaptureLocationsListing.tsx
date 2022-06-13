@@ -17,8 +17,7 @@ interface CaptureLocationsListingProps {
 export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => {
     const [active, setActive] = useState(true)
 
-    let hasEncounters = props.encounters.length > 0
-    if (!hasEncounters) {
+    if (props.encounters.length <= 0 || !props.versionGroup) {
         return null
     }
 
@@ -36,6 +35,10 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
     )
 
     const renderMethodMenu = (encounters: Encounter[]) => {
+        if (encounters.length <= 0) {
+            return <Segment><span>No locations to show!</span></Segment>
+        }
+
         const methodPanes = encounterMethods.map(em => ({
             menuItem: getName(em),
             render: () => <Tab.Pane className="encounters-list-container">
@@ -53,19 +56,12 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
     let encounterMethods = uniqueBy(validEncounters, ed => ed.encounterSlot.method.id).map(ed => ed.encounterSlot.method)
     encounterMethods.sort(sortById)
 
-    let versions = uniqueBy(validEncounters, e => e.version.id).map(e => e.version)
-    versions.sort(sortById)
-
-    const versionPanes = versions.map(v => ({
+    const versionPanes = props.versionGroup.versions.map(v => ({
         menuItem: getName(v),
         render: () => renderMethodMenu(getEncountersWithVersion(validEncounters, v.id)),
     }))
 
     let versionMenu = <Tab menu={{ inverted: true, secondary: true, pointing: true, }} panes={versionPanes} />
-
-    if (validEncounters.length <= 0) {
-        versionMenu = <Segment><span>No locations to show!</span></Segment>
-    }
 
     return (
         <Accordion className="capture-locations-listing-container">
