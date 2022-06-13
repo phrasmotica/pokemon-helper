@@ -1,11 +1,11 @@
-import { Name } from "./models/Name"
-import { VersionGroup } from "./models/VersionGroup"
+import { Name } from "../models/Name"
+import { VersionGroup } from "../models/VersionGroup"
 
-import { Encounter, LocationArea } from "./models/Encounter"
-import { FlavourText, VersionFlavourText } from "./models/FlavourText"
-import { PokemonForm } from "./models/PokemonForm"
-import { Species } from "./models/Species"
-import { PokemonMove, Variety } from "./models/Variety"
+import { Encounter, LocationArea } from "../models/Encounter"
+import { FlavourText, VersionFlavourText } from "../models/FlavourText"
+import { PokemonForm } from "../models/PokemonForm"
+import { Species } from "../models/Species"
+import { PokemonMove, Variety } from "../models/Variety"
 
 /**
  * Returns an array of consecutive integers of a given length.

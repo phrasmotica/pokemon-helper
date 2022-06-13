@@ -3,7 +3,7 @@ import { Accordion, Icon, Segment, Tab } from "semantic-ui-react"
 
 import { PokemonMove } from "./models/Variety"
 
-import { getName, sortById, uniqueBy } from "./Helpers"
+import { getName, sortById, uniqueBy } from "./util/Helpers"
 import { MoveDetailsList } from "./MoveDetailsList"
 
 import "./MovesListing.css"

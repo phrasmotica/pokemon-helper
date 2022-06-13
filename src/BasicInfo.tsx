@@ -7,7 +7,7 @@ import { PokemonForm } from "./models/PokemonForm"
 import { Species } from "./models/Species"
 import { Variety } from "./models/Variety"
 
-import { getEffectiveTypes, getGenus, getName } from "./Helpers"
+import { getEffectiveTypes, getGenus, getName } from "./util/Helpers"
 import { SpeciesFlavourText } from "./SpeciesFlavourText"
 import { TypeLabel } from "./TypeLabel"
 

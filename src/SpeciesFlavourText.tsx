@@ -1,7 +1,7 @@
 import { Species } from "./models/Species"
 import { VersionGroup } from "./models/VersionGroup"
 
-import { getCleanFlavourText, getName } from "./Helpers"
+import { getCleanFlavourText, getName } from "./util/Helpers"
 
 import "./SpeciesFlavourText.css"
 

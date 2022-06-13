@@ -3,7 +3,7 @@ import { Dropdown, DropdownItemProps } from "semantic-ui-react"
 import { Species } from "./models/Species"
 import { Variety } from "./models/Variety"
 
-import { getName, getVarietyName } from "./Helpers"
+import { getName, getVarietyName } from "./util/Helpers"
 
 interface VarietySelectorProps {
     species: Species | undefined

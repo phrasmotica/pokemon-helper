@@ -2,7 +2,7 @@ import { List } from "semantic-ui-react"
 
 import { Encounter } from "./models/Encounter"
 
-import { getLocationAreaName, getName, groupBy, sortEncounters } from "./Helpers"
+import { getLocationAreaName, getName, groupBy, sortEncounters } from "./util/Helpers"
 
 import "./EncountersList.css"
 

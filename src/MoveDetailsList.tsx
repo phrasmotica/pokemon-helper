@@ -2,7 +2,7 @@ import { List } from "semantic-ui-react"
 
 import { PokemonMove } from "./models/Variety"
 
-import { getDisplayText, getName, sortMoveDetails } from "./Helpers"
+import { getDisplayText, getName, sortMoveDetails } from "./util/Helpers"
 import { MoveInformation } from "./MoveInformation"
 import { TypeLabel } from "./TypeLabel"
 

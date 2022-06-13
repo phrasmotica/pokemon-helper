@@ -5,7 +5,7 @@ import { Encounter } from "./models/Encounter"
 import { VersionGroup } from "./models/VersionGroup"
 
 import { EncountersList } from "./EncountersList"
-import { getName, sortById, uniqueBy } from "./Helpers"
+import { getName, sortById, uniqueBy } from "./util/Helpers"
 
 import "./CaptureLocationsListing.css"
 

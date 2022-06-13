@@ -3,7 +3,7 @@ import { Dropdown } from "semantic-ui-react"
 import { Type } from "./models/Type"
 import { PokemonMove } from "./models/Variety"
 
-import { getName, sortById, uniqueBy } from "./Helpers"
+import { getName, sortById, uniqueBy } from "./util/Helpers"
 
 interface MoveTypeSelectorProps {
     moves: PokemonMove[][]

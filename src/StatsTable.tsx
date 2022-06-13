@@ -3,7 +3,7 @@ import { Accordion, Icon, Progress, Segment } from "semantic-ui-react"
 
 import { PokemonStat } from "./models/Variety"
 
-import { getName } from "./Helpers"
+import { getName } from "./util/Helpers"
 
 import "./StatBars.css"
 import "./StatsTable.css"

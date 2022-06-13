@@ -2,7 +2,7 @@ import { Label, SemanticSIZES } from "semantic-ui-react"
 
 import { Type } from "./models/Type"
 
-import { getName } from "./Helpers"
+import { getName } from "./util/Helpers"
 
 import "./TypeLabel.css"
 

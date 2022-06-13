@@ -3,7 +3,7 @@ import { Accordion, Icon, Input } from "semantic-ui-react"
 
 import { PokemonMove } from "./models/Variety"
 
-import { getName, groupBy, sortMoves } from "./Helpers"
+import { getName, groupBy, sortMoves } from "./util/Helpers"
 import { MoveLearnMethodSelector } from "./MoveLearnMethodSelector"
 import { MoveTypeSelector } from "./MoveTypeSelector"
 import { TypeLabel } from "./TypeLabel"

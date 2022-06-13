@@ -3,7 +3,7 @@ import { Dropdown } from "semantic-ui-react"
 import { Species } from "./models/Species"
 import { VersionGroup } from "./models/VersionGroup"
 
-import { getVersionGroupName } from "./Helpers"
+import { getVersionGroupName } from "./util/Helpers"
 
 import "./VersionGroupSelector.css"
 

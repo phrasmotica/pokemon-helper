@@ -3,7 +3,7 @@ import { Button, Icon, Modal } from "semantic-ui-react"
 
 import { useMoveQuery } from "./queries/MoveQuery"
 
-import { getFlavourText, getName } from "./Helpers"
+import { getFlavourText, getName } from "./util/Helpers"
 import { MoveTargetIndicator } from "./MoveTargetIndicator"
 import { TypeLabel } from "./TypeLabel"
 

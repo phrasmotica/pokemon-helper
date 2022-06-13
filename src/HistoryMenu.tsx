@@ -3,7 +3,7 @@ import { Accordion, Icon, Menu } from "semantic-ui-react"
 
 import { Name } from "./models/Name"
 
-import { getName } from "./Helpers"
+import { getName } from "./util/Helpers"
 
 import "./HistoryMenu.css"
 
