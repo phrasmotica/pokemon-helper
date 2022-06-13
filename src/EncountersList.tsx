@@ -27,7 +27,7 @@ export const EncountersList = (props: EncountersListProps) => {
         <div className="encounter">
             <div className="encounter-name-container">
                 {renderLevels(e)}
-                <span>{e.encounterSlot.rarity}% chance</span>
+                {renderChance(e)}
             </div>
 
             <div className="encounter-condition-values">
@@ -44,6 +44,16 @@ export const EncountersList = (props: EncountersListProps) => {
         }
 
         return <span>Levels {e.minLevel}-{e.maxLevel}</span>
+    }
+
+    const renderChance = (e: Encounter) => {
+        // don't show 100% chance for gift Pokemon
+        let hideChance = [18, 19].includes(e.encounterSlot.method.id)
+        if (hideChance) {
+            return null
+        }
+
+        return <span>{e.encounterSlot.rarity}% chance</span>
     }
 
     let encounters = [...props.encounters]
