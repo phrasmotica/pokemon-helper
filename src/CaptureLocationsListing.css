@@ -9,6 +9,15 @@
     font-size: 1.2rem;
 }
 
+.ui.accordion.capture-locations-listing-container .ui.menu {
+    display: flex;
+}
+
+.ui.accordion.capture-locations-listing-container .ui.menu > * {
+    flex: 1;
+    justify-content: center;
+}
+
 .encounters-list-container {
     width: unset;
     max-height: 50vh;

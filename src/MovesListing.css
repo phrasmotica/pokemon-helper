@@ -9,6 +9,15 @@
     font-size: 1.2rem;
 }
 
+.ui.accordion.moves-listing-container .ui.menu {
+    display: flex;
+}
+
+.ui.accordion.moves-listing-container .ui.menu > * {
+    flex: 1;
+    justify-content: center;
+}
+
 .move-details-list-container {
     width: unset;
     max-height: 50vh;
