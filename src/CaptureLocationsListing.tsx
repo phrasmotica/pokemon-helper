@@ -27,33 +27,45 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
         return versions.map(v => v.id).includes(e.version.id)
     }
 
+    const getEncountersWithVersion = (encounters: Encounter[], versionId: number) => (
+        encounters.filter(e => e.version.id === versionId)
+    )
+
     const getEncountersWithMethod = (encounters: Encounter[], methodId: number) => (
         encounters.filter(e => e.encounterSlot.method.id === methodId)
     )
+
+    const renderMethodMenu = (encounters: Encounter[]) => {
+        const methodPanes = encounterMethods.map(em => ({
+            menuItem: getName(em),
+            render: () => <Tab.Pane className="encounters-list-container">
+                <EncountersList
+                    key={em.name}
+                    encounters={getEncountersWithMethod(encounters, em.id)} />
+            </Tab.Pane>,
+        }))
+
+        return <Tab menu={{ pointing: true, }} panes={methodPanes} />
+    }
 
     let validEncounters = props.encounters.filter(isValidEncounter)
 
     let encounterMethods = uniqueBy(validEncounters, ed => ed.encounterSlot.method.id).map(ed => ed.encounterSlot.method)
     encounterMethods.sort(sortById)
 
-    const panes = encounterMethods.map(em => ({
-        menuItem: getName(em),
-        render: () => <Tab.Pane className="encounters-list-container">
-            <EncountersList
-                key={em.name}
-                encounters={getEncountersWithMethod(validEncounters, em.id)}
-                versionGroupId={props.versionGroup?.id} />
-        </Tab.Pane>,
+    let versions = uniqueBy(validEncounters, e => e.version.id).map(e => e.version)
+    versions.sort(sortById)
+
+    const versionPanes = versions.map(v => ({
+        menuItem: getName(v),
+        render: () => renderMethodMenu(getEncountersWithVersion(validEncounters, v.id)),
     }))
 
-    let content = <Tab menu={{ pointing: true, }} panes={panes} />
+    let versionMenu = <Tab menu={{ inverted: true, secondary: true, pointing: true, }} panes={versionPanes} />
 
     if (validEncounters.length <= 0) {
-        content = <Segment><span>No locations to show!</span></Segment>
+        versionMenu = <Segment><span>No locations to show!</span></Segment>
     }
-
-    // TODO: add secondary detached menu for selecting which version to view
-    // encounters for
 
     return (
         <Accordion className="capture-locations-listing-container">
@@ -63,7 +75,7 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
             </Accordion.Title>
 
             <Accordion.Content active={active}>
-                {content}
+                {versionMenu}
             </Accordion.Content>
         </Accordion>
     )

@@ -8,35 +8,18 @@ import "./EncountersList.css"
 
 interface EncountersListProps {
     encounters: Encounter[]
-    versionGroupId: number | undefined
 }
 
 export const EncountersList = (props: EncountersListProps) => {
-    const renderEncountersInVersion = (versionName: string, encounters: Encounter[]) => {
-        let groupedEncounters = groupBy(encounters, e => getLocationAreaName(e.locationArea))
-
-        return (
-            <List.Item key={versionName}>
-                <div className="version-header">
-                    <span>{versionName}</span>
-                </div>
-
-                {Array.from(groupedEncounters.entries()).map(
-                    e => renderEncountersInLocationArea(e[0], e[1])
-                )}
-            </List.Item>
-        )
-    }
-
     const renderEncountersInLocationArea = (locationAreaName: string, encounters: Encounter[]) => {
         return (
-            <div>
+            <List.Item key={locationAreaName}>
                 <div className="location-area-header">
                     <span>{locationAreaName}</span>
                 </div>
 
                 {encounters.map(renderEncounter)}
-            </div>
+            </List.Item>
         )
     }
 
@@ -66,13 +49,13 @@ export const EncountersList = (props: EncountersListProps) => {
     let encounters = [...props.encounters]
     encounters.sort(sortEncounters)
 
-    let groupedEncounters = groupBy(encounters, e => getName(e.version))
+    let groupedEncounters = groupBy(encounters, e => getLocationAreaName(e.locationArea))
 
     return (
         <div className="encounters-list">
             <List divided relaxed>
                 {Array.from(groupedEncounters.entries()).map(
-                    e => renderEncountersInVersion(e[0], e[1])
+                    e => renderEncountersInLocationArea(e[0], e[1])
                 )}
             </List>
         </div>
