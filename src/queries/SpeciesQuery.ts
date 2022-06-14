@@ -50,6 +50,27 @@ const getSpeciesQuery = gql`
                 id
                 name
                 isDefault: is_default
+                abilities: pokemon_v2_pokemonabilities {
+                    id
+                    isHidden: is_hidden
+                    ability: pokemon_v2_ability {
+                        id
+                        name
+                        names: pokemon_v2_abilitynames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                            id
+                            name
+                        }
+                        descriptions: pokemon_v2_abilityeffecttexts(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                            id
+                            shortEffect: short_effect
+                            effect
+                        }
+                        generation: pokemon_v2_generation {
+                            id
+                            name
+                        }
+                    }
+                }
                 encounters: pokemon_v2_encounters {
                     id
                     minLevel: min_level

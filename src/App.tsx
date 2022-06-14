@@ -21,6 +21,7 @@ import { VersionGroupSelector } from "./VersionGroupSelector"
 import { WelcomeMessage } from "./WelcomeMessage"
 
 import "./App.css"
+import { AbilitiesListing } from "./AbilitiesListing"
 
 const App = () => {
     const [searchActive, setSearchActive] = useState(true)
@@ -176,6 +177,10 @@ const App = () => {
                             versionGroup={versionGroup} />
 
                         <div className="battle-details-container">
+                            <AbilitiesListing
+                                abilities={variety?.abilities ?? []}
+                                versionGroup={versionGroup} />
+
                             <StatsTable stats={stats} />
 
                             <EfficacyList

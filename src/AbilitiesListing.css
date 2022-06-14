@@ -1,0 +1,27 @@
+.ui.accordion.abilities-listing-container {
+    color: black;
+}
+
+.ui.accordion.abilities-listing-container > .title {
+    text-align: start;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.ui.accordion.abilities-listing-container .pokemon-ability {
+    text-align: start;
+}
+
+.ui.accordion.abilities-listing-container .pokemon-ability > :not(:first-child) {
+    margin-top: 0.25em;
+}
+
+.ui.accordion.abilities-listing-container .pokemon-ability > .ability-name {
+    font-weight: bold;
+}
+
+.ui.accordion.abilities-listing-container .pokemon-ability > .ability-name > .ability-hidden {
+    font-weight: normal;
+    font-style: italic;
+}

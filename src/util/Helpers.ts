@@ -1,3 +1,4 @@
+import { Ability } from "../models/Ability"
 import { Encounter, LocationArea } from "../models/Encounter"
 import { FlavourText, VersionFlavourText } from "../models/FlavourText"
 import { Name } from "../models/Name"
@@ -72,6 +73,8 @@ export const moveToFront = <T>(arr: T[], elem: T) => {
 export const getGenus = (x: Species) => x.names[0]!.genus
 
 export const getName = (x: { names: Name[] }) => x.names[0]?.name ?? ""
+
+export const getShortEffect = (a: Ability) => a.descriptions[0]?.shortEffect ?? ""
 
 /**
  * Removes unnecessary spacing and newline characters from the given string.
