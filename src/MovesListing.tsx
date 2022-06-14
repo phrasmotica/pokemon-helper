@@ -2,34 +2,34 @@ import { useState } from "react"
 import { Accordion, Icon, Segment, Tab } from "semantic-ui-react"
 
 import { PokemonMove } from "./models/Variety"
+import { VersionGroup } from "./models/VersionGroup"
 
 import { getName, sortById, uniqueBy } from "./util/Helpers"
+
 import { MoveDetailsList } from "./MoveDetailsList"
 
 import "./MovesListing.css"
 
 interface MovesListingProps {
     moves: PokemonMove[]
-    versionGroupId: number | undefined
+    versionGroup: VersionGroup | undefined
 }
 
 export const MovesListing = (props: MovesListingProps) => {
     const [active, setActive] = useState(true)
-
-    const isValidDetail = (md: PokemonMove) => (
-        !props.versionGroupId || md.versionGroup.id === props.versionGroupId!
-    )
 
     const getDetailsWithLearnMethod = (details: PokemonMove[], learnMethodId: number) => (
         details.filter(md => md.learnMethod.id === learnMethodId)
     )
 
     let hasMoves = props.moves.length > 0
-    if (!hasMoves) {
+    let versionGroup = props.versionGroup
+
+    if (!hasMoves || !versionGroup) {
         return null
     }
 
-    let validDetails = props.moves.filter(isValidDetail)
+    let validDetails = props.moves.filter(md => md.versionGroup.id === versionGroup!.id)
 
     let learnMethods = uniqueBy(validDetails, md => md.learnMethod.id).map(md => md.learnMethod)
     learnMethods.sort(sortById)
@@ -40,7 +40,7 @@ export const MovesListing = (props: MovesListingProps) => {
             <MoveDetailsList
                 key={lm.name}
                 moveDetails={getDetailsWithLearnMethod(validDetails, lm.id)}
-                versionGroupId={props.versionGroupId} />
+                versionGroup={props.versionGroup} />
         </Tab.Pane>,
     }))
 

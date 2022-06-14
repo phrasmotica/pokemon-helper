@@ -9,6 +9,10 @@ interface Item extends NamedModel {
 
 }
 
+interface MoveMetadata {
+    criticalHitRate: number
+}
+
 interface MoveMachine {
     id: number
     machineNumber: number
@@ -25,6 +29,7 @@ interface MoveWithInformation extends Move {
     power: number | null
     pp: number
     priority: number
+    metadata: MoveMetadata
     machines: MoveMachine[]
     damageClass: MoveDamageClass
     target: MoveTarget
@@ -53,6 +58,9 @@ const getMoveQuery = gql`
             power
             pp
             priority
+            metadata: pokemon_v2_movemetum {
+                criticalHitRate: crit_rate
+            }
             machines: pokemon_v2_machines {
                 id
                 machineNumber: machine_number

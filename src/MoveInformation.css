@@ -12,13 +12,12 @@
     align-items: flex-start;
 }
 
-.ui.modal.move-info-modal > .content > :first-child {
-    flex: 2;
+.ui.modal.move-info-modal > .content > * {
+    flex: 1;
 }
 
 .ui.modal.move-info-modal > .content > :not(:first-child) {
     margin-left: 1em;
-    flex: 1;
 }
 
 .ui.modal.move-info-modal > .content > .move-target-indicator-container {

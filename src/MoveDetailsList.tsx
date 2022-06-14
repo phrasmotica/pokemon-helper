@@ -1,8 +1,10 @@
 import { List } from "semantic-ui-react"
 
 import { PokemonMove } from "./models/Variety"
+import { VersionGroup } from "./models/VersionGroup"
 
 import { getDisplayText, getName, sortMoveDetails } from "./util/Helpers"
+
 import { MoveInformation } from "./MoveInformation"
 import { TypeLabel } from "./TypeLabel"
 
@@ -10,7 +12,7 @@ import "./MoveDetailsList.css"
 
 interface MoveDetailsListProps {
     moveDetails: PokemonMove[]
-    versionGroupId: number | undefined
+    versionGroup: VersionGroup | undefined
 }
 
 export const MoveDetailsList = (props: MoveDetailsListProps) => {
@@ -26,7 +28,7 @@ export const MoveDetailsList = (props: MoveDetailsListProps) => {
                             <div className="move-name-container">
                                 <MoveInformation
                                     moveId={md.move.id}
-                                    versionGroupId={props.versionGroupId} />
+                                    versionGroup={props.versionGroup} />
 
                                 <span>{getName(md.move)}</span>
 

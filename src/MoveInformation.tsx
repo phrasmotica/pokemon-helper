@@ -1,9 +1,13 @@
 import { useState } from "react"
 import { Button, Icon, Modal } from "semantic-ui-react"
 
+import { Generation } from "./models/Generation"
+import { VersionGroup } from "./models/VersionGroup"
+
 import { useMoveQuery } from "./queries/MoveQuery"
 
-import { getFlavourText, getName } from "./util/Helpers"
+import { calculateCriticalHitChance, getFlavourText, getName } from "./util/Helpers"
+
 import { MoveTargetIndicator } from "./MoveTargetIndicator"
 import { TypeLabel } from "./TypeLabel"
 
@@ -11,7 +15,7 @@ import "./MoveInformation.css"
 
 interface MoveInformationProps {
     moveId: number
-    versionGroupId: number | undefined
+    versionGroup: VersionGroup | undefined
 }
 
 export const MoveInformation = (props: MoveInformationProps) => {
@@ -43,15 +47,40 @@ export const MoveInformation = (props: MoveInformationProps) => {
         return <span>Priority: -</span>
     }
 
-    const move = moveData?.moveInfo[0]
+    const renderCriticalHitRate = (rate: number, generation: Generation) => {
+        if (rate > 0) {
+            let chance = calculateCriticalHitChance(rate, generation) * 100
 
-    if (!move) {
+            return (
+                <div className="critical-hit-rate">
+                    <span>Critical hit rate:</span>
+                    &nbsp;
+                    <span className="rate">
+                        <Icon fitted name="arrow up" />
+                    </span>
+                    &nbsp;
+                    <span className="chance">({chance}%)</span>
+                </div>
+            )
+        }
+
+        return (
+            <div className="critical-hit-rate">
+                <span>Critical hit rate: -</span>
+            </div>
+        )
+    }
+
+    const move = moveData?.moveInfo[0]
+    const versionGroup = props.versionGroup
+
+    if (!move || !versionGroup) {
         return renderTrigger(true)
     }
 
     let machineNames = "N/A"
 
-    let relevantMachines = move.machines.filter(mm => !props.versionGroupId || mm.versionGroup.id === props.versionGroupId)
+    let relevantMachines = move.machines.filter(mm => mm.versionGroup.id === versionGroup.id)
     if (relevantMachines.length > 0) {
         machineNames = relevantMachines.map(mm => getName(mm.item)).join(", ")
     }
@@ -71,7 +100,7 @@ export const MoveInformation = (props: MoveInformationProps) => {
             </Modal.Header>
 
             <Modal.Content>
-                <div><span>{getFlavourText(move, props.versionGroupId)}</span></div>
+                <div><span>{getFlavourText(move, versionGroup.id)}</span></div>
 
                 <div>
                     <div><span>Power: {move.power ?? "-"}</span></div>
@@ -82,6 +111,10 @@ export const MoveInformation = (props: MoveInformationProps) => {
                 <div>
                     <div>
                         {renderPriority(move.priority)}
+                    </div>
+
+                    <div>
+                        {renderCriticalHitRate(move.metadata.criticalHitRate, versionGroup.generation)}
                     </div>
 
                     <div><span>Damage Class: {getName(move.damageClass)}</span></div>

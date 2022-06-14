@@ -1,6 +1,7 @@
 import { Ability } from "../models/Ability"
 import { Encounter, LocationArea } from "../models/Encounter"
 import { FlavourText, VersionFlavourText } from "../models/FlavourText"
+import { Generation } from "../models/Generation"
 import { Name } from "../models/Name"
 import { PokemonForm } from "../models/PokemonForm"
 import { Species } from "../models/Species"
@@ -281,4 +282,31 @@ export const createMergedEncounters = (encounters: Encounter[]) => {
     }
 
     return mergeMap
+}
+
+/**
+ * Returns the probability of the given critical hit rate in the given generation.
+ */
+export const calculateCriticalHitChance = (rate: number, generation: Generation) => {
+    let effectiveRate = Math.min(4, Math.max(0, rate))
+
+    switch (effectiveRate) {
+        case 0:
+            return generation.id >= 7 ? 1/24 : 1/16
+
+        case 1:
+            return 1/8
+
+        case 2:
+            return generation.id >= 6 ? 1/2 : 1/4
+
+        case 3:
+            return generation.id >= 6 ? 1 : 1/3
+
+        case 4:
+            return generation.id >= 6 ? 1 : 1/2
+
+        default:
+            throw new Error(`Unknown critical hit rate ${effectiveRate} provided!`)
+    }
 }
