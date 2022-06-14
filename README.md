@@ -14,8 +14,8 @@ Currently available:
 * [x] Pokédex flavour text
 * [x] encounter information
 * [x] catch rate
+* [x] gender rate
 
 To be added:
 
-* [ ] gender rate
 * [ ] evolution chain
