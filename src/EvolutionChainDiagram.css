@@ -1,0 +1,34 @@
+.ui.accordion.evolution-chain-diagram-container {
+    color: black;
+}
+
+.ui.accordion.evolution-chain-diagram-container > .title {
+    text-align: start;
+    color: white;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.evolution-chain-diagram {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.evolution-chain-diagram > .chain-link > .link-name {
+    margin-top: 0.25em;
+    border-top: 1px solid lightgrey;
+    padding-top: 0.25em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.evolution-chain-diagram > .chain-link img.ui.image.sprite {
+    width: 96px;
+    height: 96px;
+}
+
+.evolution-chain-diagram > .chain-link button.ui.button {
+    margin-right: 0em;
+}

@@ -7,8 +7,10 @@ import { useSpeciesQuery } from "./queries/SpeciesQuery"
 import { useTypesQuery } from "./queries/TypeQuery"
 import { useVersionGroupsQuery } from "./queries/VersionGroupQuery"
 
+import { AbilitiesListing } from "./AbilitiesListing"
 import { BasicInfo } from "./BasicInfo"
 import { EfficacyList } from "./EfficacyList"
+import { EvolutionChainDiagram } from "./EvolutionChainDiagram"
 import { CaptureLocationsListing } from "./CaptureLocationsListing"
 import { FormSelector } from "./FormSelector"
 import { getEffectiveTypes, moveToFront, range } from "./util/Helpers"
@@ -21,7 +23,6 @@ import { VersionGroupSelector } from "./VersionGroupSelector"
 import { WelcomeMessage } from "./WelcomeMessage"
 
 import "./App.css"
-import { AbilitiesListing } from "./AbilitiesListing"
 
 const App = () => {
     const [searchActive, setSearchActive] = useState(true)
@@ -30,6 +31,8 @@ const App = () => {
     const [varietyId, setVarietyId] = useState<number>()
     const [formId, setFormId] = useState<number>()
     const [versionGroupId, setVersionGroupId] = useState<number>()
+
+    const [showShiny, setShowShiny] = useState(false)
 
     const [history, setHistory] = useState<Species[]>([])
 
@@ -174,7 +177,9 @@ const App = () => {
                             speciesInfo={speciesInfo}
                             variety={variety}
                             form={form}
-                            versionGroup={versionGroup} />
+                            versionGroup={versionGroup}
+                            showShiny={showShiny}
+                            setShowShiny={setShowShiny} />
 
                         <div className="battle-details-container">
                             <AbilitiesListing
@@ -182,6 +187,12 @@ const App = () => {
                                 versionGroup={versionGroup} />
 
                             <StatsTable stats={stats} />
+
+                            <EvolutionChainDiagram
+                                evolutionChain={speciesInfo.evolutionChain}
+                                versionGroup={versionGroup}
+                                setSpecies={setSpeciesName}
+                                showShiny={showShiny} />
 
                             <EfficacyList
                                 types={typesData?.typeInfo ?? []}

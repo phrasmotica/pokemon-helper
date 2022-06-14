@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react"
 import { Checkbox, Icon, Image, Segment } from "semantic-ui-react"
 
-import { VersionGroup } from "./models/VersionGroup"
-
+import { HasSprite } from "./models/HasSprite"
 import { PokemonForm } from "./models/PokemonForm"
 import { Species } from "./models/Species"
 import { Variety } from "./models/Variety"
+import { VersionGroup } from "./models/VersionGroup"
 
 import { getEffectiveTypes, getGenus, getName } from "./util/Helpers"
 import { SpeciesFlavourText } from "./SpeciesFlavourText"
@@ -18,18 +18,12 @@ interface BasicInfoProps {
     variety: Variety | undefined
     form: PokemonForm | undefined
     versionGroup: VersionGroup | undefined
-}
-
-interface HasSprite {
-    sprites: {
-        front_default: string,
-        front_shiny: string,
-    }
+    showShiny: boolean
+    setShowShiny: (showShiny: boolean) => void
 }
 
 export const BasicInfo = (props: BasicInfoProps) => {
     const [sprite, setSprite] = useState<HasSprite>()
-    const [showShiny, setShowShiny] = useState(false)
 
     useEffect(() => {
         if (props.form && !props.form.isDefault) {
@@ -128,13 +122,13 @@ export const BasicInfo = (props: BasicInfoProps) => {
                 <div className="sprite-container">
                     <Image
                         className="sprite"
-                        src={showShiny ? sprite?.sprites.front_shiny : sprite?.sprites.front_default} />
+                        src={props.showShiny ? sprite?.sprites.front_shiny : sprite?.sprites.front_default} />
 
                     <Checkbox
                         toggle
                         label="Shiny"
-                        checked={showShiny}
-                        onChange={(e, data) => setShowShiny(data.checked ?? false)} />
+                        checked={props.showShiny}
+                        onChange={(e, data) => props.setShowShiny(data.checked ?? false)} />
                 </div>
             </div>
 
