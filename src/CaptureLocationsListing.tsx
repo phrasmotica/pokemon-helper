@@ -12,6 +12,7 @@ import "./CaptureLocationsListing.css"
 interface CaptureLocationsListingProps {
     encounters: Encounter[]
     versionGroup: VersionGroup | undefined
+    captureRate: number
 }
 
 export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => {
@@ -47,7 +48,9 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
             render: () => <Tab.Pane className="encounters-list-container">
                 <EncountersList
                     key={em.name}
-                    encounters={getEncountersWithMethod(encounters, em.id)} />
+                    encounters={getEncountersWithMethod(encounters, em.id)}
+                    methodId={em.id}
+                    captureRate={props.captureRate} />
             </Tab.Pane>,
         }))
 

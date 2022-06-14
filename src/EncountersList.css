@@ -2,23 +2,18 @@
     color: black;
 }
 
-.encounters-list .item > :not(:first-child) {
-    margin-top: 0.5em;
+.encounters-list .capture-rate {
+    text-align: start;
+    font-style: italic;
 }
 
-.encounters-list .item .version-header {
-    font-weight: bold;
+.encounters-list .item > :not(:first-child) {
+    margin-top: 0.5em;
 }
 
 .encounters-list .item .location-area-header {
     text-align: start;
     font-weight: bold;
-}
-
-.encounters-list .item .encounter {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .encounters-list .item .matched-encounters {
@@ -28,8 +23,8 @@
 }
 
 .encounters-list .item .matched-encounters .conditions {
-    font-style: italic;
     text-align: end;
+    font-style: italic;
 }
 
 .encounters-list .item .matched-encounters .conditions .condition-values {

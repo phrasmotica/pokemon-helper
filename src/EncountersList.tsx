@@ -9,9 +9,24 @@ import "./EncountersList.css"
 
 interface EncountersListProps {
     encounters: Encounter[]
+    methodId: number
+    captureRate: number
 }
 
 export const EncountersList = (props: EncountersListProps) => {
+    const renderCaptureRate = (captureRate: number) => {
+        // don't show capture rate for gift Pokemon
+        if ([18, 19].includes(props.methodId)) {
+            return null
+        }
+
+        return (
+            <div className="capture-rate">
+                <span>Catch rate: {captureRate}</span>
+            </div>
+        )
+    }
+
     const renderEncountersInLocationArea = (locationAreaName: string, encounters: Encounter[]) => {
         let mergeMap = createMergedEncounters(encounters)
 
@@ -86,6 +101,8 @@ export const EncountersList = (props: EncountersListProps) => {
 
     return (
         <div className="encounters-list">
+            {renderCaptureRate(props.captureRate)}
+
             <List divided relaxed>
                 {Array.from(groupedEncounters.entries()).map(
                     e => renderEncountersInLocationArea(e[0], e[1])

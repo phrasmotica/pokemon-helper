@@ -7,6 +7,7 @@ export interface Species {
     id: number
     name: string
     order: number
+    captureRate: number
     names: SpeciesName[]
     flavourTexts: VersionFlavourText[]
     generation: Generation

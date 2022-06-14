@@ -19,6 +19,7 @@ const getSpeciesQuery = gql`
             id
             name
             order
+            captureRate: capture_rate
             names: pokemon_v2_pokemonspeciesnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
                 id
                 name

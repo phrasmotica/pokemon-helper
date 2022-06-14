@@ -185,7 +185,8 @@ const App = () => {
 
                             <CaptureLocationsListing
                                 encounters={variety?.encounters ?? []}
-                                versionGroup={versionGroup} />
+                                versionGroup={versionGroup}
+                                captureRate={speciesInfo.captureRate} />
 
                             <MovesListing moves={moves} versionGroupId={versionGroupId} />
                         </div>
