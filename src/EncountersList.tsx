@@ -42,7 +42,7 @@ export const EncountersList = (props: EncountersListProps) => {
     }
 
     const renderMatchedEncounters = (matchedEncounters: Encounter[]) => (
-        <div className="matched-encounters">
+        <div key={matchedEncounters[0].id} className="matched-encounters">
             {renderLevels(matchedEncounters)}
 
             <div className="conditions">

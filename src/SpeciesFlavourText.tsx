@@ -31,7 +31,7 @@ export const SpeciesFlavourText = (props: SpeciesFlavourTextProps) => {
     return (
         <div className="species-flavour-text">
             {relevantFlavourTexts.map(ft => (
-                <div>
+                <div key={ft.id}>
                     <span><b>{getName(ft.version)}</b></span>
                     <br />
                     <span>{getCleanFlavourText(ft)}</span>
