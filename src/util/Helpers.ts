@@ -17,21 +17,6 @@ export const range = (start: number, length: number) => Array(length).fill(0).ma
 /**
  *
  */
-export const min = (...arr: number[]) => {
-    let min = null
-
-    for (let i = 0; i < arr.length; i++) {
-        if (min === null || arr[i] < min) {
-            min = arr[i]
-        }
-    }
-
-    return min
-}
-
-/**
- *
- */
 export const minBy = <T>(arr: T[], func: (x: T) => number) => {
     let sortedArr = [...arr]
     sortedArr.sort((a, b) => func(a) - func(b))
@@ -165,7 +150,7 @@ export const getEffectiveTypes = (variety: Variety | undefined, form: PokemonFor
  * Sorts the given moves by their details in a lexicographical fashion.
  */
 export const sortMoves = (m1: PokemonMove[], m2: PokemonMove[]) => {
-    for (let i = 0; i < (min(m1.length, m2.length) ?? 0); i++) {
+    for (let i = 0; i < Math.min(m1.length, m2.length); i++) {
         let comp = sortMoveDetails(m1[i], m2[i])
         if (comp !== 0) {
             return comp
