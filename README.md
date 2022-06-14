@@ -18,4 +18,5 @@ Currently available:
 
 To be added:
 
+* [ ] abilities
 * [ ] evolution chain
