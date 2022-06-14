@@ -82,9 +82,9 @@ export const getShortEffect = (a: Ability) => a.descriptions[0]?.shortEffect ?? 
  * \u00AD (&shy;) replacement taken from https://stackoverflow.com/a/34838501
  */
 const clean = (str: string) => str
+    .replaceAll("- ", "-")
     .replaceAll("\n", " ")
     .replaceAll("\f", " ")
-    .replaceAll("- ", "-")
     .replaceAll("\u00AD ", "")
 
 export const getFlavourText = (x: { flavourTexts: FlavourText[] }, versionGroupId: number | undefined) => {
