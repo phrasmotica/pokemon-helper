@@ -103,7 +103,7 @@ const App = () => {
         disabledVersionGroupIds = [...new Set([...disabledVersionGroupIds, ...range(1, 19)])]
     }
 
-    if (form?.formName === "mega") {
+    if (form?.formName && form.formName.startsWith("mega")) {
         // version groups before gen 6 and after gen 7 are invalid
         disabledVersionGroupIds = [...new Set([...disabledVersionGroupIds, ...range(1, 14), 20])]
     }
