@@ -18,7 +18,7 @@ interface CaptureLocationsListingProps {
 export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => {
     const [active, setActive] = useState(true)
 
-    if (props.encounters.length <= 0 || !props.versionGroup) {
+    if (!props.versionGroup) {
         return null
     }
 
