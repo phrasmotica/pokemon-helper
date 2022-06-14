@@ -26,6 +26,21 @@ const getSpeciesQuery = gql`
                 name
                 genus
             }
+            evolutionChain: pokemon_v2_evolutionchain {
+                id
+                species: pokemon_v2_pokemonspecies {
+                    id
+                    name
+                    names: pokemon_v2_pokemonspeciesnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
+                        id
+                        name
+                    }
+                    varieties: pokemon_v2_pokemons {
+                        id
+                        name
+                    }
+                }
+            }
             flavourTexts: pokemon_v2_pokemonspeciesflavortexts(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
                 id
                 text: flavor_text
