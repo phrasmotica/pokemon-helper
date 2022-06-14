@@ -9,17 +9,12 @@ interface FormSelectorProps {
     species: Species | undefined
     loadingForms: boolean
     forms: PokemonForm[]
-    form: number | undefined
-    setForm: (form: number | undefined) => void
+    formId: number | undefined
+    setFormId: (id: number | undefined) => void
 }
 
 export const FormSelector = (props: FormSelectorProps) => {
-    const getDisplayName = (f: PokemonForm) => (
-        getName(props.species!) + " (" + (getName(f) || "default") + ")"
-    )
-
     const isDisabled = props.forms.length < 2
-
     if (isDisabled) {
         return null
     }
@@ -29,7 +24,7 @@ export const FormSelector = (props: FormSelectorProps) => {
     if (!props.loadingForms && props.species) {
         options = props.forms.map(f => ({
             key: f.id,
-            text: getDisplayName(f),
+            text: getName(f) || "Default",
             value: f.id,
         }))
     }
@@ -41,7 +36,7 @@ export const FormSelector = (props: FormSelectorProps) => {
             loading={props.loadingForms}
             placeholder="Form..."
             options={options}
-            value={props.form}
-            onChange={(e, data) => props.setForm(Number(data.value))} />
+            value={props.formId}
+            onChange={(e, data) => props.setFormId(Number(data.value))} />
     )
 }

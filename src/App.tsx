@@ -148,15 +148,15 @@ const App = () => {
                                         species={speciesInfo}
                                         loadingVarieties={loadingSpecies}
                                         varieties={varieties}
-                                        variety={varietyId}
-                                        setVariety={setVarietyId} />
+                                        varietyId={varietyId}
+                                        setVarietyId={setVarietyId} />
 
                                     <FormSelector
                                         species={speciesInfo}
                                         loadingForms={loadingSpecies}
                                         forms={forms}
-                                        form={formId}
-                                        setForm={setFormId} />
+                                        formId={formId}
+                                        setFormId={setFormId} />
                                 </div>
 
                                 <HistoryMenu
