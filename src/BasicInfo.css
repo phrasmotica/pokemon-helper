@@ -10,16 +10,33 @@
     color: black;
 }
 
-.basic-info .species-name {
-    margin-bottom: 0.2em;
+.basic-info > .attribute-container > :not(:first-child) {
+    margin-top: 0.5em;
 }
 
-.basic-info .species-order {
+.basic-info > .attribute-container > .species-name {
+    margin-bottom: 0em;
+}
+
+.basic-info > .attribute-container > .species-name .species-order {
     color: grey;
 }
 
-.basic-info .type-labels-container > :not(:first-child) {
+.basic-info > .attribute-container > .form-name {
+    margin-bottom: 0em;
+    font-style: italic;
+}
+
+.basic-info > .attribute-container > .species-genus {
+    margin-bottom: 0em;
+}
+
+.basic-info > .attribute-container > .type-labels-container > :not(:first-child) {
     margin-left: 0.2em;
+}
+
+.basic-info > .attribute-container > .gender-rate > i.icon {
+    margin-right: 0em;
 }
 
 .basic-info .sprite-container > :not(:first-child) {
