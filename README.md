@@ -15,8 +15,8 @@ Currently available:
 * [x] encounter information
 * [x] catch rate
 * [x] gender rate
+* [x] abilities
 
 To be added:
 
-* [ ] abilities
 * [ ] evolution chain
