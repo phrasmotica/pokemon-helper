@@ -12,10 +12,10 @@ Currently available:
 * [x] moves learnt
 * [x] detailed information about learnt moves
 * [x] Pokédex flavour text
+* [x] encounter information
 
 To be added:
 
 * [ ] catch rate
 * [ ] gender rate
-* [ ] encounter information
 * [ ] evolution chain
