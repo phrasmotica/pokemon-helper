@@ -5,7 +5,7 @@ export interface EvolutionChain {
     species: EvolutionChainSpecies[]
 }
 
-interface EvolutionChainSpecies extends NamedModel {
+export interface EvolutionChainSpecies extends NamedModel {
     varieties: EvolutionChainVariety[]
 }
 

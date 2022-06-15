@@ -13,6 +13,9 @@ interface SpeciesVars {
 
 // TODO: put encounters information in a new query?
 
+// TODO: query evolution chain in a well-structured way, rather than just a list
+// of the species in the chain
+
 const getSpeciesQuery = gql`
     query speciesInfo($languageId: Int, $speciesName: String) {
         speciesInfo: pokemon_v2_pokemonspecies(where: {name: {_eq: $speciesName}}, order_by: {id: asc}) {

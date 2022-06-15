@@ -191,6 +191,7 @@ const App = () => {
                             <EvolutionChainDiagram
                                 evolutionChain={speciesInfo.evolutionChain}
                                 versionGroup={versionGroup}
+                                species={speciesName}
                                 setSpecies={setSpeciesName}
                                 showShiny={showShiny} />
 

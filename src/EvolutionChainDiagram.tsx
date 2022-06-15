@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { Accordion, Button, Icon, Segment } from "semantic-ui-react"
 
-import { EvolutionChain } from "./models/EvolutionChain"
+import { EvolutionChain, EvolutionChainSpecies } from "./models/EvolutionChain"
 import { VersionGroup } from "./models/VersionGroup"
 
 import { getName, sortById } from "./util/Helpers"
@@ -14,6 +14,7 @@ interface EvolutionChainDiagramProps {
     evolutionChain: EvolutionChain
     versionGroup: VersionGroup | undefined
     showShiny: boolean
+    species: string
     setSpecies: (name: string) => void
 }
 
@@ -25,25 +26,40 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
 
         return (
             <div className="evolution-chain-diagram">
-                {sortedSpecies.map(s => (
-                    <div key={s.id} className="chain-link">
-                        <PokemonSprite
-                            key={s.name}
-                            pokemonId={s.varieties[0]?.id}
-                            showShiny={props.showShiny} />
+                {sortedSpecies.map(renderChainLink)}
+            </div>
+        )
+    }
 
-                        <div className="link-name">
-                            <span>{getName(s)}</span>
+    const renderChainLink = (s: EvolutionChainSpecies) => {
+        let speciesNameClass = "species-name"
 
-                            <Button
-                                color="green"
-                                size="mini"
-                                icon="search"
-                                onClick={() => props.setSpecies(s.name)}>
-                            </Button>
-                        </div>
-                    </div>
-                ))}
+        let isCurrent = s.name === props.species
+        if (isCurrent) {
+            speciesNameClass += " current"
+        }
+
+        return (
+            <div key={s.id} className="chain-link">
+                <PokemonSprite
+                    key={s.name}
+                    pokemonId={s.varieties[0]?.id}
+                    showShiny={props.showShiny} />
+
+                <div className="link-name">
+                    <span className={speciesNameClass}>
+                        {getName(s)}
+                    </span>
+
+                    <Button
+                        circular
+                        color="green"
+                        size="mini"
+                        icon="search"
+                        disabled={isCurrent}
+                        onClick={() => props.setSpecies(s.name)}>
+                    </Button>
+                </div>
             </div>
         )
     }

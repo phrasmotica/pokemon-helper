@@ -12,7 +12,7 @@
 .evolution-chain-diagram {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .evolution-chain-diagram > .chain-link > .link-name {
@@ -24,9 +24,8 @@
     justify-content: space-between;
 }
 
-.evolution-chain-diagram > .chain-link img.ui.image.sprite {
-    width: 96px;
-    height: 96px;
+.evolution-chain-diagram > .chain-link > .link-name > .species-name.current {
+    font-weight: bold;
 }
 
 .evolution-chain-diagram > .chain-link button.ui.button {
