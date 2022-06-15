@@ -60,26 +60,28 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
 
         return (
             <div key={name} className={chainLinkClass}>
-                {!isRoot && renderTransition(link.evolution_details)}
+                {!isRoot && renderEvolutionDetails(link.evolution_details)}
 
-                <PokemonSprite
-                    key={name}
-                    pokemon={name}
-                    showShiny={props.showShiny} />
+                <div>
+                    <PokemonSprite
+                        key={name}
+                        pokemon={name}
+                        showShiny={props.showShiny} />
 
-                <div className="link-name">
-                    <span className={speciesNameClass}>
-                        {name}
-                    </span>
+                    <div className="link-name">
+                        <span className={speciesNameClass}>
+                            {name}
+                        </span>
 
-                    <Button
-                        circular
-                        color="green"
-                        size="mini"
-                        icon="search"
-                        disabled={isCurrent}
-                        onClick={() => props.setSpecies(name)}>
-                    </Button>
+                        <Button
+                            circular
+                            color="green"
+                            size="mini"
+                            icon="search"
+                            disabled={isCurrent}
+                            onClick={() => props.setSpecies(name)}>
+                        </Button>
+                    </div>
                 </div>
 
                 <div className="child-links">
@@ -89,9 +91,9 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
         )
     }
 
-    const renderTransition = (details: EvolutionDetail[]) => (
-        <div>
-            <Icon name="arrow down" />
+    const renderEvolutionDetails = (details: EvolutionDetail[]) => (
+        <div className="evolution-details">
+            <Icon name="arrow right" />
 
             {details.map(renderEvolutionDetail)}
         </div>
@@ -99,8 +101,18 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
 
     const renderEvolutionDetail = (detail: EvolutionDetail) => (
         // TODO: show other details here
-        <div>
-            {detail.min_level && <span>Level {detail.min_level}</span>}
+        <div className="evolution-detail">
+            {detail.trigger.name === "level-up" && !detail.min_level && <div>Level up</div>}
+            {detail.min_level && <div>Level {detail.min_level}</div>}
+            {detail.trigger.name === "trade" && <div>Trade</div>}
+            {detail.min_affection && <div>Min. {detail.min_affection} affection</div>}
+            {detail.min_beauty && <div>Min. {detail.min_beauty} beauty</div>}
+            {detail.min_happiness && <div>Min. {detail.min_happiness} happiness</div>}
+            {detail.item && <div>use {detail.item.name}</div>}
+            {detail.held_item && <div>holding {detail.held_item.name}</div>}
+            {detail.gender && <div>must be {detail.gender}</div>}
+            {detail.location && <div>at {detail.location.name}</div>}
+            {detail.time_of_day && <div>at {detail.time_of_day}</div>}
         </div>
     )
 

@@ -15,16 +15,20 @@
     justify-content: space-evenly;
 }
 
-.evolution-chain-diagram > .chain-link > .child-links {
+.evolution-chain-diagram > .chain-link {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
 }
 
-.evolution-chain-diagram > .chain-link .chain-link.child:not(:first-child) {
+.evolution-chain-diagram > .chain-link > .child-links {
     margin-left: 0.5em;
-    border-left: 1px solid lightgrey;
-    padding-left: 0.5em;
+}
+
+.evolution-chain-diagram > .chain-link > .child-links > .chain-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .evolution-chain-diagram > .chain-link .link-name {
@@ -42,4 +46,20 @@
 
 .evolution-chain-diagram > .chain-link .link-name > button.ui.button {
     margin-right: 0em;
+}
+
+.evolution-chain-diagram .chain-link.child:not(:first-child) {
+    margin-top: 0.25em;
+    border-top: 1px solid black;
+    padding-top: 0.25em;
+}
+
+.evolution-chain-diagram .chain-link.child > :not(:first-child) {
+    margin-left: 0.5em;
+}
+
+.evolution-chain-diagram .chain-link > .evolution-details > .evolution-detail:not(:first-child) {
+    margin-top: 0.25em;
+    border-top: 1px dashed lightgrey;
+    padding-top: 0.25em;
 }

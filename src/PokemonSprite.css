@@ -3,3 +3,8 @@
     align-items: center;
     justify-content: center;
 }
+
+.pokemon-sprite-container > img.ui.image.sprite {
+    width: 96px;
+    height: 96px;
+}
