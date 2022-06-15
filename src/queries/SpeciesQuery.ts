@@ -13,9 +13,6 @@ interface SpeciesVars {
 
 // TODO: put encounters information in a new query?
 
-// TODO: query evolution chain in a well-structured way, rather than just a list
-// of the species in the chain
-
 const getSpeciesQuery = gql`
     query speciesInfo($languageId: Int, $speciesName: String) {
         speciesInfo: pokemon_v2_pokemonspecies(where: {name: {_eq: $speciesName}}, order_by: {id: asc}) {
@@ -24,25 +21,11 @@ const getSpeciesQuery = gql`
             order
             genderRate: gender_rate
             captureRate: capture_rate
+            evolutionChainId: evolution_chain_id
             names: pokemon_v2_pokemonspeciesnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
                 id
                 name
                 genus
-            }
-            evolutionChain: pokemon_v2_evolutionchain {
-                id
-                species: pokemon_v2_pokemonspecies {
-                    id
-                    name
-                    names: pokemon_v2_pokemonspeciesnames(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
-                        id
-                        name
-                    }
-                    varieties: pokemon_v2_pokemons {
-                        id
-                        name
-                    }
-                }
             }
             flavourTexts: pokemon_v2_pokemonspeciesflavortexts(where: {pokemon_v2_language: {id: {_eq: $languageId}}}) {
                 id

@@ -1,4 +1,3 @@
-import { EvolutionChain } from "./EvolutionChain"
 import { VersionFlavourText } from "./FlavourText"
 import { Generation } from "./Generation"
 import { Name } from "./Name"
@@ -11,7 +10,7 @@ export interface Species {
     genderRate: number
     captureRate: number
     names: SpeciesName[]
-    evolutionChain: EvolutionChain
+    evolutionChainId: number
     flavourTexts: VersionFlavourText[]
     generation: Generation
     varieties: Variety[]

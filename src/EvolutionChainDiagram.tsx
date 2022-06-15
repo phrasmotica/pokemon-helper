@@ -1,18 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Accordion, Button, Icon, Segment } from "semantic-ui-react"
 
-import { EvolutionChain, EvolutionChainSpecies } from "./models/EvolutionChain"
-import { VersionGroup } from "./models/VersionGroup"
-
-import { getName, sortById } from "./util/Helpers"
+import { ChainLink, EvolutionChain, EvolutionDetail } from "./models/EvolutionChain"
 
 import { PokemonSprite } from "./PokemonSprite"
 
 import "./EvolutionChainDiagram.css"
 
 interface EvolutionChainDiagramProps {
-    evolutionChain: EvolutionChain
-    versionGroup: VersionGroup | undefined
+    evolutionChainId: number | undefined
     showShiny: boolean
     species: string
     setSpecies: (name: string) => void
@@ -20,35 +16,60 @@ interface EvolutionChainDiagramProps {
 
 export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
     const [active, setActive] = useState(true)
+    const [evolutionChain, setEvolutionChain] = useState<EvolutionChain>()
 
-    const renderEvolutionChain = (chain: EvolutionChain) => {
-        let sortedSpecies = chain.species.slice().sort(sortById)
+    useEffect(() => {
+        if (props.evolutionChainId) {
+            fetchEvolutionChain(props.evolutionChainId)
+        }
+        else {
+            setEvolutionChain(undefined)
+        }
 
-        return (
-            <div className="evolution-chain-diagram">
-                {sortedSpecies.map(renderChainLink)}
-            </div>
-        )
+        return () => setEvolutionChain(undefined)
+    }, [props.evolutionChainId])
+
+    const fetchEvolutionChain = (id: number) => {
+        fetch(`${process.env.REACT_APP_API_URL}/evolution-chain/${id}`)
+            .then(res => res.json())
+            .then(setEvolutionChain)
     }
 
-    const renderChainLink = (s: EvolutionChainSpecies) => {
+    const renderEvolutionChain = (chain: EvolutionChain) => (
+        <div className="evolution-chain-diagram">
+            {renderChainLink(chain.chain)}
+        </div>
+    )
+
+    const renderChainLink = (link: ChainLink) => {
+        let name = link.species.name
+
+        let chainLinkClass = "chain-link"
+
+        let isRoot = link.evolution_details.length <= 0
+        if (!isRoot) {
+            chainLinkClass += " child"
+        }
+
         let speciesNameClass = "species-name"
 
-        let isCurrent = s.name === props.species
+        let isCurrent = name === props.species
         if (isCurrent) {
             speciesNameClass += " current"
         }
 
         return (
-            <div key={s.id} className="chain-link">
+            <div key={name} className={chainLinkClass}>
+                {!isRoot && renderTransition(link.evolution_details)}
+
                 <PokemonSprite
-                    key={s.name}
-                    pokemonId={s.varieties[0]?.id}
+                    key={name}
+                    pokemon={name}
                     showShiny={props.showShiny} />
 
                 <div className="link-name">
                     <span className={speciesNameClass}>
-                        {getName(s)}
+                        {name}
                     </span>
 
                     <Button
@@ -57,12 +78,31 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
                         size="mini"
                         icon="search"
                         disabled={isCurrent}
-                        onClick={() => props.setSpecies(s.name)}>
+                        onClick={() => props.setSpecies(name)}>
                     </Button>
+                </div>
+
+                <div className="child-links">
+                    {link.evolves_to.map(renderChainLink)}
                 </div>
             </div>
         )
     }
+
+    const renderTransition = (details: EvolutionDetail[]) => (
+        <div>
+            <Icon name="arrow down" />
+
+            {details.map(renderEvolutionDetail)}
+        </div>
+    )
+
+    const renderEvolutionDetail = (detail: EvolutionDetail) => (
+        // TODO: show other details here
+        <div>
+            {detail.min_level && <span>Level {detail.min_level}</span>}
+        </div>
+    )
 
     return (
         <Accordion className="evolution-chain-diagram-container">
@@ -73,7 +113,7 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
 
             <Accordion.Content active={active}>
                 <Segment>
-                    {renderEvolutionChain(props.evolutionChain)}
+                    {evolutionChain && renderEvolutionChain(evolutionChain)}
                 </Segment>
             </Accordion.Content>
         </Accordion>

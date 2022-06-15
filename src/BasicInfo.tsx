@@ -95,8 +95,8 @@ export const BasicInfo = (props: BasicInfoProps) => {
 
                 <div className="sprite-container">
                     <PokemonSprite
-                        pokemonId={props.variety?.id}
-                        formId={!props.form || props.form.isDefault ? undefined : props.form.id}
+                        pokemon={props.variety?.id}
+                        form={!props.form || props.form.isDefault ? undefined : props.form.id}
                         showShiny={props.showShiny} />
 
                     <Checkbox

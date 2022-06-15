@@ -189,8 +189,7 @@ const App = () => {
                             <StatsTable stats={stats} />
 
                             <EvolutionChainDiagram
-                                evolutionChain={speciesInfo.evolutionChain}
-                                versionGroup={versionGroup}
+                                evolutionChainId={speciesInfo.evolutionChainId}
                                 species={speciesName}
                                 setSpecies={setSpeciesName}
                                 showShiny={showShiny} />

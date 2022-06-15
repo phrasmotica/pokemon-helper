@@ -6,8 +6,8 @@ import { HasSprite } from "./models/HasSprite"
 import "./PokemonSprite.css"
 
 interface PokemonSpriteProps {
-    pokemonId?: number
-    formId?: number
+    pokemon?: number | string
+    form?: number | string
     showShiny: boolean
 }
 
@@ -15,27 +15,27 @@ export const PokemonSprite = (props: PokemonSpriteProps) => {
     const [sprite, setSprite] = useState<HasSprite>()
 
     useEffect(() => {
-        if (props.formId) {
-            fetchFormSprite(props.formId)
+        if (props.form) {
+            fetchFormSprite(props.form)
         }
-        else if (props.pokemonId) {
-            fetchSprite(props.pokemonId)
+        else if (props.pokemon) {
+            fetchSprite(props.pokemon)
         }
         else {
             setSprite(undefined)
         }
 
         return () => setSprite(undefined)
-    }, [props.formId, props.pokemonId])
+    }, [props.form, props.pokemon])
 
-    const fetchSprite = (pokemonId: number) => {
-        fetch(`${process.env.REACT_APP_API_URL}/pokemon/${pokemonId}`)
+    const fetchSprite = (pokemon: number | string) => {
+        fetch(`${process.env.REACT_APP_API_URL}/pokemon/${pokemon}`)
             .then(res => res.json())
             .then(setSprite)
     }
 
-    const fetchFormSprite = (formId: number) => {
-        fetch(`${process.env.REACT_APP_API_URL}/pokemon-form/${formId}`)
+    const fetchFormSprite = (form: number | string) => {
+        fetch(`${process.env.REACT_APP_API_URL}/pokemon-form/${form}`)
             .then(res => res.json())
             .then(setSprite)
     }
