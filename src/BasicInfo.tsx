@@ -1,13 +1,13 @@
-import { useEffect, useState } from "react"
-import { Checkbox, Icon, Image, Segment } from "semantic-ui-react"
+import { Checkbox, Icon, Segment } from "semantic-ui-react"
 
-import { HasSprite } from "./models/HasSprite"
 import { PokemonForm } from "./models/PokemonForm"
 import { Species } from "./models/Species"
 import { Variety } from "./models/Variety"
 import { VersionGroup } from "./models/VersionGroup"
 
 import { getEffectiveTypes, getGenus, getName } from "./util/Helpers"
+
+import { PokemonSprite } from "./PokemonSprite"
 import { SpeciesFlavourText } from "./SpeciesFlavourText"
 import { TypeLabel } from "./TypeLabel"
 
@@ -23,32 +23,6 @@ interface BasicInfoProps {
 }
 
 export const BasicInfo = (props: BasicInfoProps) => {
-    const [sprite, setSprite] = useState<HasSprite>()
-
-    useEffect(() => {
-        if (props.form && !props.form.isDefault) {
-            fetchFormSprite(props.form.name)
-        }
-        else if (props.variety) {
-            fetchSprite(props.variety.name)
-        }
-        else {
-            setSprite(undefined)
-        }
-    }, [props.variety, props.form])
-
-    const fetchFormSprite = (formName: string) => {
-        fetch(`${process.env.REACT_APP_API_URL}/pokemon-form/${formName}`)
-            .then(res => res.json())
-            .then(setSprite)
-    }
-
-    const fetchSprite = (pokemonName: string) => {
-        fetch(`${process.env.REACT_APP_API_URL}/pokemon/${pokemonName}`)
-            .then(res => res.json())
-            .then(setSprite)
-    }
-
     const renderGenderRate = (species: Species) => {
         let rate = species.genderRate
         if (rate === -1) {
@@ -120,9 +94,10 @@ export const BasicInfo = (props: BasicInfoProps) => {
                 </div>
 
                 <div className="sprite-container">
-                    <Image
-                        className="sprite"
-                        src={props.showShiny ? sprite?.sprites.front_shiny : sprite?.sprites.front_default} />
+                    <PokemonSprite
+                        pokemonId={props.variety?.id}
+                        formId={!props.form || props.form.isDefault ? undefined : props.form.id}
+                        showShiny={props.showShiny} />
 
                     <Checkbox
                         toggle
