@@ -182,17 +182,17 @@ const App = () => {
                             setShowShiny={setShowShiny} />
 
                         <div className="battle-details-container">
-                            <AbilitiesListing
-                                abilities={variety?.abilities ?? []}
-                                versionGroup={versionGroup} />
-
-                            <StatsTable stats={stats} />
-
                             <EvolutionChainDiagram
                                 evolutionChainId={speciesInfo.evolutionChainId}
                                 species={speciesName}
                                 setSpecies={setSpeciesName}
                                 showShiny={showShiny} />
+
+                            <AbilitiesListing
+                                abilities={variety?.abilities ?? []}
+                                versionGroup={versionGroup} />
+
+                            <StatsTable stats={stats} />
 
                             <EfficacyList
                                 types={typesData?.typeInfo ?? []}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { Accordion, Button, Icon, Segment } from "semantic-ui-react"
+import { Button, Icon, Modal } from "semantic-ui-react"
 
 import { ChainLink, EvolutionChain, EvolutionDetail } from "./models/EvolutionChain"
 
@@ -15,7 +15,7 @@ interface EvolutionChainDiagramProps {
 }
 
 export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
-    const [active, setActive] = useState(true)
+    const [open, setOpen] = useState(false)
     const [evolutionChain, setEvolutionChain] = useState<EvolutionChain>()
 
     useEffect(() => {
@@ -34,6 +34,15 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
             .then(res => res.json())
             .then(setEvolutionChain)
     }
+
+    const renderTrigger = (disabled: boolean) => (
+        <Button
+            fluid
+            inverted
+            disabled={disabled}>
+            Show evolution tree
+        </Button>
+    )
 
     const renderEvolutionChain = (chain: EvolutionChain) => (
         <div className="evolution-chain-diagram">
@@ -117,17 +126,20 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
     )
 
     return (
-        <Accordion className="evolution-chain-diagram-container">
-            <Accordion.Title active={active} onClick={() => setActive(!active)}>
-                <Icon name="dropdown" />
-                Evolution
-            </Accordion.Title>
+        <Modal
+            className="evolution-chain-diagram-container"
+            closeIcon
+            onClose={() => setOpen(false)}
+            onOpen={() => setOpen(true)}
+            open={open}
+            trigger={renderTrigger(!evolutionChain)}>
+            <Modal.Header>
+                <span>Evolution</span>
+            </Modal.Header>
 
-            <Accordion.Content active={active}>
-                <Segment>
-                    {evolutionChain && renderEvolutionChain(evolutionChain)}
-                </Segment>
-            </Accordion.Content>
-        </Accordion>
+            <Modal.Content>
+                {evolutionChain && renderEvolutionChain(evolutionChain)}
+            </Modal.Content>
+        </Modal>
     )
 }

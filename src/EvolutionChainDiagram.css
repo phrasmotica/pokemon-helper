@@ -2,13 +2,6 @@
     color: black;
 }
 
-.ui.accordion.evolution-chain-diagram-container > .title {
-    text-align: start;
-    color: white;
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
 .evolution-chain-diagram {
     display: flex;
     align-items: center;
@@ -23,12 +16,6 @@
 
 .evolution-chain-diagram > .chain-link > .child-links {
     margin-left: 0.5em;
-}
-
-.evolution-chain-diagram > .chain-link > .child-links > .chain-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
 }
 
 .evolution-chain-diagram > .chain-link .link-name {
@@ -46,6 +33,12 @@
 
 .evolution-chain-diagram > .chain-link .link-name > button.ui.button {
     margin-right: 0em;
+}
+
+.evolution-chain-diagram .chain-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .evolution-chain-diagram .chain-link.child:not(:first-child) {
