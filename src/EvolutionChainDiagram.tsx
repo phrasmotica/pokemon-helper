@@ -3,6 +3,10 @@ import { Button, Icon, Modal } from "semantic-ui-react"
 
 import { ChainLink, EvolutionChain, EvolutionDetail } from "./models/EvolutionChain"
 
+import { useEvolutionTreeInfoQuery } from "./queries/SpeciesNamesQuery"
+
+import { getName, getSpeciesNames } from "./util/Helpers"
+
 import { PokemonSprite } from "./PokemonSprite"
 
 import "./EvolutionChainDiagram.css"
@@ -29,6 +33,8 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
         return () => setEvolutionChain(undefined)
     }, [props.evolutionChainId])
 
+    const { evolutionTreeInfoData } = useEvolutionTreeInfoQuery(getSpeciesNames(evolutionChain?.chain))
+
     const fetchEvolutionChain = (id: number) => {
         fetch(`${process.env.REACT_APP_API_URL}/evolution-chain/${id}`)
             .then(res => res.json())
@@ -52,6 +58,12 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
 
     const renderChainLink = (link: ChainLink) => {
         let name = link.species.name
+
+        let displayName = name
+        if (evolutionTreeInfoData) {
+            let speciesInfo = evolutionTreeInfoData.speciesInfo.find(s => s.name === name)
+            displayName = speciesInfo ? getName(speciesInfo) : name
+        }
 
         let chainLinkClass = "chain-link"
 
@@ -79,7 +91,7 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
 
                     <div className="link-name">
                         <span className={speciesNameClass}>
-                            {name}
+                            {displayName}
                         </span>
 
                         <Button
