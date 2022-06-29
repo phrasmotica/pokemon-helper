@@ -102,7 +102,9 @@ export const EvolutionChainDiagram = (props: EvolutionChainDiagramProps) => {
 
     const renderEvolutionDetails = (details: EvolutionDetail[]) => (
         <div className="evolution-details">
-            <Icon name="arrow right" />
+            <div className="icon-container">
+                <Icon name="arrow right" />
+            </div>
 
             {details.map(renderEvolutionDetail)}
         </div>

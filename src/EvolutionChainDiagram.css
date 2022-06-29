@@ -51,6 +51,15 @@
     margin-left: 0.5em;
 }
 
+.evolution-chain-diagram .icon-container {
+    display: flex;
+}
+
+.evolution-chain-diagram .icon-container > i.icon {
+    flex: auto;
+    margin-right: unset;
+}
+
 .evolution-chain-diagram .chain-link > .evolution-details > .evolution-detail:not(:first-child) {
     margin-top: 0.25em;
     border-top: 1px dashed lightgrey;
