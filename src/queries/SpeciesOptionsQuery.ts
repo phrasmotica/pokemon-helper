@@ -15,7 +15,7 @@ interface SpeciesVars {
 }
 
 const getSpeciesOptionsQuery = gql`
-    query speciesOptions($languageId: Int, $speciesName: String) {
+    query speciesOptions($languageId: Int) {
         speciesOptions: pokemon_v2_pokemonspecies(order_by: {id: asc}) {
             id
             name
