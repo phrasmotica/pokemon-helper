@@ -1,5 +1,6 @@
 import { Ability } from "../models/Ability"
 import { Encounter, LocationArea } from "../models/Encounter"
+import { ChainLink } from "../models/EvolutionChain"
 import { FlavourText, VersionFlavourText } from "../models/FlavourText"
 import { Generation } from "../models/Generation"
 import { Name } from "../models/Name"
@@ -294,4 +295,18 @@ export const calculateCriticalHitChance = (rate: number, generation: Generation)
         default:
             throw new Error(`Unknown critical hit rate ${effectiveRate} provided!`)
     }
+}
+
+/**
+ * Returns the names of the species in the given evolution chain link, by
+ * recursively calling itself on descendants of the chain link and map-reducing
+ * the results.
+ */
+export const getSpeciesNames = (link: ChainLink | undefined): string[] => {
+    if (!link) {
+        return []
+    }
+
+    let childLinksNames = link.evolves_to.map(getSpeciesNames).reduce((x, y) => x.concat(y), [])
+    return [link.species.name].concat(childLinksNames)
 }
