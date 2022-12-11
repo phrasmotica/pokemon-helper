@@ -26,6 +26,7 @@ export const LocationSelector = (props: LocationSelectorProps) => {
         .filter(showLocation)
         .sort(sortLocationOptions)
 
+    // TODO: move this logic into a common file
     const { loadingRegions, regionsData } = useRegionsQuery()
 
     const getRegionName = (name: string) => {

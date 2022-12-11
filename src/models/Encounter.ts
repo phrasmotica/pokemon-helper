@@ -13,7 +13,14 @@ export interface Encounter {
     encounterSlot: EncounterSlot
 }
 
-export interface Pokemon extends NamedModel {}
+export interface Pokemon {
+    id: number
+    name: string
+    species: {
+        id: number
+        name: string
+    }
+}
 
 export interface EncounterConditionValueMap {
     id: number

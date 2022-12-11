@@ -42,6 +42,10 @@ const getLocationQuery = gql`
                     pokemon: pokemon_v2_pokemon {
                         id
                         name
+                        species: pokemon_v2_pokemonspecy {
+                            id
+                            name
+                        }
                     }
                     version: pokemon_v2_version {
                         id
