@@ -34,13 +34,7 @@ export const RouteDexPage = () => {
         }
     }, [locationInfo])
 
-    const getEncounters = () => {
-        if (!locationInfo) {
-            return []
-        }
-
-        return locationInfo.areas.flatMap(a => a.encounters)
-    }
+    const getEncounters = () => (locationInfo?.areas ?? []).flatMap(a => a.encounters)
 
     let encounters = useMemo(getEncounters, [locationInfo])
 
@@ -77,6 +71,7 @@ export const RouteDexPage = () => {
             <div>
                 {Array.from(groupedEncounters.entries()).map(
                     g => <CaptureLocationsListing
+                        key={g[0]}
                         encounters={g[1]}
                         versionGroup={versionGroup}
                         groupBy={e => e.pokemon.name} // TODO: group by localised name. Create GraphQL query for getting name of a species/variety/form
@@ -86,7 +81,7 @@ export const RouteDexPage = () => {
         )
     }
 
-    const renderLocationHistoryItem = (l: Location) => <div>{getName(l)}</div>
+    const renderLocationHistoryItem = (l: Location) => <div>{getName(l) + ` (${l.region.name})`}</div> // TODO: query localised region name
 
     return (
         <div>
