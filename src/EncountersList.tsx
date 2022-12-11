@@ -28,13 +28,15 @@ export const EncountersList = (props: EncountersListProps) => {
         )
     }
 
-    const renderEncountersInLocationArea = (locationAreaName: string, encounters: Encounter[]) => {
+    const renderEncounters = (header: string, encounters: Encounter[]) => {
         let mergeMap = createMergedEncounters(encounters)
 
         return (
-            <List.Item key={locationAreaName}>
-                <div className="location-area-header">
-                    <span>{locationAreaName}</span>
+            <List.Item key={header}>
+                <div className="encounters-header">
+                    <span>{header}</span>
+
+                    {/* TODO: allow rendering a sprite here */}
                 </div>
 
                 {mergeMap.map(renderMatchedEncounters)}
@@ -106,7 +108,7 @@ export const EncountersList = (props: EncountersListProps) => {
 
             <List divided relaxed>
                 {Array.from(groupedEncounters.entries()).map(
-                    e => renderEncountersInLocationArea(e[0], e[1])
+                    e => renderEncounters(e[0], e[1])
                 )}
             </List>
         </div>
