@@ -3,6 +3,7 @@ import { Button, Dropdown } from "semantic-ui-react"
 import { LocationArea } from "./models/Encounter"
 
 import { LocationOption, sortLocationOptions, useLocationOptionsQuery } from "./queries/LocationOptionsQuery"
+import { useRegionsQuery } from "./queries/RegionQuery"
 
 import { getName } from "./util/Helpers"
 
@@ -21,14 +22,33 @@ export const LocationSelector = (props: LocationSelectorProps) => {
     let showLocationArea = (area: LocationArea) => area.encountersAgg.aggregate.count > 0
     let showLocation = (location: LocationOption) => location.locationAreas.some(showLocationArea)
 
-    let options = (locationOptionsData?.locationOptions ?? [])
+    let validLocations = (locationOptionsData?.locationOptions ?? [])
         .filter(showLocation)
         .sort(sortLocationOptions)
-        .map(s => ({
-            key: s.name,
-            text: getName(s) + ` (${s.region.name})`, // TODO: query localised region name
-            value: s.name,
-        }))
+
+    const { loadingRegions, regionsData } = useRegionsQuery()
+
+    const getRegionName = (name: string) => {
+        let regions = regionsData?.regionInfo ?? []
+        let region = regions.find(r => r.name === name)
+        return region ? getName(region) : ""
+    }
+
+    const getText = (l: LocationOption) => {
+        let text = getName(l)
+
+        if (!loadingRegions) {
+            text += ` (${getRegionName(l.region.name)})`
+        }
+
+        return text
+    }
+
+    let options = validLocations.map(l => ({
+        key: l.name,
+        text: getText(l),
+        value: l.name,
+    }))
 
     return (
         <div className="location-selector-container">

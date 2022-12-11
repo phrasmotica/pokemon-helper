@@ -1,6 +1,6 @@
 import { LocationArea } from "./Encounter"
 import { Name } from "./Name"
-import { NamedModel } from "./NamedModel"
+import { Region } from "./Region"
 
 export interface Location {
     id: number
@@ -9,5 +9,3 @@ export interface Location {
     region: Region
     areas: LocationArea[]
 }
-
-export interface Region extends NamedModel {}

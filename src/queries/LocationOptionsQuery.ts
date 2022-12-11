@@ -2,7 +2,7 @@ import { gql, useQuery } from "@apollo/client"
 
 import { LocationArea } from "../models/Encounter"
 import { Generation } from "../models/Generation"
-import { Region } from "../models/Location"
+import { Region } from "../models/Region"
 import { NamedModel } from "../models/NamedModel"
 
 export interface LocationOption extends NamedModel {
