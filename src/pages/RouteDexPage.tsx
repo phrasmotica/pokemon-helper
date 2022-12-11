@@ -3,6 +3,7 @@ import { Accordion, Icon } from "semantic-ui-react"
 
 import { Encounter } from "../models/Encounter"
 import { Location } from "../models/Location"
+import { hasEncounters } from "../models/VersionGroup"
 
 import { useLocationQuery } from "../queries/LocationQuery"
 import { useVersionGroupsQuery } from "../queries/VersionGroupQuery"
@@ -45,6 +46,12 @@ export const RouteDexPage = () => {
 
     const { loadingVersionGroups, versionGroupsData } = useVersionGroupsQuery()
 
+    let versionGroups = useMemo(() => versionGroupsData?.versionGroupInfo ?? [], [versionGroupsData])
+    let versionGroup = versionGroups.find(vg => vg.id === versionGroupId)
+
+    let disabledVersionGroups = versionGroups.filter(vg => !hasEncounters(vg, encounters))
+    let disabledVersionGroupIds = disabledVersionGroups.map(vg => vg.id)
+
     useEffect(() => {
         let firstVersionGroup = versionGroupsData?.versionGroupInfo[0]
         if (firstVersionGroup) {
@@ -52,11 +59,15 @@ export const RouteDexPage = () => {
         }
     }, [versionGroupsData])
 
-    let versionGroups = useMemo(() => versionGroupsData?.versionGroupInfo ?? [], [versionGroupsData])
-
-    // TODO: compute version groups that should be disabled
-
-    let versionGroup = versionGroups.find(vg => vg.id === versionGroupId)
+    useEffect(() => {
+        if (locationInfo && versionGroups) {
+            // ensure a valid version group is selected
+            if (versionGroupId && disabledVersionGroupIds.includes(versionGroupId)) {
+                let newVersionGroupId = versionGroups.find(vg => !disabledVersionGroupIds.includes(vg.id))?.id
+                setVersionGroupId(newVersionGroupId)
+            }
+        }
+    }, [locationInfo, versionGroupsData, disabledVersionGroupIds, versionGroupId, versionGroups])
 
     const renderEncounters = (encounters: Encounter[]) => {
         let groupedEncounters = groupBy(encounters, e => getName(e.locationArea))
@@ -87,7 +98,7 @@ export const RouteDexPage = () => {
                         loadingVersionGroups={loadingVersionGroups}
                         versionGroups={versionGroups}
                         versionGroupId={versionGroupId}
-                        disabledVersionGroupIds={[]}
+                        disabledVersionGroupIds={disabledVersionGroupIds}
                         setVersionGroupId={setVersionGroupId} />
 
                     <Accordion className="input-container">
