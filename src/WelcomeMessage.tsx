@@ -9,3 +9,11 @@ export const WelcomeMessage = () => (
         </Message>
     </div>
 )
+
+export const RouteDexWelcomeMessage = () => (
+    <div className="welcome-message-container">
+        <Message info>
+            Select a location to view the wild Pok&eacute;mon available there!
+        </Message>
+    </div>
+)

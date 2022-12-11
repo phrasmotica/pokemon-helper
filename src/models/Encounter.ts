@@ -1,3 +1,4 @@
+import { Location } from "./Location"
 import { NamedModel } from "./NamedModel"
 import { Version } from "./Version"
 
@@ -5,11 +6,14 @@ export interface Encounter {
     id: number
     minLevel: number
     maxLevel: number
+    pokemon: Pokemon
     version: Version
     conditionValues: EncounterConditionValueMap[]
     locationArea: LocationArea
     encounterSlot: EncounterSlot
 }
+
+export interface Pokemon extends NamedModel {}
 
 export interface EncounterConditionValueMap {
     id: number
@@ -22,10 +26,16 @@ interface EncounterConditionValue extends NamedModel {
 
 export interface LocationArea extends NamedModel {
     location: Location
+    encounters: Encounter[]
+    encountersAgg: AggregateInfo
 }
 
-interface Location extends NamedModel {
+interface AggregateInfo {
+    aggregate: Aggregate
+}
 
+interface Aggregate {
+    count: number
 }
 
 interface EncounterSlot {

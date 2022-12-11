@@ -1,0 +1,11 @@
+.location-selector-container {
+    display: flex;
+}
+
+.location-selector-container > :not(:first-child) {
+    margin-left: 0.5em;
+}
+
+.location-selector-container > .ui.button  {
+    margin-right: 0em!important;
+}

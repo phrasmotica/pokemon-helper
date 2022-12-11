@@ -2,6 +2,7 @@ import { BrowserRouter, Link, Route, Routes } from "react-router-dom"
 import { Menu } from "semantic-ui-react"
 
 import { PokedexPage } from "./pages/PokedexPage"
+import { RouteDexPage } from "./pages/RouteDexPage"
 
 import "./App.css"
 
@@ -17,8 +18,16 @@ const App = () => {
                     Pokedex
                 </Link>
             </Menu.Item>
+
+            <Menu.Item>
+                <Link to="/routedex">
+                    RouteDex
+                </Link>
+            </Menu.Item>
         </Menu>
     )
+
+    // TODO: change background colour per page. Might require restructuring the divs...
 
     return (
         <div className="App">
@@ -28,6 +37,7 @@ const App = () => {
 
                     <Routes>
                         <Route path="/" element={<PokedexPage />} />
+                        <Route path="/routedex" element={<RouteDexPage />} />
                     </Routes>
                 </BrowserRouter>
             </div>

@@ -11,8 +11,10 @@ import "./CaptureLocationsListing.css"
 
 interface CaptureLocationsListingProps {
     encounters: Encounter[]
+    groupBy: (e: Encounter) => string
     versionGroup: VersionGroup | undefined
-    captureRate: number
+    title?: string
+    captureRate?: number
 }
 
 export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => {
@@ -49,6 +51,7 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
                 <EncountersList
                     key={em.name}
                     encounters={getEncountersWithMethod(encounters, em.id)}
+                    groupBy={props.groupBy}
                     methodId={em.id}
                     captureRate={props.captureRate} />
             </Tab.Pane>,
@@ -66,11 +69,19 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
 
     let versionMenu = <Tab menu={{ inverted: true, secondary: true, pointing: true, }} panes={versionPanes} />
 
+    if (!props.title) {
+        return (
+            <div className="capture-locations-listing-container">
+                {versionMenu}
+            </div>
+        )
+    }
+
     return (
         <Accordion className="capture-locations-listing-container">
             <Accordion.Title active={active} onClick={() => setActive(!active)}>
                 <Icon name="dropdown" />
-                Capture Locations
+                {props.title}
             </Accordion.Title>
 
             <Accordion.Content active={active}>

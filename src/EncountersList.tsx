@@ -2,15 +2,16 @@ import { List } from "semantic-ui-react"
 
 import { Encounter } from "./models/Encounter"
 
-import { createMergedEncounters, getLocationAreaName, getName, groupBy, sortEncounters } from "./util/Helpers"
+import { createMergedEncounters, getName, groupBy, sortEncounters } from "./util/Helpers"
 import { Interval, isEmpty, mergeIntRanges, summarise } from "./util/Interval"
 
 import "./EncountersList.css"
 
 interface EncountersListProps {
     encounters: Encounter[]
+    groupBy: (e: Encounter) => string
     methodId: number
-    captureRate: number
+    captureRate?: number
 }
 
 export const EncountersList = (props: EncountersListProps) => {
@@ -97,11 +98,11 @@ export const EncountersList = (props: EncountersListProps) => {
     let encounters = [...props.encounters]
     encounters.sort(sortEncounters)
 
-    let groupedEncounters = groupBy(encounters, e => getLocationAreaName(e.locationArea))
+    let groupedEncounters = groupBy(encounters, props.groupBy)
 
     return (
         <div className="encounters-list">
-            {renderCaptureRate(props.captureRate)}
+            {props.captureRate && renderCaptureRate(props.captureRate)}
 
             <List divided relaxed>
                 {Array.from(groupedEncounters.entries()).map(

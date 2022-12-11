@@ -14,7 +14,7 @@ import { useTypesQuery } from "../queries/TypeQuery"
 import { useVersionGroupsQuery } from "../queries/VersionGroupQuery"
 import { SpeciesSelector } from "../SpeciesSelector"
 import { StatsTable } from "../StatsTable"
-import { moveToFront, range, getEffectiveTypes } from "../util/Helpers"
+import { range, getEffectiveTypes, updateHistory, getLocationAreaName, getName } from "../util/Helpers"
 import { VarietySelector } from "../VarietySelector"
 import { VersionGroupSelector } from "../VersionGroupSelector"
 import { WelcomeMessage } from "../WelcomeMessage"
@@ -37,13 +37,7 @@ export const PokedexPage = () => {
 
     useEffect(() => {
         if (speciesInfo) {
-            setHistory(h => {
-                if (!h.some(s => s.name === speciesInfo!.name)) {
-                    return [speciesInfo!, ...h]
-                }
-
-                return moveToFront(h, speciesInfo!)
-            })
+            setHistory(h => updateHistory(h, speciesInfo!))
 
             let firstVariety = speciesInfo.varieties[0]
             if (firstVariety) {
@@ -55,7 +49,7 @@ export const PokedexPage = () => {
                 }
             }
         }
-    }, [speciesData, speciesInfo])
+    }, [speciesInfo])
 
     let varieties = useMemo(() => speciesInfo?.varieties ?? [], [speciesInfo])
 
@@ -92,6 +86,16 @@ export const PokedexPage = () => {
 
     const { typesData } = useTypesQuery()
 
+    const renderSpeciesHistoryItem = (s: Species) => (
+        <div>
+            {getName(s)}&nbsp;
+
+            <span className="species-order">
+                (&#x00023;{s.order})
+            </span>
+        </div>
+    )
+
     let variety = varieties.find(v => v.id === varietyId)
 
     let forms = variety?.forms ?? []
@@ -120,7 +124,6 @@ export const PokedexPage = () => {
             <div className="main-container">
                 <div className="control-container">
                     <VersionGroupSelector
-                        species={speciesInfo}
                         loadingVersionGroups={loadingVersionGroups}
                         versionGroups={versionGroups}
                         versionGroupId={versionGroupId}
@@ -159,7 +162,8 @@ export const PokedexPage = () => {
 
                             <HistoryMenu
                                 history={history}
-                                setSpecies={setSpeciesName} />
+                                renderItem={s => renderSpeciesHistoryItem(s as Species)}
+                                setItem={setSpeciesName} />
                         </Accordion.Content>
                     </Accordion>
                 </div>
@@ -187,8 +191,10 @@ export const PokedexPage = () => {
 
                         <CaptureLocationsListing
                             encounters={variety?.encounters ?? []}
+                            groupBy={e => getLocationAreaName(e.locationArea)}
                             versionGroup={versionGroup}
-                            captureRate={speciesInfo.captureRate} />
+                            captureRate={speciesInfo.captureRate}
+                            title="Capture Locations" />
 
                         <MovesListing
                             moves={moves}
