@@ -1,5 +1,14 @@
 import { useState, useEffect, useMemo } from "react"
+import { useSearchParams } from "react-router-dom"
 import { Accordion, Icon } from "semantic-ui-react"
+
+import { Species } from "../models/Species"
+
+import { useSpeciesQuery } from "../queries/SpeciesQuery"
+import { useTypesQuery } from "../queries/TypeQuery"
+import { useVersionGroupsQuery } from "../queries/VersionGroupQuery"
+
+import { range, getEffectiveTypes, updateHistory, getLocationAreaName, getName } from "../util/Helpers"
 
 import { AbilitiesListing } from "../AbilitiesListing"
 import { BasicInfo } from "../BasicInfo"
@@ -7,14 +16,9 @@ import { CaptureLocationsListing } from "../CaptureLocationsListing"
 import { EfficacyList } from "../EfficacyList"
 import { FormSelector } from "../FormSelector"
 import { HistoryMenu } from "../HistoryMenu"
-import { Species } from "../models/Species"
 import { MovesListing } from "../MovesListing"
-import { useSpeciesQuery } from "../queries/SpeciesQuery"
-import { useTypesQuery } from "../queries/TypeQuery"
-import { useVersionGroupsQuery } from "../queries/VersionGroupQuery"
 import { SpeciesSelector } from "../SpeciesSelector"
 import { StatsTable } from "../StatsTable"
-import { range, getEffectiveTypes, updateHistory, getLocationAreaName, getName } from "../util/Helpers"
 import { VarietySelector } from "../VarietySelector"
 import { VersionGroupSelector } from "../VersionGroupSelector"
 import { WelcomeMessage } from "../WelcomeMessage"
@@ -24,12 +28,22 @@ import "./PokedexPage.css"
 export const PokedexPage = () => {
     const [searchActive, setSearchActive] = useState(true)
 
+    const [searchParams, setSearchParams] = useSearchParams()
+
     const [speciesName, setSpeciesName] = useState("")
     const [varietyId, setVarietyId] = useState<number>()
     const [formId, setFormId] = useState<number>()
     const [versionGroupId, setVersionGroupId] = useState<number>()
 
     const [history, setHistory] = useState<Species[]>([])
+
+    let speciesFromParams = searchParams.get("species")
+
+    useEffect(() => {
+        if (speciesFromParams) {
+            setSpeciesName(speciesFromParams)
+        }
+    }, [speciesFromParams])
 
     const { loadingSpecies, speciesData } = useSpeciesQuery(speciesName)
 
