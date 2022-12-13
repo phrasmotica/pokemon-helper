@@ -5,6 +5,8 @@ import { Encounter } from "./models/Encounter"
 import { createMergedEncounters, getName, groupBy, sortEncounters } from "./util/Helpers"
 import { Interval, isEmpty, mergeIntRanges, summarise } from "./util/Interval"
 
+import { Sprite } from "./Sprite"
+
 import "./EncountersList.css"
 
 interface EncountersListProps {
@@ -12,6 +14,7 @@ interface EncountersListProps {
     groupBy: (e: Encounter) => string
     methodId: number
     captureRate?: number
+    showSprites?: boolean
 }
 
 export const EncountersList = (props: EncountersListProps) => {
@@ -30,13 +33,16 @@ export const EncountersList = (props: EncountersListProps) => {
 
     const renderEncounters = (header: string, encounters: Encounter[]) => {
         let mergeMap = createMergedEncounters(encounters)
+        let pokemon = encounters[0].pokemon
 
         return (
             <List.Item key={header}>
                 <div className="encounters-header">
                     <span>{header}</span>
 
-                    {/* TODO: allow rendering a sprite here */}
+                    {props.showSprites && <Sprite
+                        pokemon={pokemon}
+                        showShinyToggle={false} />}
                 </div>
 
                 {mergeMap.map(renderMatchedEncounters)}

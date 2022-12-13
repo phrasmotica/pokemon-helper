@@ -15,6 +15,7 @@ interface CaptureLocationsListingProps {
     versionGroup: VersionGroup | undefined
     title?: string
     captureRate?: number
+    showSprites?: boolean
 }
 
 export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => {
@@ -53,7 +54,8 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
                     encounters={getEncountersWithMethod(encounters, em.id)}
                     groupBy={props.groupBy}
                     methodId={em.id}
-                    captureRate={props.captureRate} />
+                    captureRate={props.captureRate}
+                    showSprites={props.showSprites} />
             </Tab.Pane>,
         }))
 

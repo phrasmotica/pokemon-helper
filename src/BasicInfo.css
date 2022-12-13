@@ -38,12 +38,3 @@
 .basic-info > .attribute-container > .gender-rate > i.icon {
     margin-right: 0em;
 }
-
-.basic-info .sprite-container > :not(:first-child) {
-    margin-top: 0.5em;
-}
-
-.basic-info .sprite {
-    width: 96px;
-    height: 96px;
-}

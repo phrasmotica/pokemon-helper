@@ -97,10 +97,11 @@ export const RouteDexPage = () => {
                 {Array.from(groupedEncounters.entries()).map(
                     g => <CaptureLocationsListing
                         key={g[0]}
+                        title={showTitles ? g[0] : undefined}
                         encounters={g[1]}
                         versionGroup={versionGroup}
                         groupBy={e => getPokemonName(e.pokemon.name)}
-                        title={showTitles ? g[0] : undefined} />
+                        showSprites={true} />
                 )}
             </div>
         )

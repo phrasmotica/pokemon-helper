@@ -190,11 +190,12 @@ export const PokedexPage = () => {
                             versionGroup={versionGroup} />
 
                         <CaptureLocationsListing
+                            title="Capture Locations"
                             encounters={variety?.encounters ?? []}
                             groupBy={e => getLocationAreaName(e.locationArea)}
                             versionGroup={versionGroup}
                             captureRate={speciesInfo.captureRate}
-                            title="Capture Locations" />
+                            showSprites={false} />
 
                         <MovesListing
                             moves={moves}

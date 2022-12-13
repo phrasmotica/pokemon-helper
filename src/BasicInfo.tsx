@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react"
-import { Checkbox, Icon, Image, Segment } from "semantic-ui-react"
-
-import { VersionGroup } from "./models/VersionGroup"
+import { Icon, Segment } from "semantic-ui-react"
 
 import { PokemonForm } from "./models/PokemonForm"
 import { Species } from "./models/Species"
 import { Variety } from "./models/Variety"
+import { VersionGroup } from "./models/VersionGroup"
 
 import { getEffectiveTypes, getGenus, getName } from "./util/Helpers"
+
 import { SpeciesFlavourText } from "./SpeciesFlavourText"
+import { Sprite } from "./Sprite"
 import { TypeLabel } from "./TypeLabel"
 
 import "./BasicInfo.css"
@@ -20,41 +20,7 @@ interface BasicInfoProps {
     versionGroup: VersionGroup | undefined
 }
 
-interface HasSprite {
-    sprites: {
-        front_default: string,
-        front_shiny: string,
-    }
-}
-
 export const BasicInfo = (props: BasicInfoProps) => {
-    const [sprite, setSprite] = useState<HasSprite>()
-    const [showShiny, setShowShiny] = useState(false)
-
-    useEffect(() => {
-        if (props.form && !props.form.isDefault) {
-            fetchFormSprite(props.form.name)
-        }
-        else if (props.variety) {
-            fetchSprite(props.variety.name)
-        }
-        else {
-            setSprite(undefined)
-        }
-    }, [props.variety, props.form])
-
-    const fetchFormSprite = (formName: string) => {
-        fetch(`${process.env.REACT_APP_API_URL}/pokemon-form/${formName}`)
-            .then(res => res.json())
-            .then(setSprite)
-    }
-
-    const fetchSprite = (pokemonName: string) => {
-        fetch(`${process.env.REACT_APP_API_URL}/pokemon/${pokemonName}`)
-            .then(res => res.json())
-            .then(setSprite)
-    }
-
     const renderGenderRate = (species: Species) => {
         let rate = species.genderRate
         if (rate === -1) {
@@ -125,17 +91,10 @@ export const BasicInfo = (props: BasicInfoProps) => {
                     {renderGenderRate(species)}
                 </div>
 
-                <div className="sprite-container">
-                    <Image
-                        className="sprite"
-                        src={showShiny ? sprite?.sprites.front_shiny : sprite?.sprites.front_default} />
-
-                    <Checkbox
-                        toggle
-                        label="Shiny"
-                        checked={showShiny}
-                        onChange={(e, data) => setShowShiny(data.checked ?? false)} />
-                </div>
+                <Sprite
+                    pokemon={variety}
+                    form={form}
+                    showShinyToggle={true} />
             </div>
 
             <SpeciesFlavourText speciesInfo={species} versionGroup={props.versionGroup} />
