@@ -45,7 +45,9 @@ export const EncountersList = (props: EncountersListProps) => {
                         showShinyToggle={false} />}
                 </div>
 
-                {mergeMap.map(renderMatchedEncounters)}
+                <div>
+                    {mergeMap.map(renderMatchedEncounters)}
+                </div>
             </List.Item>
         )
     }
