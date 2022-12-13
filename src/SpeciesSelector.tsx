@@ -1,4 +1,4 @@
-import { Button, Dropdown } from "semantic-ui-react"
+import { Button, ButtonGroup, Dropdown } from "semantic-ui-react"
 
 import { useSpeciesOptionsQuery } from "./queries/SpeciesOptionsQuery"
 
@@ -21,23 +21,53 @@ export const SpeciesSelector = (props: SpeciesSelectorProps) => {
         value: s.name,
     }))
 
+    const previousSpecies = () => {
+        let currentIndex = options.findIndex(e => e.value === props.species)
+        let newIndex = (currentIndex - 1) % options.length
+        let newLocation = options[newIndex].value
+        props.setSpecies(newLocation)
+    }
+
+    const nextSpecies = () => {
+        let currentIndex = options.findIndex(e => e.value === props.species)
+        let newIndex = (currentIndex + 1) % options.length
+        let newLocation = options[newIndex].value
+        props.setSpecies(newLocation)
+    }
+
     return (
         <div className="species-selector-container">
-            <Dropdown
-                fluid
-                selection
-                search
-                className="species-input"
-                loading={props.loadingSpecies || loadingSpeciesOptions}
-                placeholder="Species..."
-                options={options}
-                value={props.species}
-                onChange={(e, data) => props.setSpecies(data.value as string)} />
+            <div className="species-selector-dropdown-container">
+                <Dropdown
+                    fluid
+                    selection
+                    search
+                    className="species-input"
+                    loading={props.loadingSpecies || loadingSpeciesOptions}
+                    placeholder="Species..."
+                    options={options}
+                    value={props.species}
+                    onChange={(e, data) => props.setSpecies(data.value as string)} />
 
-            <Button
-                icon="cancel"
-                disabled={!props.species}
-                onClick={() => props.setSpecies("")}  />
+                <Button
+                    icon="cancel"
+                    disabled={!props.species}
+                    onClick={() => props.setSpecies("")}  />
+            </div>
+
+            <div>
+                <ButtonGroup fluid>
+                    <Button
+                        icon="arrow left"
+                        color="red"
+                        onClick={previousSpecies} />
+
+                    <Button
+                        icon="arrow right"
+                        color="violet"
+                        onClick={nextSpecies} />
+                </ButtonGroup>
+            </div>
         </div>
     )
 }
