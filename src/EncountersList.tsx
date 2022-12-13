@@ -33,12 +33,21 @@ export const EncountersList = (props: EncountersListProps) => {
 
     const renderEncounters = (header: string, encounters: Encounter[]) => {
         let mergeMap = createMergedEncounters(encounters)
+
+        // TODO: refactor this component so that it's easier to render
+        // encounters in different ways depending on how they're grouped?
+        let headerElem = <span>{header}</span>
+
         let pokemon = encounters[0].pokemon
+        if (pokemon) {
+            let link = `/?species=${encounters[0].pokemon.species.name}`
+            headerElem = <span><a href={link}>{header}</a></span>
+        }
 
         return (
             <List.Item key={header}>
                 <div className="encounters-header">
-                    <span>{header}</span>
+                    {headerElem}
 
                     {props.showSprites && <Sprite
                         pokemon={pokemon}
