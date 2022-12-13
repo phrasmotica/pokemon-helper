@@ -42,11 +42,6 @@ export const PokedexPage = () => {
             let firstVariety = speciesInfo.varieties[0]
             if (firstVariety) {
                 setVarietyId(firstVariety.id)
-
-                let firstForm = firstVariety.forms[0]
-                if (firstForm) {
-                    setFormId(firstForm.id)
-                }
             }
         }
     }, [speciesInfo])
