@@ -67,8 +67,8 @@ export const MoveTargetIndicator = (props: MoveTargetIndicatorProps) => {
 
     return (
         <div className={className}>
-            {targetMatrix.map(t => (
-                <div className="combatant">
+            {targetMatrix.map((t, i) => (
+                <div key={i} className="combatant">
                     <Icon
                         fitted
                         color={t.colour as SemanticCOLORS}
