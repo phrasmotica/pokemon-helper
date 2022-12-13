@@ -177,9 +177,10 @@ export const PokedexPage = () => {
                     </Accordion>
                 </div>
 
-                {!speciesInfo && <WelcomeMessage />}
+                {!speciesInfo && !loadingSpecies && <WelcomeMessage />}
 
-                {speciesInfo && <div className="details-container">
+                {/* TODO: show loader(s) if species is loading */}
+                {(speciesInfo || loadingSpecies) && <div className="details-container">
                     <BasicInfo
                         speciesInfo={speciesInfo}
                         variety={variety}
@@ -203,7 +204,7 @@ export const PokedexPage = () => {
                             encounters={variety?.encounters ?? []}
                             groupBy={e => getLocationAreaName(e.locationArea)}
                             versionGroup={versionGroup}
-                            captureRate={speciesInfo.captureRate}
+                            captureRate={speciesInfo?.captureRate}
                             showSprites={false} />
 
                         <MovesListing

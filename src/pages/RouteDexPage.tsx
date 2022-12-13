@@ -165,9 +165,10 @@ export const RouteDexPage = () => {
                     </Accordion>
                 </div>
 
-                {!locationInfo && <RouteDexWelcomeMessage />}
+                {!locationInfo && !loadingLocation && <RouteDexWelcomeMessage />}
 
-                {locationInfo && <div className="details-container">
+                {/* TODO: show loader(s) if location is loading */}
+                {(locationInfo || loadingLocation) && <div className="details-container">
                     {renderEncounters(encounters)}
                 </div>}
             </div>
