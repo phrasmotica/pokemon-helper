@@ -1,4 +1,4 @@
-import { Button, Dropdown } from "semantic-ui-react"
+import { Button, ButtonGroup, Dropdown } from "semantic-ui-react"
 
 import { LocationArea } from "./models/Encounter"
 
@@ -51,23 +51,53 @@ export const LocationSelector = (props: LocationSelectorProps) => {
         value: l.name,
     }))
 
+    const previousLocation = () => {
+        let currentIndex = options.findIndex(e => e.value === props.location)
+        let newIndex = (currentIndex - 1) % options.length
+        let newLocation = options[newIndex].value
+        props.setLocation(newLocation)
+    }
+
+    const nextLocation = () => {
+        let currentIndex = options.findIndex(e => e.value === props.location)
+        let newIndex = (currentIndex + 1) % options.length
+        let newLocation = options[newIndex].value
+        props.setLocation(newLocation)
+    }
+
     return (
         <div className="location-selector-container">
-            <Dropdown
-                fluid
-                selection
-                search
-                className="location-input"
-                loading={props.loadingLocation || loadingLocationOptions}
-                placeholder="Location..."
-                options={options}
-                value={props.location}
-                onChange={(e, data) => props.setLocation(data.value as string)} />
+            <div className="location-selector-dropdown-container">
+                <Dropdown
+                    fluid
+                    selection
+                    search
+                    className="location-input"
+                    loading={props.loadingLocation || loadingLocationOptions}
+                    placeholder="Location..."
+                    options={options}
+                    value={props.location}
+                    onChange={(e, data) => props.setLocation(data.value as string)} />
 
-            <Button
-                icon="cancel"
-                disabled={!props.location}
-                onClick={() => props.setLocation("")}  />
+                <Button
+                    icon="cancel"
+                    disabled={!props.location}
+                    onClick={() => props.setLocation("")}  />
+            </div>
+
+            <div>
+                <ButtonGroup fluid>
+                    <Button
+                        icon="arrow left"
+                        color="red"
+                        onClick={previousLocation} />
+
+                    <Button
+                        icon="arrow right"
+                        color="violet"
+                        onClick={nextLocation} />
+                </ButtonGroup>
+            </div>
         </div>
     )
 }
