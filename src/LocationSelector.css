@@ -17,3 +17,8 @@
 .region-checkbox-container {
     text-align: start;
 }
+
+.region-checkbox-container .ui.label.region-count-label.active {
+    background-color: lightcoral;
+    border-color: lightcoral;
+}

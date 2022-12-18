@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { Button, ButtonGroup, Checkbox, Dropdown, List, Loader, Segment } from "semantic-ui-react"
+import { Button, ButtonGroup, Dropdown, Label, Loader, Menu } from "semantic-ui-react"
 
 import { LocationArea } from "./models/Encounter"
 
@@ -58,6 +58,10 @@ export const LocationSelector = (props: LocationSelectorProps) => {
         return region ? getName(region) : ""
     }
 
+    const getRegionCount = (name: string) => {
+        return validLocations.filter(l => l.region.name === name).length
+    }
+
     const getText = (l: LocationOption) => {
         let text = getName(l)
 
@@ -97,13 +101,35 @@ export const LocationSelector = (props: LocationSelectorProps) => {
         props.setLocation(newLocation)
     }
 
-    const renderRegionCheckbox = (r: Region) => (
-        <List.Item key={r.id}>
-            <Checkbox
-                checked={regionsFilter.includes(r.id)}
-                onChange={() => toggleRegion(r.id)}
-                label={getRegionName(r.name)} />
-        </List.Item>
+    const renderRegionCheckbox = (r: Region) => {
+        let active = regionsFilter.includes(r.id)
+
+        let labelClassName = "region-count-label"
+        if (active) {
+            labelClassName += " active"
+        }
+
+        return (
+            <Menu.Item
+                name={r.name}
+                active={active}
+                onClick={() => toggleRegion(r.id)}>
+                <Label className={labelClassName}>
+                    {getRegionCount(r.name)}
+                </Label>
+
+                {getRegionName(r.name)}
+            </Menu.Item>
+        )
+    }
+
+    const renderRegionFilter = () => (
+        <Menu vertical fluid>
+            {regions.length <= 0 && <Menu.Item name="loader">
+                <Loader active inline="centered" />
+            </Menu.Item>}
+            {regions.length > 0 && regions.map(renderRegionCheckbox)}
+        </Menu>
     )
 
     return (
@@ -141,12 +167,7 @@ export const LocationSelector = (props: LocationSelectorProps) => {
             </div>
 
             <div className="region-checkbox-container">
-                <Segment>
-                    {regions.length <= 0 && <Loader active inline="centered" />}
-                    {regions.length > 0 && <List divided relaxed>
-                        {regions.map(renderRegionCheckbox)}
-                    </List>}
-                </Segment>
+                {renderRegionFilter()}
             </div>
         </div>
     )
