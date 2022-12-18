@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { Button, ButtonGroup, Checkbox, Dropdown, List, Segment } from "semantic-ui-react"
+import { Button, ButtonGroup, Checkbox, Dropdown, List, Loader, Segment } from "semantic-ui-react"
 
 import { LocationArea } from "./models/Encounter"
 
@@ -9,6 +9,7 @@ import { useRegionsQuery } from "./queries/RegionQuery"
 import { getName, uniqueBy } from "./util/Helpers"
 
 import "./LocationSelector.css"
+import { Region } from "./models/Region"
 
 interface LocationSelectorProps {
     location: string
@@ -96,6 +97,15 @@ export const LocationSelector = (props: LocationSelectorProps) => {
         props.setLocation(newLocation)
     }
 
+    const renderRegionCheckbox = (r: Region) => (
+        <List.Item key={r.id}>
+            <Checkbox
+                checked={regionsFilter.includes(r.id)}
+                onChange={() => toggleRegion(r.id)}
+                label={getRegionName(r.name)} />
+        </List.Item>
+    )
+
     return (
         <div className="location-selector-container">
             <div className="location-selector-dropdown-container">
@@ -132,16 +142,10 @@ export const LocationSelector = (props: LocationSelectorProps) => {
 
             <div className="region-checkbox-container">
                 <Segment>
-                    <List divided relaxed>
-                        {regions.map(r => (
-                            <List.Item key={r.id}>
-                                <Checkbox
-                                    checked={regionsFilter.includes(r.id)}
-                                    onChange={(_, data) => toggleRegion(r.id)}
-                                    label={getRegionName(r.name)} />
-                            </List.Item>
-                        ))}
-                    </List>
+                    {regions.length <= 0 && <Loader active inline="centered" />}
+                    {regions.length > 0 && <List divided relaxed>
+                        {regions.map(renderRegionCheckbox)}
+                    </List>}
                 </Segment>
             </div>
         </div>
