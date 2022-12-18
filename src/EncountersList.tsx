@@ -92,6 +92,13 @@ export const EncountersList = (props: EncountersListProps) => {
             return null
         }
 
+        // don't show >100% chance for multiple Devon Scope encounters, show
+        // number of encounters instead
+        let isDevonScope = matchedEncounters[0].encounterSlot.method.id === 30
+        if (isDevonScope) {
+            return <div><span>{matchedEncounters.length} encounter(s)</span></div>
+        }
+
         let chance = matchedEncounters.map(e => e.encounterSlot.rarity).reduce((a, b) => a + b)
         return <div><span>{chance}% chance</span></div>
     }
