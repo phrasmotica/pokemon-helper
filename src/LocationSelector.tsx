@@ -1,11 +1,12 @@
-import { Button, ButtonGroup, Dropdown } from "semantic-ui-react"
+import { useEffect, useMemo, useState } from "react"
+import { Button, ButtonGroup, Checkbox, Dropdown, List, Segment } from "semantic-ui-react"
 
 import { LocationArea } from "./models/Encounter"
 
 import { LocationOption, sortLocationOptions, useLocationOptionsQuery } from "./queries/LocationOptionsQuery"
 import { useRegionsQuery } from "./queries/RegionQuery"
 
-import { getName } from "./util/Helpers"
+import { getName, uniqueBy } from "./util/Helpers"
 
 import "./LocationSelector.css"
 
@@ -16,15 +17,36 @@ interface LocationSelectorProps {
 }
 
 export const LocationSelector = (props: LocationSelectorProps) => {
+    const [regionsFilter, setRegionsFilter] = useState<number[]>([])
+
     const { loadingLocationOptions, locationOptionsData } = useLocationOptionsQuery()
 
-    // filter locations with no encounters in all location areas
-    let showLocationArea = (area: LocationArea) => area.encountersAgg.aggregate.count > 0
-    let showLocation = (location: LocationOption) => location.locationAreas.some(showLocationArea)
+    let validLocations = useMemo(() => {
+        // filter locations with no encounters in all location areas
+        const showLocationArea = (area: LocationArea) => area.encountersAgg.aggregate.count > 0
+        const showLocation = (location: LocationOption) => location.locationAreas.some(showLocationArea)
 
-    let validLocations = (locationOptionsData?.locationOptions ?? [])
-        .filter(showLocation)
-        .sort(sortLocationOptions)
+        return (locationOptionsData?.locationOptions ?? [])
+            .filter(showLocation)
+            .sort(sortLocationOptions)
+    }, [locationOptionsData])
+
+    useEffect(() => {
+        // deselect if the region of the selected location is filtered out
+        let selected = validLocations.find(o => o.name === props.location)
+        if (selected && !regionsFilter.includes(selected.region.id)) {
+            props.setLocation("")
+        }
+    }, [props, regionsFilter, validLocations])
+
+    let regions = useMemo(() => uniqueBy(validLocations.map(l => l.region), x => x.id), [validLocations])
+
+    useEffect(() => {
+        setRegionsFilter(regions.map(r => r.id))
+    }, [regions])
+
+    const regionIsEnabled = (location: LocationOption) => regionsFilter.includes(location.region.id)
+    let filteredLocations = validLocations.filter(regionIsEnabled)
 
     // TODO: move this logic into a common file
     const { loadingRegions, regionsData } = useRegionsQuery()
@@ -45,7 +67,16 @@ export const LocationSelector = (props: LocationSelectorProps) => {
         return text
     }
 
-    let options = validLocations.map(l => ({
+    const toggleRegion = (regionId: number) => {
+        if (regionsFilter.includes(regionId)) {
+            setRegionsFilter(regionsFilter.filter(i => i !== regionId))
+        }
+        else {
+            setRegionsFilter([regionId, ...regionsFilter])
+        }
+    }
+
+    let options = filteredLocations.filter(l => l.region.id).map(l => ({
         key: l.name,
         text: getText(l),
         value: l.name,
@@ -97,6 +128,21 @@ export const LocationSelector = (props: LocationSelectorProps) => {
                         color="violet"
                         onClick={nextLocation} />
                 </ButtonGroup>
+            </div>
+
+            <div className="region-checkbox-container">
+                <Segment>
+                    <List divided relaxed>
+                        {regions.map(r => (
+                            <List.Item key={r.id}>
+                                <Checkbox
+                                    checked={regionsFilter.includes(r.id)}
+                                    onChange={(_, data) => toggleRegion(r.id)}
+                                    label={getRegionName(r.name)} />
+                            </List.Item>
+                        ))}
+                    </List>
+                </Segment>
             </div>
         </div>
     )

@@ -13,3 +13,7 @@
 .location-selector-dropdown-container > .ui.button  {
     margin-right: 0em!important;
 }
+
+.region-checkbox-container {
+    text-align: start;
+}
