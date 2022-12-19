@@ -13,12 +13,3 @@
 .location-selector-dropdown-container > .ui.button  {
     margin-right: 0em!important;
 }
-
-.region-checkbox-container {
-    text-align: start;
-}
-
-.region-checkbox-container .ui.label.region-count-label.active {
-    background-color: lightcoral;
-    border-color: lightcoral;
-}

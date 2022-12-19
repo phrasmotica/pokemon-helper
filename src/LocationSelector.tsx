@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
-import { Button, ButtonGroup, Dropdown, Label, Loader, Menu } from "semantic-ui-react"
+import { Button, ButtonGroup, Dropdown } from "semantic-ui-react"
 
 import { LocationArea } from "./models/Encounter"
 
@@ -8,8 +8,9 @@ import { useRegionsQuery } from "./queries/RegionQuery"
 
 import { getName, uniqueBy } from "./util/Helpers"
 
+import { RegionFilterMenu } from "./RegionFilterMenu"
+
 import "./LocationSelector.css"
-import { Region } from "./models/Region"
 
 interface LocationSelectorProps {
     location: string
@@ -58,10 +59,6 @@ export const LocationSelector = (props: LocationSelectorProps) => {
         return region ? getName(region) : ""
     }
 
-    const getRegionCount = (name: string) => {
-        return validLocations.filter(l => l.region.name === name).length
-    }
-
     const getText = (l: LocationOption) => {
         let text = getName(l)
 
@@ -70,15 +67,6 @@ export const LocationSelector = (props: LocationSelectorProps) => {
         }
 
         return text
-    }
-
-    const toggleRegion = (regionId: number) => {
-        if (regionsFilter.includes(regionId)) {
-            setRegionsFilter(regionsFilter.filter(i => i !== regionId))
-        }
-        else {
-            setRegionsFilter([regionId, ...regionsFilter])
-        }
     }
 
     let options = filteredLocations.filter(l => l.region.id).map(l => ({
@@ -100,37 +88,6 @@ export const LocationSelector = (props: LocationSelectorProps) => {
         let newLocation = options[newIndex].value
         props.setLocation(newLocation)
     }
-
-    const renderRegionCheckbox = (r: Region) => {
-        let active = regionsFilter.includes(r.id)
-
-        let labelClassName = "region-count-label"
-        if (active) {
-            labelClassName += " active"
-        }
-
-        return (
-            <Menu.Item
-                name={r.name}
-                active={active}
-                onClick={() => toggleRegion(r.id)}>
-                <Label className={labelClassName}>
-                    {getRegionCount(r.name)}
-                </Label>
-
-                {getRegionName(r.name)}
-            </Menu.Item>
-        )
-    }
-
-    const renderRegionFilter = () => (
-        <Menu vertical fluid>
-            {regions.length <= 0 && <Menu.Item name="loader">
-                <Loader active inline="centered" />
-            </Menu.Item>}
-            {regions.length > 0 && regions.map(renderRegionCheckbox)}
-        </Menu>
-    )
 
     return (
         <div className="location-selector-container">
@@ -166,9 +123,11 @@ export const LocationSelector = (props: LocationSelectorProps) => {
                 </ButtonGroup>
             </div>
 
-            <div className="region-checkbox-container">
-                {renderRegionFilter()}
-            </div>
+            <RegionFilterMenu
+                locations={validLocations}
+                regions={regionsData?.regionInfo ?? []}
+                regionsFilter={regionsFilter}
+                setRegionsFilter={setRegionsFilter} />
         </div>
     )
 }
