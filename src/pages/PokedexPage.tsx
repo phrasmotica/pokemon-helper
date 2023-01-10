@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react"
 import { useSearchParams } from "react-router-dom"
-import { Accordion, Icon } from "semantic-ui-react"
+import { Accordion, Icon, Loader } from "semantic-ui-react"
 
 import { Species } from "../models/Species"
 
@@ -179,38 +179,40 @@ export const PokedexPage = () => {
 
                 {!speciesInfo && !loadingSpecies && <WelcomeMessage />}
 
-                {/* TODO: show loader(s) if species is loading */}
                 {(speciesInfo || loadingSpecies) && <div className="details-container">
-                    <BasicInfo
-                        speciesInfo={speciesInfo}
-                        variety={variety}
-                        form={form}
-                        versionGroup={versionGroup} />
-
-                    <div className="battle-details-container">
-                        <AbilitiesListing
-                            abilities={variety?.abilities ?? []}
+                    {loadingSpecies && <Loader active inline="centered" />}
+                    {!loadingSpecies && <div>
+                        <BasicInfo
+                            speciesInfo={speciesInfo}
+                            variety={variety}
+                            form={form}
                             versionGroup={versionGroup} />
 
-                        <StatsTable stats={stats} />
+                        <div className="battle-details-container">
+                            <AbilitiesListing
+                                abilities={variety?.abilities ?? []}
+                                versionGroup={versionGroup} />
 
-                        <EfficacyList
-                            types={typesData?.typeInfo ?? []}
-                            effectiveTypes={effectiveTypes}
-                            versionGroup={versionGroup} />
+                            <StatsTable stats={stats} />
 
-                        <CaptureLocationsListing
-                            title="Capture Locations"
-                            encounters={variety?.encounters ?? []}
-                            groupBy={e => getLocationAreaName(e.locationArea)}
-                            versionGroup={versionGroup}
-                            captureRate={speciesInfo?.captureRate}
-                            showSprites={false} />
+                            <EfficacyList
+                                types={typesData?.typeInfo ?? []}
+                                effectiveTypes={effectiveTypes}
+                                versionGroup={versionGroup} />
 
-                        <MovesListing
-                            moves={moves}
-                            versionGroup={versionGroup} />
-                    </div>
+                            <CaptureLocationsListing
+                                title="Capture Locations"
+                                encounters={variety?.encounters ?? []}
+                                groupBy={e => getLocationAreaName(e.locationArea)}
+                                versionGroup={versionGroup}
+                                captureRate={speciesInfo?.captureRate}
+                                showSprites={false} />
+
+                            <MovesListing
+                                moves={moves}
+                                versionGroup={versionGroup} />
+                        </div>
+                    </div>}
                 </div>}
             </div>
         </div>

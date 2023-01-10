@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from "react"
-import { Accordion, Icon } from "semantic-ui-react"
+import { Accordion, Icon, Loader } from "semantic-ui-react"
 
 import { Encounter } from "../models/Encounter"
 import { Location } from "../models/Location"
@@ -167,9 +167,9 @@ export const RouteDexPage = () => {
 
                 {!locationInfo && !loadingLocation && <RouteDexWelcomeMessage />}
 
-                {/* TODO: show loader(s) if location is loading */}
                 {(locationInfo || loadingLocation) && <div className="details-container">
-                    {renderEncounters(encounters)}
+                    {loadingLocation && <Loader active inline="centered" />}
+                    {!loadingLocation && renderEncounters(encounters)}
                 </div>}
             </div>
         </div>
