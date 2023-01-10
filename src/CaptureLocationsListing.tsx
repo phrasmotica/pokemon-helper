@@ -51,6 +51,7 @@ export const CaptureLocationsListing = (props: CaptureLocationsListingProps) => 
             render: () => <Tab.Pane className="encounters-list-container">
                 <EncountersList
                     key={em.name}
+                    versionGroup={props.versionGroup!}
                     encounters={getEncountersWithMethod(encounters, em.id)}
                     groupBy={props.groupBy}
                     methodId={em.id}

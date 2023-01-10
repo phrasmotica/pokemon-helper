@@ -1,6 +1,7 @@
 import { List } from "semantic-ui-react"
 
 import { Encounter } from "./models/Encounter"
+import { VersionGroup } from "./models/VersionGroup"
 
 import { createMergedEncounters, getName, groupBy, sortEncounters } from "./util/Helpers"
 import { Interval, isEmpty, mergeIntRanges, summarise } from "./util/Interval"
@@ -10,6 +11,7 @@ import { Sprite } from "./Sprite"
 import "./EncountersList.css"
 
 interface EncountersListProps {
+    versionGroup: VersionGroup
     encounters: Encounter[]
     groupBy: (e: Encounter) => string
     methodId: number
@@ -40,7 +42,7 @@ export const EncountersList = (props: EncountersListProps) => {
 
         let pokemon = encounters[0].pokemon
         if (pokemon) {
-            let link = `/?species=${encounters[0].pokemon.species.name}`
+            let link = `/?species=${encounters[0].pokemon.species.name}&versionGroup=${props.versionGroup.id}`
             headerElem = <span><a href={link}>{header}</a></span>
         }
 

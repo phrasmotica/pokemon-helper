@@ -76,6 +76,18 @@ export const PokedexPage = () => {
     let disabledVersionGroups = speciesInfo ? versionGroups.filter(vg => vg.generation.id < speciesInfo!.generation.id) : []
     let disabledVersionGroupIds = disabledVersionGroups.map(vg => vg.id)
 
+    let versionGroupFromParams = searchParams.get("versionGroup")
+
+    useEffect(() => {
+        if (versionGroupFromParams) {
+            let vgId = Number(versionGroupFromParams)
+
+            if (versionGroups.map(vg => vg.id).includes(vgId)) {
+                setVersionGroupId(vgId)
+            }
+        }
+    }, [versionGroups, versionGroupFromParams])
+
     useEffect(() => {
         let firstVersionGroup = versionGroupsData?.versionGroupInfo[0]
         if (firstVersionGroup) {
