@@ -7,19 +7,23 @@
     font-style: italic;
 }
 
-.encounters-list .item > :not(:first-child) {
-    margin-top: 0.5em;
-}
-
-.encounters-list .item .location-area-header {
+.encounters-list .item .encounters-header {
     text-align: start;
     font-weight: bold;
+    display: flex;
+    justify-content: space-between;
 }
 
 .encounters-list .item .matched-encounters {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
+    margin-top: 0.5em;
+}
+
+.encounters-list .item .matched-encounters:not(:first-child) {
+    padding-top: 0.5em;
+    border-top: 1px dotted rgba(34,36,38,.15);
 }
 
 .encounters-list .item .matched-encounters .conditions {

@@ -1,0 +1,19 @@
+.ui.accordion.region-filter-menu-container {
+    text-align: start;
+}
+
+.ui.accordion.region-filter-menu-container > .title {
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.region-filter-menu {
+    max-height: 30vh;
+    overflow-y: auto;
+}
+
+.region-filter-menu .ui.label.region-count-label.active {
+    background-color: lightcoral;
+    border-color: lightcoral;
+}

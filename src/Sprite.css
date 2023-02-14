@@ -1,0 +1,20 @@
+.sprite-container > :not(:first-child) {
+    margin-top: 0.5em;
+}
+
+.sprite {
+    width: 96px;
+    height: 96px;
+}
+
+.loader-container {
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ui.centered.inline.loader.active, .ui.centered.inline.loader.visible {
+
+}

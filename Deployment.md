@@ -1,11 +1,14 @@
-# Deployment to Azure App Services
+# Deployment
 
-## Configuring app settings
+## GitHub Pages
+
+Run `npm run deploy -- -m "{commitMessage}"`, this should push the latest build of the app to the remote `gh-pages` branch and deploy it to GitHub Pages.
+
+## Azure App Services
+
+### Configuring app settings
 
 Set the following general settings:
 
 - startup command - `npx serve -l 8080 build`
-
-## Enabling HTTPS redirection
-
-Enable HTTPS Only in the TLS/SSL settings panel.
+- enable HTTPS Only

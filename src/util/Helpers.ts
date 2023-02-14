@@ -56,6 +56,14 @@ export const moveToFront = <T>(arr: T[], elem: T) => {
     return newArr
 }
 
+export const updateHistory = <T>(history: T[], elem: T) => {
+    if (!history.includes(elem)) {
+        return [elem, ...history]
+    }
+
+    return moveToFront(history, elem)
+}
+
 export const getGenus = (x: Species) => x.names[0]!.genus
 
 export const getName = (x: { names: Name[] }) => x.names[0]?.name ?? ""

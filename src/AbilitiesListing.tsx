@@ -17,27 +17,25 @@ interface AbilitiesListingProps {
 export const AbilitiesListing = (props: AbilitiesListingProps) => {
     const [active, setActive] = useState(true)
 
-    const renderAbility = (a: PokemonAbility) => {
-        return (
-            <List.Item key={a.id} className="pokemon-ability">
-                <div className="ability-name">
-                    <span>
-                        {getName(a.ability)}
-                    </span>
+    const renderAbility = (a: PokemonAbility) => (
+        <List.Item key={a.id} className="pokemon-ability">
+            <div className="ability-name">
+                <span>
+                    {getName(a.ability)}
+                </span>
 
-                    {a.isHidden && <span className="ability-hidden">
-                        &nbsp;(hidden)
-                    </span>}
-                </div>
+                {a.isHidden && <span className="ability-hidden">
+                    &nbsp;(hidden)
+                </span>}
+            </div>
 
-                <div className="ability-effect">
-                    <span>
-                        {getShortEffect(a.ability)}
-                    </span>
-                </div>
-            </List.Item>
-        )
-    }
+            <div className="ability-effect">
+                <span>
+                    {getShortEffect(a.ability)}
+                </span>
+            </div>
+        </List.Item>
+    )
 
     let relevantAbilities = props.abilities.filter(
         a => !props.versionGroup || a.ability.generation.id <= props.versionGroup.generation.id

@@ -1,4 +1,4 @@
-.ui.accordion.capture-locations-listing-container {
+.capture-locations-listing-container {
     color: black;
 }
 
@@ -9,21 +9,21 @@
     font-size: 1.2rem;
 }
 
-.ui.accordion.capture-locations-listing-container .ui.menu {
+.capture-locations-listing-container .ui.menu {
     display: flex;
 }
 
-.ui.accordion.capture-locations-listing-container .ui.inverted.pointing.secondary.menu {
+.capture-locations-listing-container .ui.inverted.pointing.secondary.menu {
     border-top: unset;
     border-left: unset;
     border-right: unset;
 }
 
-.ui.accordion.capture-locations-listing-container .ui.inverted.pointing.secondary.menu > a.active.item {
+.capture-locations-listing-container .ui.inverted.pointing.secondary.menu > a.active.item {
     border-bottom: 2px solid white;
 }
 
-.ui.accordion.capture-locations-listing-container .ui.menu > * {
+.capture-locations-listing-container .ui.menu > * {
     flex: 1;
     justify-content: center;
 }

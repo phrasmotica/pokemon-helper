@@ -1,16 +1,22 @@
 import { List } from "semantic-ui-react"
 
 import { Encounter } from "./models/Encounter"
+import { VersionGroup } from "./models/VersionGroup"
 
-import { createMergedEncounters, getLocationAreaName, getName, groupBy, sortEncounters } from "./util/Helpers"
+import { createMergedEncounters, getName, groupBy, sortEncounters } from "./util/Helpers"
 import { Interval, isEmpty, mergeIntRanges, summarise } from "./util/Interval"
+
+import { Sprite } from "./Sprite"
 
 import "./EncountersList.css"
 
 interface EncountersListProps {
+    versionGroup: VersionGroup
     encounters: Encounter[]
+    groupBy: (e: Encounter) => string
     methodId: number
-    captureRate: number
+    captureRate?: number
+    showSprites?: boolean
 }
 
 export const EncountersList = (props: EncountersListProps) => {
@@ -27,16 +33,32 @@ export const EncountersList = (props: EncountersListProps) => {
         )
     }
 
-    const renderEncountersInLocationArea = (locationAreaName: string, encounters: Encounter[]) => {
+    const renderEncounters = (header: string, encounters: Encounter[]) => {
         let mergeMap = createMergedEncounters(encounters)
 
+        // TODO: refactor this component so that it's easier to render
+        // encounters in different ways depending on how they're grouped?
+        let headerElem = <span>{header}</span>
+
+        let pokemon = encounters[0].pokemon
+        if (pokemon) {
+            let link = `/?species=${encounters[0].pokemon.species.name}&versionGroup=${props.versionGroup.id}`
+            headerElem = <span><a href={link}>{header}</a></span>
+        }
+
         return (
-            <List.Item key={locationAreaName}>
-                <div className="location-area-header">
-                    <span>{locationAreaName}</span>
+            <List.Item key={header}>
+                <div className="encounters-header">
+                    {headerElem}
+
+                    {props.showSprites && <Sprite
+                        pokemon={pokemon}
+                        showShinyToggle={false} />}
                 </div>
 
-                {mergeMap.map(renderMatchedEncounters)}
+                <div>
+                    {mergeMap.map(renderMatchedEncounters)}
+                </div>
             </List.Item>
         )
     }
@@ -72,6 +94,13 @@ export const EncountersList = (props: EncountersListProps) => {
             return null
         }
 
+        // don't show >100% chance for multiple Devon Scope encounters, show
+        // number of encounters instead
+        let isDevonScope = matchedEncounters[0].encounterSlot.method.id === 30
+        if (isDevonScope) {
+            return <div><span>{matchedEncounters.length} encounter(s)</span></div>
+        }
+
         let chance = matchedEncounters.map(e => e.encounterSlot.rarity).reduce((a, b) => a + b)
         return <div><span>{chance}% chance</span></div>
     }
@@ -97,15 +126,15 @@ export const EncountersList = (props: EncountersListProps) => {
     let encounters = [...props.encounters]
     encounters.sort(sortEncounters)
 
-    let groupedEncounters = groupBy(encounters, e => getLocationAreaName(e.locationArea))
+    let groupedEncounters = groupBy(encounters, props.groupBy)
 
     return (
         <div className="encounters-list">
-            {renderCaptureRate(props.captureRate)}
+            {props.captureRate && renderCaptureRate(props.captureRate)}
 
             <List divided relaxed>
                 {Array.from(groupedEncounters.entries()).map(
-                    e => renderEncountersInLocationArea(e[0], e[1])
+                    e => renderEncounters(e[0], e[1])
                 )}
             </List>
         </div>

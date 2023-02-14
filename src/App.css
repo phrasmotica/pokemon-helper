@@ -22,37 +22,6 @@ footer {
   margin-top: 1em;
 }
 
-.main-container {
-  display: flex;
-}
-
-.main-container > :not(:first-child) {
-  margin-left: 1em;
-}
-
-.control-container {
-  width: 250px;
-}
-
-.control-container > :not(:first-child) {
-  margin-top: 1em;
-}
-
-.selectors-container > :not(:first-child) {
-  margin-top: 0.5em;
-}
-
-.ui.accordion.input-container > .title {
-  text-align: start;
-  color: white;
-  font-weight: bold;
-  font-size: 1.2rem;
-}
-
-.details-container {
-  width: 600px;
-}
-
 @media only screen and (max-width: 900px) {
   .App-header {
     flex-direction: column;
@@ -69,30 +38,4 @@ footer {
     margin-left: 0em;
     margin-top: 1em;
   }
-
-  .main-container {
-    flex-direction: column;
-  }
-
-  .main-container > :not(:first-child) {
-    margin-left: 0em;
-    margin-top: 1em;
-  }
-
-  .control-container {
-    width: unset;
-  }
-
-  .details-container {
-    width: unset;
-  }
-}
-
-.find-button-container > .ui.button {
-  margin: 0em;
-  height: 100%;
-}
-
-.battle-details-container > :not(:first-child) {
-  margin-top: 1em;
 }

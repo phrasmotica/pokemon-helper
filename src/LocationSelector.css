@@ -1,0 +1,15 @@
+.location-selector-container > :not(:first-child) {
+    margin-top: 0.5em;
+}
+
+.location-selector-dropdown-container {
+    display: flex;
+}
+
+.location-selector-dropdown-container > :not(:first-child) {
+    margin-left: 0.5em;
+}
+
+.location-selector-dropdown-container > .ui.button  {
+    margin-right: 0em!important;
+}
