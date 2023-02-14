@@ -14,13 +14,13 @@ const App = () => {
             </Menu.Item>
 
             <Menu.Item>
-                <Link to="/">
+                <Link to="/pokemon-helper">
                     Pokedex
                 </Link>
             </Menu.Item>
 
             <Menu.Item>
-                <Link to="/routedex">
+                <Link to="/pokemon-helper/routedex">
                     RouteDex
                 </Link>
             </Menu.Item>
