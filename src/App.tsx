@@ -14,13 +14,13 @@ const App = () => {
             </Menu.Item>
 
             <Menu.Item>
-                <Link to="/pokemon-helper">
+                <Link to="/">
                     Pokedex
                 </Link>
             </Menu.Item>
 
             <Menu.Item>
-                <Link to="/pokemon-helper/routedex">
+                <Link to="/routedex">
                     RouteDex
                 </Link>
             </Menu.Item>
@@ -32,7 +32,7 @@ const App = () => {
     return (
         <div className="App">
             <div className="App-header">
-                <HashRouter>
+                <HashRouter basename="/">
                     {renderMenu()}
 
                     <Routes>
