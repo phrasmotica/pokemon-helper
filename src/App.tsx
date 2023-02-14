@@ -1,4 +1,4 @@
-import { BrowserRouter, Link, Route, Routes } from "react-router-dom"
+import { HashRouter, Link, Route, Routes } from "react-router-dom"
 import { Menu } from "semantic-ui-react"
 
 import { PokedexPage } from "./pages/PokedexPage"
@@ -32,14 +32,14 @@ const App = () => {
     return (
         <div className="App">
             <div className="App-header">
-                <BrowserRouter>
+                <HashRouter>
                     {renderMenu()}
 
                     <Routes>
                         <Route path="/" element={<PokedexPage />} />
                         <Route path="/routedex" element={<RouteDexPage />} />
                     </Routes>
-                </BrowserRouter>
+                </HashRouter>
             </div>
 
             <footer>
